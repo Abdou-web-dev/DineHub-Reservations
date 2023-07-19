@@ -1,3 +1,5 @@
+This is a React web application where users can make reservations at a given restaurant, once they submit the reservation, this turns into a customer, where there is several fields to be filled . Finally, this can be placed as an order !
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
