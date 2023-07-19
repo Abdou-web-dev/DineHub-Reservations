@@ -1,0 +1,12 @@
+.order-date-input-container {
+  .order-date-input {
+    font-size: larger;
+    & > * {
+      font-weight: bolder;
+      color: darkcyan !important;
+    }
+    .ant-input-suffix {
+      transform: scale(1.5);
+    }
+  }
+}

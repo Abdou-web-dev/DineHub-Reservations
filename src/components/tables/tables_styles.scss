@@ -1,0 +1,13 @@
+.order-time-container {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  width: 100%;
+  .times-table {
+    flex: 85%;
+  }
+  .test {
+    flex: 15%;
+  }
+  //   display: none;
+}

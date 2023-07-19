@@ -1,0 +1,30 @@
+.order-time-collapse-container {
+  .ant-collapse {
+    .ant-collapse-item {
+      //   display: none;
+      .ant-collapse-header {
+        // border: 1px solid;
+        &:hover {
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+        .ant-collapse-header-text {
+          //   display: flex;
+          //   justify-content: center;
+          text-transform: uppercase;
+          //   margin: 2rem 0;
+          color: darkcyan;
+          //   text-decoration: underline;
+          letter-spacing: 1px;
+          font-size: 1.5rem;
+        }
+        .ant-collapse-expand-icon {
+          justify-self: center;
+          align-self: center;
+          //   width: 2rem;
+          //   height: 2rem;
+          transform: scale(1.9);
+        }
+      }
+    }
+  }
+}

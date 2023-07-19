@@ -1,0 +1,70 @@
+.location-select-container {
+  .location-select-wrapper {
+    .location-select {
+      .select__menu {
+        .select__menu-list {
+          border-radius: 5px;
+          & > * {
+            font-family: "Mulish";
+            font-size: 18px;
+            // color: grey;
+          }
+          .select__option {
+            &:hover {
+              background: rgba(17, 0, 130, 0.5) !important;
+            }
+            // when hover
+            &.select__option--is-focused {
+              // background: green !important;
+            }
+            // when selected
+            &.select__option--is-selected {
+              background: rgba(17, 0, 130, 0.2);
+            }
+          }
+          &::-webkit-scrollbar {
+            width: 15px;
+          }
+          &::-webkit-scrollbar-track {
+            border-radius: 10px;
+            background: rgba(161, 160, 160, 0.05);
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+          &::-webkit-scrollbar-thumb {
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.2);
+          }
+          &::-webkit-scrollbar-thumb:hover {
+            border-radius: 10px;
+            background: rgba(23, 22, 22, 0.44);
+          }
+        }
+      }
+      .select__control {
+        width: 100%;
+        font-size: 1.4rem;
+        .select__value-container {
+          .select__placeholder {
+          }
+        }
+      }
+    }
+  }
+}
+.select__option {
+  // when hover
+}
+#react-select-3-option {
+  //   display: none;
+  //   background-color: lightgray;
+}
+.css-tr4s17-option {
+  // background: none !important;
+  // color: black !important;
+  // border-bottom: 1px solid gray;
+  &:hover {
+    // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    // background-color: rgba(96, 100, 101, 0.1) !important;
+  }
+}

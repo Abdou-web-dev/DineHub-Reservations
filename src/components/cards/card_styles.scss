@@ -1,0 +1,44 @@
+.customer-infos-card-container {
+  h5 {
+    display: flex;
+    justify-content: center;
+    // font-family: "Arial";
+    text-transform: uppercase;
+    margin: 2rem 0;
+    color: grey;
+    text-decoration: underline;
+    letter-spacing: 1px;
+    font-size: larger;
+  }
+  .customer-infos-wrapper {
+    .customer-infos-wrapper-grp1 {
+      display: grid;
+      // grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 20% 55% 25%;
+      row-gap: 3rem;
+      column-gap: 1rem;
+      padding-left: 1rem;
+      div.guests-comp {
+      }
+      div.location-comp {
+      }
+      div.date-comp {
+      }
+    }
+    .customer-infos-wrapper-grp2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 3rem;
+      column-gap: 1rem;
+      div.time-comp {
+      }
+      .add-food-input-and-list-comps {
+      }
+      div.food-comp {
+      }
+      div.add-comp {
+        // border: 1px solid;
+      }
+    }
+  }
+}

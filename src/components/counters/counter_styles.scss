@@ -1,0 +1,56 @@
+@mixin btn_styles {
+  height: fit-content;
+  border: 0;
+  padding: 0;
+  background: none;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.guests-counter-container {
+  .guests-counter-inner {
+    p.how-many {
+    }
+    .guests-input--and-btns-wrapper {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      align-items: center;
+      margin-top: 0.75rem;
+      .guests-antd-input-wrapper {
+        .guests-antd-input {
+          //   width: 50%;
+          //   height: 150%;
+          height: 3rem;
+          .ant-input {
+            font-size: larger;
+            font-family: "Karla";
+            font-weight: bold;
+          }
+          .ant-input-suffix {
+            transform: scale(1.5);
+          }
+        }
+      }
+      .plus-minus-btns {
+        display: flex;
+        gap: 0.3rem;
+        width: 50%;
+        margin-left: 0.3rem;
+        // border: 1px solid red;
+
+        .minus-btn,
+        .plus-btn {
+          @include btn_styles;
+          position: relative;
+          top: 3px;
+          img {
+            width: 23px;
+          }
+        }
+        .plus-btn {
+        }
+      }
+    }
+  }
+}
