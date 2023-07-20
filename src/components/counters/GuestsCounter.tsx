@@ -4,11 +4,7 @@ import minus_icon from "../../assets/img/minus_icon.svg";
 import plus_icon from "../../assets/img/plus_icon.svg";
 import "./counter_styles.scss";
 
-export const GuestsCounter = ({
-  guestsNumber,
-}: {
-  guestsNumber: string | number;
-}) => {
+export const GuestsCounter = ({}: {}) => {
   //   const dispatch = useDispatch();
 
   const [guests, setGuests] = useState<number | string>(0);

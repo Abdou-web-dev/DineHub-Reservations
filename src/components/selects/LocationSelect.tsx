@@ -1,13 +1,22 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Select, { SingleValue } from "react-select";
 import { restaurant_locations } from "../../assets/staticData/restaurant_locations.js";
+import { addLocationToCustomer } from "../../feature/customerSlice";
 import { ClearIndicator } from "../indicators/ClearIndicator";
 import "./select_styles.scss";
 
 // Todo : add a map above the customer's order, so that when a user chooses a location from the select dropdown,
 //he will see a red circle placed above this location
 
-export const LocationSelect = ({}: {}) => {
+export const LocationSelect = ({
+  restauLocation,
+  id,
+}: {
+  restauLocation: string | undefined;
+  id: string;
+}) => {
+  const dispatch = useDispatch();
   const [location, setLocation] = useState({
     value: "",
     label: "Select the restaurant's address",
@@ -18,6 +27,8 @@ export const LocationSelect = ({}: {}) => {
   ): void {
     // console.log(newValue, "newValue");
     setLocation(newValue);
+    dispatch(addLocationToCustomer({ location: location?.label, id: id }));
+    console.log(location, restauLocation);
   }
 
   return (
@@ -58,6 +69,9 @@ export const LocationSelect = ({}: {}) => {
             // }}
           />
         </div>
+        {/* {location.label} */}
+        {/* <br /> */}
+        {/* {restauLocation} */}
       </div>
     </>
   );

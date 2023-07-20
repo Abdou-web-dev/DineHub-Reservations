@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ReservationsState {
-  value: string[];
+  reservations: string[];
 }
 
 const initialState: ReservationsState = {
-  value: [],
+  reservations: [],
 };
 
 export const reservationsSlice = createSlice({
@@ -13,10 +13,10 @@ export const reservationsSlice = createSlice({
   initialState,
   reducers: {
     addReservation: (state, action: PayloadAction<string>) => {
-      state.value.push(action.payload);
+      state.reservations.push(action.payload);
     },
     removeReservation: (state, action: PayloadAction<number>) => {
-      state.value.splice(action.payload, 1);
+      state.reservations.splice(action.payload, 1);
     },
   },
 });

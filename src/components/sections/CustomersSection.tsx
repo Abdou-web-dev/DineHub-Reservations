@@ -13,14 +13,16 @@ export const CustomersSection = ({ customers }: { customers: Customer[] }) => {
           ) : null}
         </>
         <div className="">
-          {customers.map((customer: Customer) => {
+          {customers.map((customer: Customer, index: number) => {
             return (
               <CustomerCard
                 id={customer.id}
                 name={customer.name}
-                food={customer.food}
+                foodList={customer.food}
                 key={customer.id}
-                guestsNumber={customer.guestsNumber}
+                {...{ index }}
+                restauLocation={customer.restauLocation}
+                // guestsNumber={customer.guestsNumber}
               />
             );
           })}

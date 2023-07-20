@@ -2,12 +2,54 @@
   display: flex;
   justify-self: center;
   align-items: center;
+  gap: 0.7rem;
   width: 100%;
   .times-table {
     flex: 85%;
+    .ant-table-wrapper {
+      // display: none;
+      .ant-spin-container {
+        .ant-table {
+          // width: 60%;
+          .ant-table-container {
+            .ant-table-content {
+              table {
+                .ant-table-thead {
+                  tr {
+                    th {
+                      text-align: center;
+                      // border: 1px solid;
+                    }
+                  }
+                }
+                .ant-table-tbody {
+                  tr {
+                    td {
+                      text-align: center;
+
+                      button {
+                        span {
+                          // display: none;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
-  .test {
-    flex: 15%;
+  .selected-time {
+    border: 1px solid cyan;
+    .sunset_sunrise_icon {
+      position: relative;
+      left: 0.6rem;
+      bottom: 0.5rem;
+      // margin-left: 0.3rem;
+      // display: none;
+    }
   }
-  //   display: none;
 }

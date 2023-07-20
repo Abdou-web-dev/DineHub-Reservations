@@ -2,6 +2,10 @@
 import { Button, Card, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useState } from "react";
+import midnight_icon from "../../assets/img/noun-midnight-3541592.svg";
+import noon_icon from "../../assets/img/noun-noon-4299181.svg";
+import sunrise_icon from "../../assets/img/sunrise-svgrepo-com.svg";
+import sunset_icon from "../../assets/img/sunset-2-svgrepo-com.svg";
 import "./tables_styles.scss";
 
 export const TimeTable = ({}: {}) => {
@@ -118,7 +122,32 @@ export const TimeTable = ({}: {}) => {
         </div>
         <div className="selected-time">
           {selectedTime ? (
-            <Card title={selectedTime} bordered={false}>
+            <Card
+              // cover
+              extra={
+                <>
+                  <img
+                    className="sunset_sunrise_icon"
+                    width={`20px`}
+                    src={
+                      selectedTime === `06` && meridiumType === `AM`
+                        ? sunrise_icon
+                        : selectedTime === `12` && meridiumType === `AM`
+                        ? midnight_icon
+                        : selectedTime === `06` && meridiumType === `PM`
+                        ? sunset_icon
+                        : selectedTime === `12` && meridiumType === `PM`
+                        ? noon_icon
+                        : ""
+                    }
+                    alt=""
+                  />
+                </>
+              }
+              hoverable
+              title={selectedTime}
+              bordered={false}
+            >
               <span className="meridium">
                 {meridiumType === `AM` ? `AM` : `PM`}
               </span>

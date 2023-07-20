@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { OrderTimeTable } from "../collapse/OrderTime";
 import { GuestsCounter } from "../counters/GuestsCounter";
 import { AddFoodInput } from "../inputs/AddFoodInput";
@@ -11,13 +10,20 @@ import "./card_styles.scss";
 interface CustomerCardType {
   id: string;
   name: string;
-  food: string[];
-  guestsNumber: string | number;
+  foodList: string[];
+  index: number;
+  restauLocation: string | undefined;
+  // guestsNumber: string | number;
 }
 
-function CustomerCard({ id, name, food, guestsNumber }: CustomerCardType) {
+function CustomerCard({
+  id,
+  name,
+  foodList,
+  restauLocation,
+}: CustomerCardType) {
   const [customerFoodInput, setCustomerFoodInput] = useState("");
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <div className="customer-infos-card-container">
@@ -25,11 +31,11 @@ function CustomerCard({ id, name, food, guestsNumber }: CustomerCardType) {
       <div className="customer-infos-wrapper">
         <div className="customer-infos-wrapper-grp1">
           <div className="guests-comp">
-            <GuestsCounter {...{ guestsNumber }} />
+            <GuestsCounter />
           </div>
           <div className="location-comp">
             {/* https://rsuitejs.com/components/select-picker/ */}
-            <LocationSelect />
+            <LocationSelect {...{ restauLocation, id }} />
           </div>
           <div className="date-comp">
             <DateInput />
@@ -44,10 +50,8 @@ function CustomerCard({ id, name, food, guestsNumber }: CustomerCardType) {
             <AddFoodInput
               {...{ id, customerFoodInput, setCustomerFoodInput }}
             />
-            <Selectedfood {...{ food }} />
+            <Selectedfood {...{ id, foodList }} />
           </div>
-          {/* <div className="food-comp"> */}
-          {/* </div> */}
         </div>
       </div>
     </div>

@@ -3,10 +3,45 @@
     font-size: larger;
     & > * {
       font-weight: bolder;
-      color: darkcyan !important;
+      color: darkcyan;
     }
     .ant-input-suffix {
       transform: scale(1.5);
+    }
+  }
+}
+.customer-food-add-input-btn-container {
+  // border: 1px solid;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  .customer-food-add-input {
+    width: 70%;
+    font-size: 1.08rem;
+    .ant-input {
+      height: 2.5rem;
+    }
+    & > * {
+      font-weight: bold;
+      color: rgba(0, 139, 139, 0.6);
+    }
+    .ant-input-suffix {
+      transform: scale(1.5);
+    }
+  }
+  button.customer-food-add-btn {
+    // background-color: rgba(0, 139, 139, 0.6);
+    height: fit-content;
+    padding: 0.15rem 0.8rem;
+    span {
+      color: white;
+      font-size: 1.3rem;
+    }
+    &.user_is_not_typing {
+      background-color: rgba(0, 139, 139, 0.44);
+    }
+    &.user_is_typing {
+      background-color: rgba(0, 139, 139, 0.6);
     }
   }
 }

@@ -4,8 +4,8 @@ import reservationsReducer from "../feature/reservationSlice";
 
 export const store = configureStore({
   reducer: {
-    reservations: reservationsReducer,
-    customer: customerReducer,
+    reservationsReducer,
+    customerReducer,
   },
 });
 
