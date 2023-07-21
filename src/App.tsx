@@ -18,6 +18,8 @@ function App() {
   const customers: Customer[] = useSelector(
     (state: RootState) => state.customerReducer.customers
   );
+  // console.log(reservations, customers);
+
   const handleAddReservations = () => {
     dispatch(addReservation(reservationNameInput));
     setReservationNameInput("");
@@ -26,10 +28,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <div
-          // style={{ border: "1px solid red" }}
-          className="reservation-container"
-        >
+        <div className="reservation-container">
           <ReservationsSection
             {...{
               reservations,

@@ -1,18 +1,21 @@
 import { Customer } from "../../feature/customerSlice";
 import CustomerCard from "../cards/CustomerCard";
 
+// https://www.reddit.com/r/reactjs/comments/we08mw/comment/iiywd82/
+
 export const CustomersSection = ({ customers }: { customers: Customer[] }) => {
   return (
     <>
-      <div>
+      <div className="customers-section-container">
         <>
           {customers?.length ? (
-            <div>
+            <div className="customers-section-h1-wrapper">
               <h1>Orders :</h1>
             </div>
           ) : null}
         </>
-        <div className="">
+        <div className="customers-section-customers__list">
+          {/* I can use context api here to pass the customer object down to nested components, instead of props drilling */}
           {customers.map((customer: Customer, index: number) => {
             return (
               <CustomerCard

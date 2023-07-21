@@ -3,14 +3,14 @@ import { OrderTimeTable } from "../collapse/OrderTime";
 import { GuestsCounter } from "../counters/GuestsCounter";
 import { AddFoodInput } from "../inputs/AddFoodInput";
 import { DateInput } from "../inputs/DateInput";
-import { Selectedfood } from "../lists/SelectedFood";
+import { SelectedfoodHorizontalDrag } from "../lists/SelectedfoodHorizontalDrag";
 import { LocationSelect } from "../selects/LocationSelect";
 import "./card_styles.scss";
 
 interface CustomerCardType {
   id: string;
   name: string;
-  foodList: string[];
+  foodList: [{ food_value: string; food_id: number }];
   index: number;
   restauLocation: string | undefined;
   // guestsNumber: string | number;
@@ -50,7 +50,8 @@ function CustomerCard({
             <AddFoodInput
               {...{ id, customerFoodInput, setCustomerFoodInput }}
             />
-            <Selectedfood {...{ id, foodList }} />
+            <SelectedfoodHorizontalDrag {...{ id, foodList }} />
+            {/* <MultipleHorizontalDragDrop></MultipleHorizontalDragDrop> */}
           </div>
         </div>
       </div>

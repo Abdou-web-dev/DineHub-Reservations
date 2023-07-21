@@ -18,6 +18,12 @@ export const AddFoodInput = ({
   const [inputStatus, setInputStatus] = useState<
     "warning" | "error" | undefined | InputStatus
   >();
+  function randomInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // const jdjdj = dispatch(addFoodToCustomer({food_element:{food_value:'',food_id:55},id}))
+
   return (
     <>
       <div className="customer-food-add-input-btn-container">
@@ -45,8 +51,16 @@ export const AddFoodInput = ({
             dispatch(
               addFoodToCustomer({
                 id,
-                food: customerFoodInput,
+                food_element: {
+                  food_value: customerFoodInput,
+                  food_id: randomInteger(1, 5000),
+                },
+                // food_id: randomInteger(1, 5000),
               })
+              // addFoodToCustomer({
+              // id,
+              // food: customerFoodInput,
+              // })
             );
             if (!customerFoodInput) {
               setInputStatus("error");

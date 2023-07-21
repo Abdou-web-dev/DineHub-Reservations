@@ -12,7 +12,7 @@ const gridStyle: React.CSSProperties = {
   textAlign: "center",
 };
 
-export const SelectedFood = ({
+export const SelectedFoodOriginal = ({
   foodList,
   id,
 }: {
@@ -32,6 +32,7 @@ export const SelectedFood = ({
             <Card
               className="selected-food-card"
               title="You choosed these items :"
+              // title={null}
             >
               {Array.isArray(foodList)
                 ? foodList?.map((foodItem, index: number) => {

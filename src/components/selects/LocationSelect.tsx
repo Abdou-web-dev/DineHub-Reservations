@@ -71,7 +71,7 @@ export const LocationSelect = ({
         </div>
         {/* {location.label} */}
         {/* <br /> */}
-        {/* {restauLocation} */}
+        {restauLocation && restauLocation}
       </div>
     </>
   );

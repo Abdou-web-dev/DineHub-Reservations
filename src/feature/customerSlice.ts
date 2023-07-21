@@ -3,7 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface Customer {
   id: string;
   name: string;
-  food: string[];
+  food: [
+    {
+      food_value: string;
+      food_id: number;
+    }
+  ];
   //the new 4 props
   guestsNumber?: number | string;
   restauLocation?: string;
@@ -12,7 +17,10 @@ export interface Customer {
 }
 
 interface AddFoodToCustomerPayload {
-  food: string;
+  food_element: {
+    food_value: string;
+    food_id: number;
+  };
   id: string;
 }
 interface RemoveFoodFromCustomerPayload {
@@ -47,7 +55,10 @@ export const customerSlice = createSlice({
     ) => {
       state.customers.forEach((customer) => {
         if (customer.id === action.payload.id) {
-          customer.food.push(action.payload.food);
+          customer.food.push({
+            food_value: action.payload.food_element.food_value,
+            food_id: action.payload.food_element.food_id,
+          });
           // customer.food.push(action.payload.food + "string");
         }
       });

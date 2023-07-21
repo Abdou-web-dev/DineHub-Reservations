@@ -1,0 +1,43 @@
+.selected-food-container {
+  .selected-food-list {
+    // border: 1px solid;
+    .selected-food-card {
+      .selected-food-single-card-grid-wrapper {
+        display: inline-block;
+
+        .selected-food-single-card-grid {
+          padding: 1rem 0;
+          width: fit-content;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 0.5rem;
+          margin-bottom: 0.5rem;
+          padding: 1rem;
+
+          p {
+            margin-right: 0.3rem;
+            font-size: 1.2rem;
+            color: rgb(187, 160, 127);
+          }
+          button {
+            height: fit-content;
+            padding: 0;
+            border: 0;
+          }
+        }
+      }
+      &.ant-card {
+        border: 0;
+        .ant-card-head {
+          border-bottom: 0;
+        }
+        .ant-card-body {
+        }
+      }
+    }
+  }
+}
+
+.droppable-1 {
+}
