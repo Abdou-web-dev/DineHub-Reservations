@@ -2,6 +2,7 @@
   .selected-food-list {
     // border: 1px solid;
     .selected-food-card {
+      // display: none;
       .selected-food-single-card-grid-wrapper {
         display: inline-block;
 
@@ -33,6 +34,35 @@
           border-bottom: 0;
         }
         .ant-card-body {
+        }
+      }
+      &.start__dragging {
+        &.ant-card {
+          border: 0;
+          .ant-card-head {
+            border-bottom: 0;
+          }
+          .ant-card-body {
+            overflow-x: scroll;
+            // padding: 1rem;
+            &::-webkit-scrollbar {
+              width: 15px;
+            }
+            &::-webkit-scrollbar-track {
+              border-radius: 10px;
+              background: rgba(161, 160, 160, 0.05);
+              margin-top: 10px;
+              margin-bottom: 10px;
+            }
+            &::-webkit-scrollbar-thumb {
+              border-radius: 20px;
+              background: rgba(0, 0, 0, 0.2);
+            }
+            &::-webkit-scrollbar-thumb:hover {
+              border-radius: 10px;
+              background: rgba(23, 22, 22, 0.44);
+            }
+          }
         }
       }
     }

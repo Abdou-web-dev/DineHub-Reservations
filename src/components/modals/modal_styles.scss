@@ -1,0 +1,58 @@
+.order-modal-content-container {
+  .four-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    // grid-template-columns: 24% 28% 24% 24%;
+    column-gap: 1rem;
+    // display: none;
+    .guests-card,
+    .address-card,
+    .time-card,
+    .date-card {
+      .ant-card-head {
+        .ant-card-head-wrapper {
+          .ant-card-head-title {
+            color: rgb(93, 0, 255);
+            font-style: italic;
+            text-align: center;
+            font-size: 1.2rem;
+            //   max-width: 5rem;
+            //   border: 1px solid;
+            white-space: nowrap;
+          }
+        }
+      }
+      .ant-card-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+          //   text-align: center;
+          font-size: 1.2rem;
+          color: rgba(128, 128, 128, 0.7);
+        }
+      }
+    }
+  }
+}
+
+.btns-modal-content-container {
+  .f-list-btn {
+    // background: url("https://images.resto.com/view?iid=resto.be:3ad5f416-3176-4626-8575-d5a73ba939c3&context=default&imageType=JPEG&hash=622dbac8ded08e35390d83bf941d3795");
+    // no-repeat center;
+    width: 25%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 15rem;
+    // background-repeat: repeat-y;
+    background-size: cover;
+    opacity: 0.4;
+    span {
+      z-index: 999 !important;
+      font-weight: bolder;
+      font-size: 2rem;
+    }
+  }
+  .f-infos-btn {
+  }
+}

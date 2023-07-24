@@ -29,7 +29,8 @@ function ReservationCard({ name, index }: ReservationCardType) {
                 addCustomer({
                   id: uuid(),
                   name: name,
-                  food: [],
+                  food: [{ food_id: Number(""), food_value: "" }],
+                  // food: [],
                 })
               );
             }}

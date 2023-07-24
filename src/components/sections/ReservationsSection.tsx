@@ -8,11 +8,13 @@ export const ReservationsSection = ({
   reservationNameInput,
   setReservationNameInput,
   handleAddReservations,
+  setShowInfoText,
 }: {
   reservations: string[];
   reservationNameInput: string;
   setReservationNameInput: React.Dispatch<React.SetStateAction<string>>;
   handleAddReservations: () => void;
+  setShowInfoText: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
     <>
@@ -23,6 +25,19 @@ export const ReservationsSection = ({
             value={reservationNameInput}
             onChange={(e) => {
               setReservationNameInput(e.target.value);
+              if (reservationNameInput.length !== 0) {
+                setTimeout(() => {
+                  setShowInfoText(false);
+                }, 750);
+              }
+            }}
+            onClick={() => {
+              if (reservationNameInput.length === 0) {
+                setShowInfoText(true);
+              }
+            }}
+            onBlur={() => {
+              setShowInfoText(false);
             }}
             type="text"
             placeholder="Add a reservation..."

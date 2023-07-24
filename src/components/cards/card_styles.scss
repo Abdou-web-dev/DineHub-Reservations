@@ -43,3 +43,39 @@
     }
   }
 }
+
+.order-customer-card-modal {
+  // margin-bottom: 250px;
+  .ant-modal-content {
+    // width: 100%;
+    .ant-modal-header {
+      .ant-modal-title {
+        .order-customer-card-modal-header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          .order-customer-card-modal-header-close-icon {
+            button {
+              height: fit-content;
+              padding: 0;
+              border: 0;
+              img {
+                // width: 45px !important;
+                // height: 50px !important;
+                // display: none;
+                transform: scale(1.5);
+              }
+            }
+          }
+
+          span {
+            // font-family: "sans-serif";
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}

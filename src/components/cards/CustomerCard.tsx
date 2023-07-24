@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { Modal } from "antd";
+import { MouseEvent, useState } from "react";
+import { CustomerButtons } from "../buttons/CustomerButtons";
 import { OrderTimeTable } from "../collapse/OrderTime";
 import { GuestsCounter } from "../counters/GuestsCounter";
+import { CloseXIconBtn } from "../icons/Icons";
 import { AddFoodInput } from "../inputs/AddFoodInput";
 import { DateInput } from "../inputs/DateInput";
 import { SelectedfoodHorizontalDrag } from "../lists/SelectedfoodHorizontalDrag";
+import { ButtonsModalContent } from "../modals/ButtonsModalContent";
+import { FoodInfosModalContent } from "../modals/FoodInfosModalContent";
+import { FoodListModalContent } from "../modals/FoodListModalContent";
 import { LocationSelect } from "../selects/LocationSelect";
 import "./card_styles.scss";
 
@@ -13,6 +19,7 @@ interface CustomerCardType {
   foodList: [{ food_value: string; food_id: number }];
   index: number;
   restauLocation: string | undefined;
+  // index: number;
   // guestsNumber: string | number;
 }
 
@@ -21,8 +28,27 @@ function CustomerCard({
   name,
   foodList,
   restauLocation,
+  index,
 }: CustomerCardType) {
+  const [openOrderModal, setOpenOrderModal] = useState(false);
   const [customerFoodInput, setCustomerFoodInput] = useState("");
+  const [location, setLocation] = useState({
+    value: "",
+    label: "Select the restaurant's address",
+  });
+  const [guests, setGuests] = useState<number | string>(0);
+  const [selectedTime, setSelectedTime] = useState("");
+  const [orderDate, setOrderDate] = useState<string>("");
+  const [meridiumType, setMeridiumType] = useState("");
+  //
+  const [showChoosenFood, setShowChoosenFood] = useState(false);
+  const [showChoosenFoodInfos, setShowChoosenFoodInfos] = useState(false);
+  function handleCloseClick(
+    event: MouseEvent<HTMLButtonElement, MouseEvent<Element, MouseEvent>>
+  ): void {
+    setOpenOrderModal(false);
+  }
+
   // const dispatch = useDispatch();
 
   return (
@@ -31,19 +57,30 @@ function CustomerCard({
       <div className="customer-infos-wrapper">
         <div className="customer-infos-wrapper-grp1">
           <div className="guests-comp">
-            <GuestsCounter />
+            <GuestsCounter {...{ guests, setGuests }} />
           </div>
           <div className="location-comp">
             {/* https://rsuitejs.com/components/select-picker/ */}
-            <LocationSelect {...{ restauLocation, id }} />
+            <LocationSelect
+              {...{ restauLocation, id, location, setLocation }}
+            />
           </div>
           <div className="date-comp">
-            <DateInput />
+            <DateInput
+              {...{ orderDate, setOrderDate, meridiumType, setMeridiumType }}
+            />
           </div>
         </div>
         <div className="customer-infos-wrapper-grp2">
           <div className="time-comp">
-            <OrderTimeTable />
+            <OrderTimeTable
+              {...{
+                selectedTime,
+                setSelectedTime,
+                meridiumType,
+                setMeridiumType,
+              }}
+            />
           </div>
 
           <div className="add-food-input-and-list-comps">
@@ -51,9 +88,69 @@ function CustomerCard({
               {...{ id, customerFoodInput, setCustomerFoodInput }}
             />
             <SelectedfoodHorizontalDrag {...{ id, foodList }} />
-            {/* <MultipleHorizontalDragDrop></MultipleHorizontalDragDrop> */}
           </div>
         </div>
+      </div>
+
+      <div className="customer-infos-footer">
+        <CustomerButtons {...{ foodList, index, setOpenOrderModal }} />
+      </div>
+
+      <div>
+        <Modal
+          destroyOnClose
+          // when closing the modal and then reopening it, only a portion of the next random generated bg image is displayed
+          // by adding destroyOnClose prop, the bg image of ButtonsModalContent component is no longer
+          // displayed partially, and so it's displayed totally
+          className="order-customer-card-modal"
+          open={openOrderModal}
+          maskClosable={true}
+          closable={false}
+          keyboard={true}
+          mask={true}
+          onOk={() => setOpenOrderModal(false)}
+          onCancel={() => setOpenOrderModal(false)}
+          width={"80%"}
+          footer={null}
+          title={
+            <div className="order-customer-card-modal-header">
+              <span>Here is a summary of what you have picked :</span>
+              <div className="order-customer-card-modal-header-close-icon">
+                <CloseXIconBtn {...{ handleCloseClick }} />
+              </div>
+            </div>
+          }
+        >
+          <>
+            {showChoosenFood ? (
+              <FoodListModalContent
+                {...{
+                  foodList,
+                  setShowChoosenFood,
+                  setShowChoosenFoodInfos,
+                }}
+              />
+            ) : showChoosenFoodInfos ? (
+              <div>
+                <FoodInfosModalContent
+                  {...{
+                    location,
+                    guests,
+                    orderDate,
+                    selectedTime,
+                    meridiumType,
+                    setShowChoosenFood,
+                    setShowChoosenFoodInfos,
+                  }}
+                />
+              </div>
+            ) : (
+              <ButtonsModalContent
+                {...{ setShowChoosenFood, setShowChoosenFoodInfos }}
+              />
+            )}
+          </>
+        </Modal>
       </div>
     </div>
   );

@@ -49,6 +49,9 @@ export const customerSlice = createSlice({
     addCustomer: (state, action: PayloadAction<Customer>) => {
       state.customers.push(action.payload);
     },
+    deleteCustomer: (state, action: PayloadAction<number>) => {
+      state.customers.splice(action.payload, 1);
+    },
     addFoodToCustomer: (
       state,
       action: PayloadAction<AddFoodToCustomerPayload>
@@ -63,6 +66,7 @@ export const customerSlice = createSlice({
         }
       });
     },
+
     // addFoodToCustomer_version2: (
     //   state,
     //   action: PayloadAction<AddFoodToCustomerPayload>
@@ -105,6 +109,7 @@ export const {
   addFoodToCustomer,
   addLocationToCustomer,
   deleteFoodFromCustomer,
+  deleteCustomer,
 } = customerSlice.actions;
 
 export default customerSlice.reducer;

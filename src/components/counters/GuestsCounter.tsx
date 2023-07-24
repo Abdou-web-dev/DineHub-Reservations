@@ -1,13 +1,18 @@
 import { Button, Input } from "antd";
-import { useState } from "react";
 import minus_icon from "../../assets/img/minus_icon.svg";
 import plus_icon from "../../assets/img/plus_icon.svg";
 import "./counter_styles.scss";
 
-export const GuestsCounter = ({}: {}) => {
+export const GuestsCounter = ({
+  guests,
+  setGuests,
+}: {
+  guests: number | string;
+  setGuests: React.Dispatch<React.SetStateAction<string | number>>;
+}) => {
   //   const dispatch = useDispatch();
 
-  const [guests, setGuests] = useState<number | string>(0);
+  // const [guests, setGuests] = useState<number | string>(0);
   // console.log(guestsNumber, guests, "line 14");
   return (
     <>

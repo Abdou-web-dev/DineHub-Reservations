@@ -11,13 +11,37 @@
   }
 }
 .customer-food-add-input-btn-container {
-  // border: 1px solid;
   display: flex;
   gap: 1rem;
   align-items: center;
+
   .customer-food-add-input {
-    width: 70%;
+    width: 70% !important;
     font-size: 1.08rem;
+    &.ant-select {
+      &.ant-select-auto-complete {
+        &.ant-select-show-search {
+          .ant-select-selector {
+            height: 2.5rem !important;
+            .ant-select-selection-search {
+              .ant-select-selection-search-input {
+                font-weight: bold;
+                color: rgba(0, 139, 139, 0.6);
+                font-size: 1.08rem;
+                position: relative;
+                top: 5px;
+              }
+            }
+            .ant-select-selection-placeholder {
+              position: relative;
+              top: 5px;
+              font-size: 1.08rem;
+            }
+          }
+        }
+      }
+    }
+
     .ant-input {
       height: 2.5rem;
     }

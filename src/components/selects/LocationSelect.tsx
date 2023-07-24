@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Select, { SingleValue } from "react-select";
 import { restaurant_locations } from "../../assets/staticData/restaurant_locations.js";
@@ -12,22 +11,34 @@ import "./select_styles.scss";
 export const LocationSelect = ({
   restauLocation,
   id,
+  location,
+  setLocation,
 }: {
   restauLocation: string | undefined;
   id: string;
+  location: {
+    value: string;
+    label: string;
+  };
+  setLocation: React.Dispatch<
+    React.SetStateAction<{
+      value: string;
+      label: string;
+    }>
+  >;
 }) => {
   const dispatch = useDispatch();
-  const [location, setLocation] = useState({
-    value: "",
-    label: "Select the restaurant's address",
-  });
+  // const [location, setLocation] = useState({
+  //   value: "",
+  //   label: "Select the restaurant's address",
+  // });
 
   function handleLocationChange(
     newValue: SingleValue<{ value: string; label: string }> | any
   ): void {
     // console.log(newValue, "newValue");
-    setLocation(newValue);
     dispatch(addLocationToCustomer({ location: location?.label, id: id }));
+    setLocation(newValue);
     console.log(location, restauLocation);
   }
 
@@ -71,7 +82,7 @@ export const LocationSelect = ({
         </div>
         {/* {location.label} */}
         {/* <br /> */}
-        {restauLocation && restauLocation}
+        {/* {restauLocation && restauLocation} */}
       </div>
     </>
   );

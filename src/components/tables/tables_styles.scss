@@ -13,6 +13,25 @@
           // width: 60%;
           .ant-table-container {
             .ant-table-content {
+              max-height: 20rem;
+              overflow-y: scroll;
+              &::-webkit-scrollbar {
+                width: 15px;
+              }
+              &::-webkit-scrollbar-track {
+                border-radius: 10px;
+                background: rgba(161, 160, 160, 0.05);
+                margin-top: 10px;
+                margin-bottom: 10px;
+              }
+              &::-webkit-scrollbar-thumb {
+                border-radius: 20px;
+                background: rgba(0, 0, 0, 0.2);
+              }
+              &::-webkit-scrollbar-thumb:hover {
+                border-radius: 10px;
+                background: rgba(23, 22, 22, 0.44);
+              }
               table {
                 .ant-table-thead {
                   tr {

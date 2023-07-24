@@ -1,9 +1,18 @@
 import { Input } from "antd";
-import { useState } from "react";
 import "./inputs_styles.scss";
 
-export const DateInput = ({}: {}) => {
-  const [orderDate, setOrderDate] = useState<string>("");
+export const DateInput = ({
+  orderDate,
+  setOrderDate,
+  meridiumType,
+  setMeridiumType,
+}: {
+  orderDate: string;
+  setOrderDate: React.Dispatch<React.SetStateAction<string>>;
+  meridiumType: string;
+  setMeridiumType: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  // const [orderDate, setOrderDate] = useState<string>("");
 
   return (
     <>

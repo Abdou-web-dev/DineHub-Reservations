@@ -27,7 +27,7 @@ export const SelectedfoodHorizontalDrag = ({
   id: string;
 }) => {
   const dispatch = useDispatch();
-
+  const [startDragging, setStartDragging] = useState(false);
   const [storedItems, setStoredItems] = useState(foodList && foodList);
 
   function handleOnDragEnd(result: DropResult): void {
@@ -46,6 +46,7 @@ export const SelectedfoodHorizontalDrag = ({
         }
       }
     }
+    setStartDragging(false);
   }
   useEffect(() => {
     // the food items were not visible in the droppable area, that is because the stored items array is empty at first render, do
@@ -61,6 +62,11 @@ export const SelectedfoodHorizontalDrag = ({
             <DragDropContext
               onDragEnd={handleOnDragEnd}
               // onDragStart={() => {}}
+              onDragStart={() => {
+                console.log("onDragStart");
+                setStartDragging(true);
+              }}
+              // onBeforeDragStart={() => console.log("onBeforeDragStart")}
             >
               <StrictModeDroppable
                 // mode="standard"
@@ -75,13 +81,19 @@ export const SelectedfoodHorizontalDrag = ({
                     {...provided.droppableProps}
                   >
                     <Card
-                      className="selected-food-card"
+                      // style={{ border: startDragging ? "1px solid red":'' }}
+                      className={
+                        startDragging
+                          ? "selected-food-card start__dragging"
+                          : "selected-food-card"
+                      }
                       // title="You choosed these items :"
                       title={null}
                     >
                       {Array.isArray(storedItems)
                         ? storedItems?.map((foodItem, index: number) => {
-                            if (foodItem) {
+                            // console.log(foodItem, "foodItem");
+                            if (foodItem && foodItem.food_value !== "") {
                               return (
                                 <Draggable
                                   key={foodItem?.food_id}

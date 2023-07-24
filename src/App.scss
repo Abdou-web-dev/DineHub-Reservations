@@ -1,0 +1,35 @@
+.reserv-restau-app-container {
+  .info-text {
+    &.info-text-if_customers_not_empty {
+      margin-bottom: 2rem;
+      // display: none;
+    }
+  }
+  .reservations-customer-container {
+    display: flex;
+    .reservation-container {
+      flex: 30%;
+    }
+    .customer-food-container {
+      flex: 70%;
+    }
+  }
+}
+
+.full-name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .full-name-inner {
+    gap: 1rem;
+    padding: 0.6rem 0.7rem;
+    background-color: rgba(128, 128, 128, 0.75);
+    // width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  p {
+    color: white;
+  }
+}

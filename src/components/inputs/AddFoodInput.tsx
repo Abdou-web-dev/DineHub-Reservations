@@ -1,9 +1,12 @@
-import { Button, Input } from "antd";
+import { AutoComplete, Button } from "antd";
 import { InputStatus } from "antd/es/_util/statusUtils";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addFoodToCustomer } from "../../feature/customerSlice";
 import "./inputs_styles.scss";
+
+// https://www.npmjs.com/package/turnstone
+// Turnstone is a highly customisable, easy-to-use autocomplete search component for React.
 
 export const AddFoodInput = ({
   customerFoodInput,
@@ -22,12 +25,66 @@ export const AddFoodInput = ({
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  // const jdjdj = dispatch(addFoodToCustomer({food_element:{food_value:'',food_id:55},id}))
+  const [value, setValue] = useState("");
+  const [options, setOptions] = useState<{ value: string }[] | any>([]);
+  const [anotherOptions, setAnotherOptions] = useState<{ value: string }[]>([]);
+  const mockVal = (str: string, repeat = 1) => ({
+    value: str.repeat(repeat),
+  });
+  const getPanelValue_2 = (searchText: string) =>
+    !searchText
+      ? []
+      : [
+          { value: "fish", disabled: true },
+          { value: "meat" },
+          { value: "milk" },
+          { value: "pizza" },
+          { value: "tortilla" },
+          { value: "hamburger" },
+          { value: "tajine" },
+          { value: "cheeseburger" },
+          { value: "ice cream" },
+          { value: "tacos" },
+          { value: "kabab" },
+        ];
+  const getPanelValue = (searchText: string) =>
+    !searchText
+      ? []
+      : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
+
+  const onSelect = (data: string) => {
+    console.log("onSelect", data);
+  };
+  // const [value, setValue] = useState("");
+
+  const onChange = (data: string) => {
+    console.log("onChange", data);
+    setValue(data);
+  };
 
   return (
     <>
       <div className="customer-food-add-input-btn-container">
-        <Input
+        <AutoComplete
+          className="customer-food-add-input"
+          value={customerFoodInput}
+          onChange={(value) => {
+            // console.log(value, "value");
+            setCustomerFoodInput(value);
+            if (customerFoodInput) {
+              setInputStatus("");
+            }
+          }}
+          options={options}
+          style={{ width: 200 }}
+          onSelect={onSelect}
+          onSearch={(text) => setOptions(getPanelValue_2(text))}
+          status={inputStatus}
+          placeholder={"Type a food item..."}
+          allowClear
+        />
+        {/* this Input component has been replaced with antd AutoComplete Input */}
+        {/* <Input
           className="customer-food-add-input"
           value={customerFoodInput}
           onChange={(e) => {
@@ -40,7 +97,7 @@ export const AddFoodInput = ({
           status={inputStatus}
           placeholder={"Type a food item..."}
           allowClear
-        />
+        /> */}
         <Button
           className={
             customerFoodInput
