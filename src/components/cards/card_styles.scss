@@ -77,5 +77,36 @@
         }
       }
     }
+    .ant-modal-body {
+      .yes-no-btns {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        margin: 3rem 0;
+        .cancel {
+          background: rgba(128, 128, 128, 0.347);
+          height: fit-content;
+          &:hover {
+            border: 0;
+          }
+          span {
+            color: white;
+            font-size: 1.5rem;
+          }
+        }
+        .order {
+          background: rgb(187, 160, 127);
+          height: fit-content;
+          &:hover {
+            border: 0;
+          }
+          span {
+            color: white;
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
   }
 }

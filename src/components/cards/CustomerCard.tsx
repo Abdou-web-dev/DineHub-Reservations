@@ -43,6 +43,8 @@ function CustomerCard({
   //
   const [showChoosenFood, setShowChoosenFood] = useState(false);
   const [showChoosenFoodInfos, setShowChoosenFoodInfos] = useState(false);
+  //
+  const [autoCompleteBorder, setAutoCompleteBorder] = useState("");
   function handleCloseClick(
     event: MouseEvent<HTMLButtonElement, MouseEvent<Element, MouseEvent>>
   ): void {
@@ -85,7 +87,14 @@ function CustomerCard({
 
           <div className="add-food-input-and-list-comps">
             <AddFoodInput
-              {...{ id, customerFoodInput, setCustomerFoodInput }}
+              {...{
+                id,
+                customerFoodInput,
+                setCustomerFoodInput,
+                autoCompleteBorder,
+                selectedTime,
+                meridiumType,
+              }}
             />
             <SelectedfoodHorizontalDrag {...{ id, foodList }} />
           </div>
@@ -93,7 +102,9 @@ function CustomerCard({
       </div>
 
       <div className="customer-infos-footer">
-        <CustomerButtons {...{ foodList, index, setOpenOrderModal }} />
+        <CustomerButtons
+          {...{ foodList, index, setOpenOrderModal, setAutoCompleteBorder }}
+        />
       </div>
 
       <div>
@@ -131,22 +142,28 @@ function CustomerCard({
                 }}
               />
             ) : showChoosenFoodInfos ? (
-              <div>
-                <FoodInfosModalContent
-                  {...{
-                    location,
-                    guests,
-                    orderDate,
-                    selectedTime,
-                    meridiumType,
-                    setShowChoosenFood,
-                    setShowChoosenFoodInfos,
-                  }}
-                />
-              </div>
+              <FoodInfosModalContent
+                {...{
+                  location,
+                  guests,
+                  orderDate,
+                  selectedTime,
+                  meridiumType,
+                  setShowChoosenFood,
+                  setShowChoosenFoodInfos,
+                }}
+              />
             ) : (
               <ButtonsModalContent
-                {...{ setShowChoosenFood, setShowChoosenFoodInfos }}
+                {...{
+                  setShowChoosenFood,
+                  setShowChoosenFoodInfos,
+                  foodList,
+                  location,
+                  guests,
+                  orderDate,
+                  selectedTime,
+                }}
               />
             )}
           </>

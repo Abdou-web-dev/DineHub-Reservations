@@ -1,9 +1,9 @@
-import { Button, Card } from "antd";
+import { Card } from "antd";
 import address from "../../assets/img/address.svg";
-import come_back from "../../assets/img/back-arrow.svg";
 import date from "../../assets/img/date.svg";
 import invites from "../../assets/img/invites.png";
 import time from "../../assets/img/time.svg";
+import { ComeBackBtn } from "../buttons/ComeBackBtn";
 import "./modal_styles.scss";
 
 export const FoodInfosModalContent = ({
@@ -36,20 +36,13 @@ export const FoodInfosModalContent = ({
     return word;
   }
 
+  // let no_address = location?.label === "";
+  let no_address = location?.label === undefined;
+
   return (
     <>
       <div className="order-modal-content-container">
-        <Button
-          onClick={() => {
-            setShowChoosenFood(false);
-            setShowChoosenFoodInfos(false);
-          }}
-          icon={
-            <>
-              <img width={`40px`} src={come_back} alt="" />
-            </>
-          }
-        ></Button>
+        <ComeBackBtn {...{ setShowChoosenFood, setShowChoosenFoodInfos }} />
         <div className="four-cards">
           <Card
             className="guests-card"
@@ -67,7 +60,11 @@ export const FoodInfosModalContent = ({
             title={"Number of guests :"}
             bordered={false}
           >
-            <span className="guests">{guests}</span>
+            {guests ? (
+              <span className="guests">{guests}</span>
+            ) : (
+              <span>Not yet choosen</span>
+            )}
           </Card>
           <Card
             className="address-card"
@@ -85,7 +82,12 @@ export const FoodInfosModalContent = ({
             title={"Address :"}
             bordered={false}
           >
-            <span className="location">{location?.label}</span>
+            {location?.label === `Select the restaurant's address` ? (
+              <span>Not yet choosen</span>
+            ) : (
+              <span className="location">{location?.label}</span>
+            )}
+            {no_address ? <span>Not yet choosen</span> : null}
           </Card>
           <Card
             className="date-card"
@@ -98,7 +100,11 @@ export const FoodInfosModalContent = ({
             title={"Date of arrival :"}
             bordered={false}
           >
-            <span className="date">{orderDate}</span>
+            {orderDate !== "" ? (
+              <span className="date">{orderDate}</span>
+            ) : (
+              <span>Not yet choosen</span>
+            )}
           </Card>
           <Card
             className="time-card"
@@ -111,8 +117,14 @@ export const FoodInfosModalContent = ({
             title={"Time of arrival :"}
             bordered={false}
           >
-            <span className="time">{selectedTime}</span>
-            <span>{isAntePostMeridium()}</span>
+            {selectedTime !== "" ? (
+              <>
+                <span className="time">{selectedTime} : </span>
+                <span>&nbsp;{isAntePostMeridium()}</span>
+              </>
+            ) : (
+              <span>Not yet choosen</span>
+            )}
           </Card>
         </div>
       </div>

@@ -8,10 +8,28 @@ export const ButtonsModalContent = ({
   //   foodList,
   setShowChoosenFoodInfos,
   setShowChoosenFood,
+  foodList,
+  location,
+  guests,
+  orderDate,
+  selectedTime,
 }: {
   //   foodList: [{ food_value: string; food_id: number }];
   setShowChoosenFood: React.Dispatch<React.SetStateAction<boolean>>;
   setShowChoosenFoodInfos: React.Dispatch<React.SetStateAction<boolean>>;
+  location: {
+    value: string;
+    label: string;
+  };
+  guests: string | number;
+  orderDate: string;
+  selectedTime: string;
+  foodList: [
+    {
+      food_value: string;
+      food_id: number;
+    }
+  ];
 }) => {
   let list_of_images = [
     "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
@@ -34,25 +52,50 @@ export const ButtonsModalContent = ({
     return bg_image;
   };
 
+  // console.log(location.label, guests, orderDate, selectedTime);
+
   return (
     <>
       <div className="btns-modal-content-container">
-        <Button
-          style={{
-            background: `url(${generateRandomBgImage()})`,
-            backgroundSize: "cover",
-          }}
-          className="f-list-btn"
-          onClick={() => setShowChoosenFood(true)}
-        >
-          <span>View food list</span>
-        </Button>
-        <Button
-          className="f-infos-btn"
-          onClick={() => setShowChoosenFoodInfos(true)}
-        >
-          <span>View food infos</span>
-        </Button>
+        <div className="btns-modal-content-row1">
+          <Button
+            disabled={foodList?.length === 1 && foodList[0]?.food_value === ""}
+            style={{
+              background: `url(${generateRandomBgImage()})`,
+            }}
+            className="f-list-btn"
+            onClick={() => setShowChoosenFood(true)}
+          >
+            <span>View food list</span>
+          </Button>
+
+          <Button
+            disabled={
+              // when all the foields are empty , this btn will be disabled
+              location?.label === "Select the restaurant's address" &&
+              guests === 0 &&
+              orderDate === "" &&
+              selectedTime === ""
+            }
+            className="f-infos-btn"
+            onClick={() => setShowChoosenFoodInfos(true)}
+          >
+            <span>View your reservation's infos</span>
+          </Button>
+        </div>
+        <div className="btns-modal-content-row2">
+          <Button
+            disabled={
+              // when all the foields are empty , this btn will be disabled
+              location?.label === "Select the restaurant's address" ||
+              location?.label === undefined
+            }
+            className="f-map-btn"
+            onClick={() => setShowChoosenFoodInfos(true)}
+          >
+            <span>View the location of the restaurant</span>
+          </Button>
+        </div>
       </div>
     </>
   );

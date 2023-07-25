@@ -11,61 +11,85 @@
   }
 }
 .customer-food-add-input-btn-container {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+  .customer-food-add-autocomplete__and__add-btn {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 
-  .customer-food-add-input {
-    width: 70% !important;
-    font-size: 1.08rem;
-    &.ant-select {
-      &.ant-select-auto-complete {
-        &.ant-select-show-search {
-          .ant-select-selector {
-            height: 2.5rem !important;
-            .ant-select-selection-search {
-              .ant-select-selection-search-input {
-                font-weight: bold;
-                color: rgba(0, 139, 139, 0.6);
-                font-size: 1.08rem;
+    .customer-food-add-autocomplete-input {
+      width: 70% !important;
+      font-size: 1.08rem;
+      border-radius: 6px;
+      transition: 0.2s ease;
+      &.ant-select {
+        &.ant-select-auto-complete {
+          &.ant-select-show-search {
+            .ant-select-selector {
+              height: 2.5rem !important;
+              .ant-select-selection-search {
+                .ant-select-selection-search-input {
+                  font-weight: bold;
+                  color: rgba(0, 139, 139, 0.6);
+                  font-size: 1.08rem;
+                  position: relative;
+                  top: 5px;
+                }
+              }
+              .ant-select-selection-placeholder {
                 position: relative;
                 top: 5px;
+                font-size: 1.08rem;
               }
-            }
-            .ant-select-selection-placeholder {
-              position: relative;
-              top: 5px;
-              font-size: 1.08rem;
             }
           }
         }
       }
-    }
 
-    .ant-input {
-      height: 2.5rem;
+      .ant-input {
+        height: 2.5rem;
+      }
+      & > * {
+        font-weight: bold;
+        color: rgba(0, 139, 139, 0.6);
+      }
+      .ant-input-suffix {
+        transform: scale(1.5);
+      }
     }
-    & > * {
-      font-weight: bold;
-      color: rgba(0, 139, 139, 0.6);
-    }
-    .ant-input-suffix {
-      transform: scale(1.5);
+    button.customer-food-add-btn {
+      // background-color: rgba(0, 139, 139, 0.6);
+      height: fit-content;
+      padding: 0.15rem 0.8rem;
+      span {
+        color: white;
+        font-size: 1.3rem;
+      }
+      &.user_is_not_typing {
+        background-color: rgba(0, 139, 139, 0.44);
+      }
+      &.user_is_typing {
+        background-color: rgba(0, 139, 139, 0.6);
+      }
     }
   }
-  button.customer-food-add-btn {
-    // background-color: rgba(0, 139, 139, 0.6);
-    height: fit-content;
-    padding: 0.15rem 0.8rem;
+  .customer-food-meal-time {
+    display: flex;
+    margin-left: 25%;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
     span {
-      color: white;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
+      font-weight: bolder;
+      font-style: italic;
+      color: rgb(0, 139, 109);
     }
-    &.user_is_not_typing {
-      background-color: rgba(0, 139, 139, 0.44);
-    }
-    &.user_is_typing {
-      background-color: rgba(0, 139, 139, 0.6);
-    }
+  }
+  .info__msg {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    color: rgba(255, 0, 0, 0.603);
   }
 }

@@ -1,3 +1,7 @@
 # Todo1: add a map above the customer's order, so that when a user chooses a location from the select dropdown,he will see a red circle placed above this location
 
 <!-- @AbdelmounimSIFELHAK All the customer data is in the Redux store, you can use the useSelector to select the customer state, and if you need to access a specific customer's data you can write a selector function that takes a customer id value and searches the customers array. There shouldn't be much to need to pass around in props. – -->
+
+# Redux/persisting state infos: @AbdelmounimSIFELHAK The frontend app state is effectively just another cache. Persisting the store to localStorage is a way to keep the cache around longer so you won't necessarily need to refetch all of the data every time the app mounts or the page reloads. Sure, you can use Redux and any number of React Contexts. –
+
+# Redux/persisting state infos: @AbdelmounimSIFELHAK That depends entirely on the UX you want and how much network traffic you want to create or handle. It can vary depending on app needs. You could persist nothing and refetch everything every time if that is necessary, or you could cache/persist everything and only occasionally "check-in"/refetch data. Or anything between, like persisting auth state and basic necessary data, and always fetching on-demand content that updates in the backend often. Does this make sense? There's no one single solution for all. –

@@ -37,22 +37,57 @@
 }
 
 .btns-modal-content-container {
-  .f-list-btn {
-    // background: url("https://images.resto.com/view?iid=resto.be:3ad5f416-3176-4626-8575-d5a73ba939c3&context=default&imageType=JPEG&hash=622dbac8ded08e35390d83bf941d3795");
-    // no-repeat center;
-    width: 25%;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 15rem;
-    // background-repeat: repeat-y;
-    background-size: cover;
-    opacity: 0.4;
-    span {
-      z-index: 999 !important;
-      font-weight: bolder;
-      font-size: 2rem;
+  .btns-modal-content-row1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    // border: 1px solid;
+    .f-list-btn,
+    .f-infos-btn {
+      // background: url("https://images.resto.com/view?iid=resto.be:3ad5f416-3176-4626-8575-d5a73ba939c3&context=default&imageType=JPEG&hash=622dbac8ded08e35390d83bf941d3795");
+      // no-repeat center;
+      width: 25%;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      height: 10rem;
+      // background-repeat: repeat-y;
+      background-size: cover !important;
+      opacity: 0.4;
+      span {
+        // z-index: 999 !important;
+        font-weight: bolder;
+        font-size: 2rem;
+        white-space: break-spaces;
+        // float: left;
+      }
+    }
+    // .f-infos-btn {}
+  }
+  .btns-modal-content-row2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    .f-map-btn {
+      background: url("../../assets/img/google-maps.png");
+      width: 30%;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      height: 10rem;
+      background-size: cover !important;
+      opacity: 0.4;
+      span {
+        font-weight: bolder;
+        font-size: 2rem;
+        white-space: break-spaces;
+      }
     }
   }
-  .f-infos-btn {
+}
+
+.food-list-modal-content-container {
+  .come-back-btn-wrapper {
+    // .come-back-btn {}
   }
 }
