@@ -1,6 +1,6 @@
 import { AutoComplete, Button } from "antd";
 import { InputStatus } from "antd/es/_util/statusUtils";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import info from "../../assets/img/info.svg";
 import breakfast from "../../assets/img/meals/breakfast.png";
@@ -13,6 +13,7 @@ import {
 } from "../../assets/staticData/meals_data";
 import { addFoodToCustomer } from "../../feature/customerSlice";
 
+import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
 import "./inputs_styles.scss";
 // https://www.npmjs.com/package/turnstone
 // Turnstone is a highly customisable, easy-to-use autocomplete search component for React.
@@ -22,17 +23,19 @@ export const AddFoodInput = ({
   id,
   setCustomerFoodInput,
   autoCompleteBorder,
-  selectedTime,
-  meridiumType,
-}: {
+}: // selectedTime,
+// meridiumType,
+{
   customerFoodInput: string;
   setCustomerFoodInput: React.Dispatch<React.SetStateAction<string>>;
   id: string;
   autoCompleteBorder: string;
-  selectedTime: string;
-  meridiumType: string;
+  // selectedTime: string;
+  // meridiumType: string;
 }) => {
   const dispatch = useDispatch();
+  const { is_breakfast_time, is_dinner_time, is_lunch_time, selectedTime } =
+    useContext(FoodTimeInfosContext);
   const [inputStatus, setInputStatus] = useState<
     "warning" | "error" | undefined | InputStatus
   >();
@@ -47,31 +50,6 @@ export const AddFoodInput = ({
     value: str.repeat(repeat),
   });
 
-  let is_time_between_06_and_11: boolean =
-    selectedTime === `06` ||
-    selectedTime === `07` ||
-    selectedTime === `08` ||
-    selectedTime === `09` ||
-    selectedTime === `10` ||
-    selectedTime === `11`;
-  let is_time_between_01_and_06: boolean =
-    selectedTime === `01` ||
-    selectedTime === `02` ||
-    selectedTime === `03` ||
-    selectedTime === `04` ||
-    selectedTime === `05` ||
-    selectedTime === `06`;
-  //
-  let is_breakfast_time: boolean =
-    (is_time_between_06_and_11 && meridiumType === "AM") ||
-    (selectedTime === `12` && meridiumType === "PM");
-  //
-  let is_lunch_time: boolean =
-    is_time_between_01_and_06 && meridiumType === "PM";
-  //
-  let is_dinner_time: boolean =
-    (is_time_between_06_and_11 && meridiumType === "PM") ||
-    (selectedTime === `12` && meridiumType === "AM");
   // !searchText ? [] : is_breakfast_time ? breakfast_menu : [];
 
   let is_serving_time: boolean =

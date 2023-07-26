@@ -2,19 +2,18 @@
 // import food_1 from "../../assets/img/food_item/food-dish.svg"
 
 import { Button } from "antd";
+import { useContext } from "react";
+import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
 import "./modal_styles.scss";
 
 export const ButtonsModalContent = ({
-  //   foodList,
   setShowChoosenFoodInfos,
   setShowChoosenFood,
   foodList,
   location,
   guests,
   orderDate,
-  selectedTime,
 }: {
-  //   foodList: [{ food_value: string; food_id: number }];
   setShowChoosenFood: React.Dispatch<React.SetStateAction<boolean>>;
   setShowChoosenFoodInfos: React.Dispatch<React.SetStateAction<boolean>>;
   location: {
@@ -23,7 +22,6 @@ export const ButtonsModalContent = ({
   };
   guests: string | number;
   orderDate: string;
-  selectedTime: string;
   foodList: [
     {
       food_value: string;
@@ -31,6 +29,8 @@ export const ButtonsModalContent = ({
     }
   ];
 }) => {
+  const { selectedTime } = useContext(FoodTimeInfosContext);
+
   let list_of_images = [
     "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
     "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600",

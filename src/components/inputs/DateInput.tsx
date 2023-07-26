@@ -4,13 +4,9 @@ import "./inputs_styles.scss";
 export const DateInput = ({
   orderDate,
   setOrderDate,
-  meridiumType,
-  setMeridiumType,
 }: {
   orderDate: string;
   setOrderDate: React.Dispatch<React.SetStateAction<string>>;
-  meridiumType: string;
-  setMeridiumType: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   // const [orderDate, setOrderDate] = useState<string>("");
 

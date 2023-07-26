@@ -37,10 +37,12 @@ export const breakfast_menu = [
   // { value: "Tea" },
 ];
 export const lunch_menu = [
-  { value: "roasted meat" },
-  { value: "Ground Beef Tacos" },
+  { value: "Slow-roasted beef with mustard potatoes recipe" },
+  // { value: "Ground Beef Tacos" },
+  { value: "tacos" },
   { value: "pizza" },
-  { value: "tortilla" },
+  { value: "sandwich" },
+  { value: "Chicken Shawarma" },
   { value: "hamburger" },
   { value: "tajine" },
   { value: "cheeseburger" },

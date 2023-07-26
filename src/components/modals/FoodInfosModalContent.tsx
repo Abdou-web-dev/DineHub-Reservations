@@ -1,17 +1,19 @@
 import { Card } from "antd";
+import { useContext } from "react";
 import address from "../../assets/img/address.svg";
 import date from "../../assets/img/date.svg";
 import invites from "../../assets/img/invites.png";
 import time from "../../assets/img/time.svg";
 import { ComeBackBtn } from "../buttons/ComeBackBtn";
+import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
 import "./modal_styles.scss";
 
 export const FoodInfosModalContent = ({
   location,
   guests,
   orderDate,
-  selectedTime,
-  meridiumType,
+  // selectedTime,
+  // meridiumType,
   setShowChoosenFood,
   setShowChoosenFoodInfos,
 }: {
@@ -21,11 +23,13 @@ export const FoodInfosModalContent = ({
   };
   guests: number | string;
   orderDate: string;
-  selectedTime: string;
-  meridiumType: string;
+  // selectedTime: string;
+  // meridiumType: string;
   setShowChoosenFood: React.Dispatch<React.SetStateAction<boolean>>;
   setShowChoosenFoodInfos: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const { selectedTime, meridiumType } = useContext(FoodTimeInfosContext);
+
   function isAntePostMeridium(): string {
     let word = "";
     if (meridiumType === `AM`) {

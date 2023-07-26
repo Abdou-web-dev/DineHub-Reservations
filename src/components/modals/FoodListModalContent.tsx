@@ -22,6 +22,9 @@ export const FoodListModalContent = ({
         </div>
         {foodList?.map((foodItem) => (
           <div key={foodItem.food_id}>{foodItem.food_value}</div>
+          // add a group of 2 icons relevant to every food item
+          // and icon to delete a food item
+          // and a div for the price
         ))}
       </div>
     </>

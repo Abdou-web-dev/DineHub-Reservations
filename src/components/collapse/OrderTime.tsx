@@ -8,16 +8,15 @@ import "./collapse_styles.scss";
 
 // npm install @ant-design/icons --save
 
-export const OrderTimeTable = ({
-  selectedTime,
-  setSelectedTime,
-  meridiumType,
-  setMeridiumType,
-}: {
-  selectedTime: string;
-  setSelectedTime: React.Dispatch<React.SetStateAction<string>>;
-  meridiumType: string;
-  setMeridiumType: React.Dispatch<React.SetStateAction<string>>;
+export const OrderTimeTable = ({}: // selectedTime,
+// setSelectedTime,
+// meridiumType,
+// setMeridiumType,
+{
+  // selectedTime: string;
+  // setSelectedTime: React.Dispatch<React.SetStateAction<string>>;
+  // meridiumType: string;
+  // setMeridiumType: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const { token } = theme.useToken();
   const getItems: (panelStyle: CSSProperties) => CollapseProps["items"] = (
@@ -29,12 +28,12 @@ export const OrderTimeTable = ({
       children: (
         <div className="animate__zoomIn animate__animated animate__delay-1.5s">
           <TimeTable
-            {...{
-              selectedTime,
-              setSelectedTime,
-              meridiumType,
-              setMeridiumType,
-            }}
+          // {...{
+          //   selectedTime,
+          //   setSelectedTime,
+          //   meridiumType,
+          //   setMeridiumType,
+          // }}
           ></TimeTable>
         </div>
       ),

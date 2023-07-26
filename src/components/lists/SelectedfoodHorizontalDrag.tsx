@@ -1,32 +1,23 @@
-import { Button, Card } from "antd";
-import React, { useEffect, useState } from "react";
-import { DragDropContext, Draggable, DropResult } from "react-beautiful-dnd";
-import { useDispatch } from "react-redux";
-import delete_stop from "../../assets/img/delete_stop.svg";
-import { deleteFoodFromCustomer } from "../../feature/customerSlice";
+import { Card } from "antd";
+import { useEffect, useState } from "react";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "../StrictModeDroppable";
+import { DraggableFoodItem } from "../draggable/DraggableFoodItem";
 import "./lists_styles.scss";
 
 // this example implements react-dnd vertical drag and drop
 
-const gridStyle: React.CSSProperties = {
-  // width: "25%",
-  textAlign: "center",
-};
-
 export const SelectedfoodHorizontalDrag = ({
   foodList,
   id,
-}: // index,
-{
-  // index: number;
+}: {
   foodList: {
     food_value: string;
     food_id: number;
   }[];
   id: string;
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [startDragging, setStartDragging] = useState(false);
   const [storedItems, setStoredItems] = useState(foodList && foodList);
 
@@ -61,7 +52,6 @@ export const SelectedfoodHorizontalDrag = ({
           <div className="selected-food-list">
             <DragDropContext
               onDragEnd={handleOnDragEnd}
-              // onDragStart={() => {}}
               onDragStart={() => {
                 console.log("onDragStart");
                 setStartDragging(true);
@@ -95,50 +85,10 @@ export const SelectedfoodHorizontalDrag = ({
                             // console.log(foodItem, "foodItem");
                             if (foodItem && foodItem.food_value !== "") {
                               return (
-                                <Draggable
+                                <DraggableFoodItem
                                   key={foodItem?.food_id}
-                                  draggableId={foodItem?.food_id?.toString()}
-                                  index={index}
-                                >
-                                  {(provided) => (
-                                    <div
-                                      className="selected-food-single-card-grid-wrapper"
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      key={foodItem.food_id}
-                                    >
-                                      <Card.Grid
-                                        className="selected-food-single-card-grid"
-                                        style={gridStyle}
-                                        // itemRef=""
-                                      >
-                                        <p>{foodItem.food_value}</p>
-                                        <Button
-                                          icon={
-                                            <>
-                                              <img
-                                                width={`17px`}
-                                                src={delete_stop}
-                                                alt=""
-                                              />
-                                            </>
-                                          }
-                                          onClick={() =>
-                                            dispatch(
-                                              deleteFoodFromCustomer({
-                                                id: id,
-                                                index: index,
-                                              })
-                                            )
-                                          }
-                                        >
-                                          {/* {"delete"} */}
-                                        </Button>
-                                      </Card.Grid>
-                                    </div>
-                                  )}
-                                </Draggable>
+                                  {...{ index, id, foodItem }}
+                                />
                               );
                             }
                           })

@@ -1,10 +1,12 @@
 // npm install @ant-design/icons --save
 import { Button, Card, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { useContext } from "react";
 import midnight_icon from "../../assets/img/noun-midnight-3541592.svg";
 import noon_icon from "../../assets/img/noun-noon-4299181.svg";
 import sunrise_icon from "../../assets/img/sunrise-svgrepo-com.svg";
 import sunset_icon from "../../assets/img/sunset-2-svgrepo-com.svg";
+import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
 import "./tables_styles.scss";
 
 interface DataType {
@@ -13,20 +15,20 @@ interface DataType {
   pm_value: string;
 }
 
-export const TimeTable = ({
-  selectedTime,
-  setSelectedTime,
-  meridiumType,
-  setMeridiumType,
-}: {
-  selectedTime: string;
-  setSelectedTime: React.Dispatch<React.SetStateAction<string>>;
-  meridiumType: string;
-  setMeridiumType: React.Dispatch<React.SetStateAction<string>>;
+export const TimeTable = ({}: // selectedTime,
+// setSelectedTime,
+// meridiumType,
+// setMeridiumType,
+{
+  // selectedTime: string;
+  // setSelectedTime: React.Dispatch<React.SetStateAction<string>>;
+  // meridiumType: string;
+  // setMeridiumType: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   // const [selectedTime, setSelectedTime] = useState("");
   // const [meridiumType, setMeridiumType] = useState("");
-
+  const { meridiumType, setMeridiumType, selectedTime, setSelectedTime } =
+    useContext(FoodTimeInfosContext);
   const columns: ColumnsType<DataType> = [
     {
       title: "AM",

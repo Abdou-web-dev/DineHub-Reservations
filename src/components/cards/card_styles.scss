@@ -2,7 +2,6 @@
   h5 {
     display: flex;
     justify-content: center;
-    // font-family: "Arial";
     text-transform: uppercase;
     margin: 2rem 0;
     color: grey;
@@ -30,7 +29,6 @@
       grid-template-columns: 35% 65%;
       row-gap: 3rem;
       column-gap: 1rem;
-      // border: 1px solid red;
       div.time-comp {
       }
       .add-food-input-and-list-comps {
@@ -38,25 +36,26 @@
       div.food-comp {
       }
       div.add-comp {
-        // border: 1px solid;
       }
     }
   }
 }
 
-.order-customer-card-modal {
-  // margin-bottom: 250px;
+.order-customer-card-modal,
+.food-item-options-modal {
   .ant-modal-content {
     // width: 100%;
     .ant-modal-header {
       .ant-modal-title {
-        .order-customer-card-modal-header {
+        .order-customer-card-modal-header,
+        .food-item-options-modal-header {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
           width: 100%;
-          .order-customer-card-modal-header-close-icon {
+          .order-customer-card-modal-header-close-icon,
+          .food-item-options-header-close-icon {
             button {
               height: fit-content;
               padding: 0;
