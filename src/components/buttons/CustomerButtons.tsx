@@ -3,17 +3,13 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteCustomer } from "../../feature/customerSlice";
 import { CloseXIconBtn } from "../icons/Icons";
+import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
 import { CancelBtn, CancelBtn as NoBtn } from "./CancebBtn";
 import { OrderBtn, OrderBtn as YesBtn } from "./OrderBtn";
 import "./btns_styles.scss";
 
 interface CustomerButtonsType {
-  foodList: [
-    {
-      food_value: string;
-      food_id: number;
-    }
-  ];
+  foodList: FoodItem[];
   index: number;
   setOpenOrderModal: React.Dispatch<React.SetStateAction<boolean>>;
   setAutoCompleteBorder: React.Dispatch<React.SetStateAction<string>>;

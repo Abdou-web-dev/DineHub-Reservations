@@ -2,6 +2,8 @@
 
 # Todo2: if the foodList contains more than 3 food items that have more than 10 characters each, then change the direction of the dragging to be vertical, if not, leave it as horizontal
 
+# Todo3: when clicking on newFoodItem button, display a spinner, then the description text, then OK btn , if Ok clicked , close the modal
+
 <!-- @AbdelmounimSIFELHAK All the customer data is in the Redux store, you can use the useSelector to select the customer state, and if you need to access a specific customer's data you can write a selector function that takes a customer id value and searches the customers array. There shouldn't be much to need to pass around in props. – -->
 
 # Redux/persisting state infos: @AbdelmounimSIFELHAK The frontend app state is effectively just another cache. Persisting the store to localStorage is a way to keep the cache around longer so you won't necessarily need to refetch all of the data every time the app mounts or the page reloads. Sure, you can use Redux and any number of React Contexts. –

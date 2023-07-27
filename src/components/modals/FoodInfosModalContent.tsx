@@ -5,7 +5,7 @@ import date from "../../assets/img/date.svg";
 import invites from "../../assets/img/invites.png";
 import time from "../../assets/img/time.svg";
 import { ComeBackBtn } from "../buttons/ComeBackBtn";
-import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
+import { FoodInfosContext } from "../context/FoodInfosContext";
 import "./modal_styles.scss";
 
 export const FoodInfosModalContent = ({
@@ -28,7 +28,7 @@ export const FoodInfosModalContent = ({
   setShowChoosenFood: React.Dispatch<React.SetStateAction<boolean>>;
   setShowChoosenFoodInfos: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { selectedTime, meridiumType } = useContext(FoodTimeInfosContext);
+  const { selectedTime, meridiumType } = useContext(FoodInfosContext);
 
   function isAntePostMeridium(): string {
     let word = "";

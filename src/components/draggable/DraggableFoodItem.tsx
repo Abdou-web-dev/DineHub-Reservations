@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import delete_stop from "../../assets/img/delete_stop.svg";
 import options from "../../assets/img/options.svg";
 import { deleteFoodFromCustomer } from "../../feature/customerSlice";
-import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
+import { FoodInfosContext } from "../context/FoodInfosContext";
 import { CloseXIconBtn } from "../icons/Icons";
 import { FoodChoiceModalContent } from "../modals/FoodChoiceModalContent";
 
@@ -34,10 +34,20 @@ export const DraggableFoodItem = ({
     is_breakfast_time,
     is_dinner_time,
     is_lunch_time,
-  } = useContext(FoodTimeInfosContext);
+    newFoodItem,
+  } = useContext(FoodInfosContext);
 
-  let showOptionsButton: boolean =
-    is_lunch_time && foodItem?.food_value === "tacos";
+  let is_serving_time: boolean =
+    is_breakfast_time || is_lunch_time || is_dinner_time;
+
+  let lunch_time_meals: boolean =
+    foodItem?.food_value === "tacos" ||
+    foodItem?.food_value === "pizza" ||
+    foodItem?.food_value === "tajine" ||
+    foodItem?.food_value === "Shawarma";
+
+  let showOptionsButton: boolean = is_lunch_time && lunch_time_meals;
+  // is_serving_time && newFoodItem.food_value !== "";
 
   const [openFoodChoiceModal, setOpenFoodChoiceModal] = useState(false);
 
@@ -112,7 +122,7 @@ export const DraggableFoodItem = ({
             </div>
           }
         >
-          <FoodChoiceModalContent {...{ foodItem }} />
+          {is_lunch_time ? <FoodChoiceModalContent {...{ foodItem }} /> : null}
         </Modal>
       </>
     </>

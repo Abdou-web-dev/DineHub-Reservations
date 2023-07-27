@@ -7,6 +7,7 @@ export interface Customer {
     {
       food_value: string;
       food_id: number;
+      food_category: string;
     }
   ];
   //the new 4 props
@@ -20,6 +21,7 @@ interface AddFoodToCustomerPayload {
   food_element: {
     food_value: string;
     food_id: number;
+    food_category: string;
   };
   id: string;
 }
@@ -61,6 +63,7 @@ export const customerSlice = createSlice({
           customer.food.push({
             food_value: action.payload.food_element.food_value,
             food_id: action.payload.food_element.food_id,
+            food_category: action.payload.food_element.food_category,
           });
           // customer.food.push(action.payload.food + "string");
         }

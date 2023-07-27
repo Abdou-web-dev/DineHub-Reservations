@@ -1,36 +1,44 @@
 import { Card } from "antd";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { StrictModeDroppable } from "../StrictModeDroppable";
+import { FoodInfosContext } from "../context/FoodInfosContext";
 import { DraggableFoodItem } from "../draggable/DraggableFoodItem";
 import "./lists_styles.scss";
 
 // this example implements react-dnd vertical drag and drop
 
+export interface FoodItem {
+  food_value: string;
+  food_id: number;
+  food_category: string;
+}
+
 export const SelectedfoodHorizontalDrag = ({
   foodList,
   id,
 }: {
-  foodList: {
-    food_value: string;
-    food_id: number;
-  }[];
+  foodList: FoodItem[];
   id: string;
 }) => {
   // const dispatch = useDispatch();
   const [startDragging, setStartDragging] = useState(false);
-  const [storedItems, setStoredItems] = useState(foodList && foodList);
+  const { storedItems, setStoredItems } = useContext(FoodInfosContext);
+
+  // const [storedItems, setStoredItems] = useState<FoodItem[]>(
+  //   foodList && foodList
+  // );
 
   function handleOnDragEnd(result: DropResult): void {
     if (result.destination) {
       // with this if check, if we drag items outside the draoppable area, no issue will arise
       // console.log("handleOnDragEnd called");
-      const items: {
-        food_value: string;
-        food_id: number;
-      }[] = Array.from(storedItems);
+      const items: FoodItem[] = Array.from(storedItems);
       if (items) {
-        const [reorderedItem] = items?.splice(result.source.index, 1);
+        const [reorderedItem]: FoodItem[] = items?.splice(
+          result.source.index,
+          1
+        );
         if (reorderedItem) {
           items?.splice(result.destination.index, 0, reorderedItem);
           setStoredItems(items);
@@ -45,6 +53,56 @@ export const SelectedfoodHorizontalDrag = ({
     setStoredItems(foodList);
   }, [foodList]);
 
+  const { newFoodItem, setNewFoodItem } = useContext(FoodInfosContext);
+
+  const replace = (object: FoodItem, list: FoodItem[]) => {
+    let newList: FoodItem[] = [];
+    list.forEach(function (item: FoodItem) {
+      if (
+        item.food_category === `tacos_category` ||
+        item.food_category === `pizza_category`
+      ) {
+        // if (item.food_id === object.food_id) {
+        newList.push(object);
+
+        // }
+      } else {
+        newList.push(item);
+      }
+    });
+    return newList;
+  };
+  const replace_with_new_food_items = (
+    objects: FoodItem[],
+    list: FoodItem[]
+  ) => {
+    let newList: FoodItem[] = [];
+    list.forEach(function (item: FoodItem) {
+      if (
+        item.food_category === `tacos_category` ||
+        item.food_category === `pizza_category`
+      ) {
+        // if (item.food_id === object.food_id) {
+        for (let index = 0; index < objects?.length; index++) {
+          const element = objects[index];
+          newList.push(element);
+        }
+
+        // }
+      } else {
+        newList.push(item);
+      }
+    });
+    return newList;
+  };
+
+  useEffect(() => {
+    if (newFoodItem) {
+      let newFoodList: FoodItem[] = replace(newFoodItem, foodList);
+      setStoredItems(newFoodList);
+    }
+  }, [newFoodItem]);
+
   if (storedItems.length)
     return (
       <>
@@ -53,7 +111,7 @@ export const SelectedfoodHorizontalDrag = ({
             <DragDropContext
               onDragEnd={handleOnDragEnd}
               onDragStart={() => {
-                console.log("onDragStart");
+                // console.log("onDragStart");
                 setStartDragging(true);
               }}
               // onBeforeDragStart={() => console.log("onBeforeDragStart")}
@@ -81,17 +139,19 @@ export const SelectedfoodHorizontalDrag = ({
                       title={null}
                     >
                       {Array.isArray(storedItems)
-                        ? storedItems?.map((foodItem, index: number) => {
-                            // console.log(foodItem, "foodItem");
-                            if (foodItem && foodItem.food_value !== "") {
-                              return (
-                                <DraggableFoodItem
-                                  key={foodItem?.food_id}
-                                  {...{ index, id, foodItem }}
-                                />
-                              );
+                        ? storedItems?.map(
+                            (foodItem: FoodItem, index: number) => {
+                              // console.log(foodItem, "foodItem");
+                              if (foodItem && foodItem.food_value !== "") {
+                                return (
+                                  <DraggableFoodItem
+                                    key={foodItem?.food_id}
+                                    {...{ index, id, foodItem }}
+                                  />
+                                );
+                              }
                             }
-                          })
+                          )
                         : null}
                     </Card>
                     {provided.placeholder}

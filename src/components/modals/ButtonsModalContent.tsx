@@ -3,7 +3,8 @@
 
 import { Button } from "antd";
 import { useContext } from "react";
-import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
+import { FoodInfosContext } from "../context/FoodInfosContext";
+import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
 import "./modal_styles.scss";
 
 export const ButtonsModalContent = ({
@@ -22,14 +23,9 @@ export const ButtonsModalContent = ({
   };
   guests: string | number;
   orderDate: string;
-  foodList: [
-    {
-      food_value: string;
-      food_id: number;
-    }
-  ];
+  foodList: FoodItem[];
 }) => {
-  const { selectedTime } = useContext(FoodTimeInfosContext);
+  const { selectedTime } = useContext(FoodInfosContext);
 
   let list_of_images = [
     "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",

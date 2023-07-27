@@ -6,7 +6,7 @@ import midnight_icon from "../../assets/img/noun-midnight-3541592.svg";
 import noon_icon from "../../assets/img/noun-noon-4299181.svg";
 import sunrise_icon from "../../assets/img/sunrise-svgrepo-com.svg";
 import sunset_icon from "../../assets/img/sunset-2-svgrepo-com.svg";
-import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
+import { FoodInfosContext } from "../context/FoodInfosContext";
 import "./tables_styles.scss";
 
 interface DataType {
@@ -28,7 +28,7 @@ export const TimeTable = ({}: // selectedTime,
   // const [selectedTime, setSelectedTime] = useState("");
   // const [meridiumType, setMeridiumType] = useState("");
   const { meridiumType, setMeridiumType, selectedTime, setSelectedTime } =
-    useContext(FoodTimeInfosContext);
+    useContext(FoodInfosContext);
   const columns: ColumnsType<DataType> = [
     {
       title: "AM",

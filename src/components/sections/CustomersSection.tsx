@@ -1,5 +1,6 @@
 import { Customer } from "../../feature/customerSlice";
 import CustomerCard from "../cards/CustomerCard";
+import { FoodInfosContextProvider } from "../context/FoodInfosContext";
 
 // https://www.reddit.com/r/reactjs/comments/we08mw/comment/iiywd82/
 
@@ -18,15 +19,16 @@ export const CustomersSection = ({ customers }: { customers: Customer[] }) => {
           {/* I can use context api here to pass the customer object down to nested components, instead of props drilling */}
           {customers.map((customer: Customer, index: number) => {
             return (
-              <CustomerCard
-                id={customer.id}
-                name={customer.name}
-                foodList={customer.food}
-                key={customer.id}
-                {...{ index }}
-                restauLocation={customer.restauLocation}
-                // guestsNumber={customer.guestsNumber}
-              />
+              <FoodInfosContextProvider key={customer.id}>
+                <CustomerCard
+                  id={customer.id}
+                  name={customer.name}
+                  foodList={customer.food}
+                  {...{ index }}
+                  restauLocation={customer.restauLocation}
+                  // guestsNumber={customer.guestsNumber}
+                />
+              </FoodInfosContextProvider>
             );
           })}
         </div>

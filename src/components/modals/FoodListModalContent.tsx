@@ -4,13 +4,15 @@
 // import food_3 from "../../assets/img/food_item/food-restaurant.svg"
 
 import { ComeBackBtn } from "../buttons/ComeBackBtn";
+import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
 
 export const FoodListModalContent = ({
   foodList,
   setShowChoosenFoodInfos,
   setShowChoosenFood,
 }: {
-  foodList: [{ food_value: string; food_id: number }];
+  // foodList: [{ food_value: string; food_id: number }];
+  foodList: FoodItem[];
   setShowChoosenFood: React.Dispatch<React.SetStateAction<boolean>>;
   setShowChoosenFoodInfos: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {

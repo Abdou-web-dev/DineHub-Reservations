@@ -1,10 +1,11 @@
 import * as React from "react";
 import { createContext, useState } from "react";
+import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
 // https://stackoverflow.com/questions/71333605/how-can-i-correctly-initialize-the-type-dispatchsetstateactionstring-as-a
 
 export interface FoodInfosContext {
-  is_time_between_01_and_06: boolean;
-  is_time_between_06_and_11: boolean;
+  // is_time_between_01_and_06?: boolean;
+  // is_time_between_06_and_11?: boolean;
   is_breakfast_time: boolean;
   is_lunch_time: boolean;
   is_dinner_time: boolean;
@@ -12,28 +13,45 @@ export interface FoodInfosContext {
   setSelectedTime?: React.Dispatch<React.SetStateAction<string>> | any; //optional prop
   meridiumType: string;
   setMeridiumType?: React.Dispatch<React.SetStateAction<string>> | any; //optional prop
+  newFoodItem: FoodItem;
+  // newFoodItems:FoodItem[];
+  setNewFoodItem?: React.Dispatch<React.SetStateAction<FoodItem>> | any;
+  storedItems: FoodItem[];
+  setStoredItems?: React.Dispatch<React.SetStateAction<FoodItem[]>> | any;
 }
 
 // export const MusicContext = createContext<IMusicContext>(undefined as any);
 // export const useMusicContext = () => useContext(MusicContext);
 
-export const FoodTimeInfosContext = createContext<FoodInfosContext>({
+export const FoodInfosContext = createContext<FoodInfosContext>({
   is_breakfast_time: false,
   is_dinner_time: false,
   is_lunch_time: false,
-  is_time_between_01_and_06: false,
-  is_time_between_06_and_11: false,
+  // is_time_between_01_and_06: false,
+  // is_time_between_06_and_11: false,
   meridiumType: "",
   selectedTime: "",
+  newFoodItem: { food_id: 0, food_value: "", food_category: "" },
+  storedItems: [{ food_category: "", food_id: 0, food_value: "" }],
 });
 
-export const FoodTimeInfosContextProvider = ({
+export const FoodInfosContextProvider = ({
   children,
 }: {
   children: React.ReactNode | JSX.Element | JSX.Element[];
 }) => {
   const [selectedTime, setSelectedTime] = useState("");
   const [meridiumType, setMeridiumType] = useState("");
+  //
+  const [newFoodItem, setNewFoodItem] = useState<FoodItem>({
+    food_id: 0,
+    food_value: "",
+    food_category: "",
+  });
+  // const [storedItems, setStoredItems] = useState<FoodItem[]>(
+  //   foodList && foodList
+  // );
+  const [storedItems, setStoredItems] = useState<FoodItem[]>([]);
 
   let is_time_between_06_and_11: boolean =
     selectedTime === `06` ||
@@ -62,10 +80,10 @@ export const FoodTimeInfosContextProvider = ({
     (selectedTime === `12` && meridiumType === "AM");
 
   return (
-    <FoodTimeInfosContext.Provider
+    <FoodInfosContext.Provider
       value={{
-        is_time_between_01_and_06,
-        is_time_between_06_and_11,
+        // is_time_between_01_and_06,
+        // is_time_between_06_and_11,
         is_breakfast_time,
         is_lunch_time,
         is_dinner_time,
@@ -73,14 +91,18 @@ export const FoodTimeInfosContextProvider = ({
         setSelectedTime,
         meridiumType,
         setMeridiumType,
+        newFoodItem,
+        setNewFoodItem,
+        storedItems,
+        setStoredItems,
       }}
     >
       {children}
-    </FoodTimeInfosContext.Provider>
+    </FoodInfosContext.Provider>
   );
 };
 
-// export const FoodTimeInfosContext = createContext<FoodInfosContext>(undefined as any); generated this error :
+// export const FoodInfosContext = createContext<FoodInfosContext>(undefined as any); generated this error :
 // TypeError: Cannot destructure property 'meridiumType' of 'Object(...)(...)' as it is undefined.
 // solution : initilize the context with initial values
 // createContext<FoodInfosContext>({

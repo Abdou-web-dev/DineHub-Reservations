@@ -38,16 +38,15 @@ export const breakfast_menu = [
 ];
 export const lunch_menu = [
   { value: "Slow-roasted beef with mustard potatoes recipe" },
-  // { value: "Ground Beef Tacos" },
   { value: "tacos" },
   { value: "pizza" },
   { value: "sandwich" },
-  { value: "Chicken Shawarma" },
+  { value: "Shawarma" },
+  // { value: "Chicken Shawarma" },
   { value: "hamburger" },
   { value: "tajine" },
   { value: "cheeseburger" },
   { value: "ice cream" },
-  { value: "tacos" },
   { value: "kabab" },
 ];
 export const dinner_menu = [
@@ -59,6 +58,5 @@ export const dinner_menu = [
   // { value: "tajine" },
   // { value: "cheeseburger" },
   // { value: "ice cream" },
-  // { value: "tacos" },
   // { value: "kabab" },
 ];

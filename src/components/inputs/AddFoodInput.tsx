@@ -1,6 +1,6 @@
 import { AutoComplete, Button } from "antd";
 import { InputStatus } from "antd/es/_util/statusUtils";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import info from "../../assets/img/info.svg";
 import breakfast from "../../assets/img/meals/breakfast.png";
@@ -13,10 +13,14 @@ import {
 } from "../../assets/staticData/meals_data";
 import { addFoodToCustomer } from "../../feature/customerSlice";
 
-import { FoodTimeInfosContext } from "../context/FoodTimeInfosContext";
+import { FoodInfosContext } from "../context/FoodInfosContext";
 import "./inputs_styles.scss";
 // https://www.npmjs.com/package/turnstone
 // Turnstone is a highly customisable, easy-to-use autocomplete search component for React.
+
+export function randomInteger(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 export const AddFoodInput = ({
   customerFoodInput,
@@ -35,13 +39,10 @@ export const AddFoodInput = ({
 }) => {
   const dispatch = useDispatch();
   const { is_breakfast_time, is_dinner_time, is_lunch_time, selectedTime } =
-    useContext(FoodTimeInfosContext);
+    useContext(FoodInfosContext);
   const [inputStatus, setInputStatus] = useState<
     "warning" | "error" | undefined | InputStatus
   >();
-  function randomInteger(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
 
   const [value, setValue] = useState("");
   const [optionsData, setOptionsData] = useState<{ value: string }[]>([]);
@@ -92,6 +93,10 @@ export const AddFoodInput = ({
     : is_dinner_time
     ? "dinner"
     : "";
+
+  useEffect(() => {
+    if (customerFoodInput) console.log(customerFoodInput, "customerFoodInput");
+  }, [customerFoodInput]);
 
   return (
     <>
@@ -164,19 +169,21 @@ export const AddFoodInput = ({
                   food_element: {
                     food_value: customerFoodInput,
                     food_id: randomInteger(1, 5000),
+                    food_category:
+                      customerFoodInput === `tacos`
+                        ? `tacos_category`
+                        : customerFoodInput === `pizza`
+                        ? `pizza_category`
+                        : "",
                   },
-                  // food_id: randomInteger(1, 5000),
                 })
-                // addFoodToCustomer({
-                // id,
-                // food: customerFoodInput,
-                // })
               );
               if (!customerFoodInput) {
                 setInputStatus("error");
               }
               setCustomerFoodInput("");
             }}
+            // food_id: randomInteger(1, 5000),
           >
             <span>Add Food</span>
           </Button>
