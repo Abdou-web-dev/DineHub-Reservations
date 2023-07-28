@@ -1,7 +1,8 @@
 import { Modal } from "antd";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useContext, useState } from "react";
 import { CustomerButtons } from "../buttons/CustomerButtons";
 import { OrderTimeTable } from "../collapse/OrderTime";
+import { FoodInfosContext } from "../context/FoodInfosContext";
 import { GuestsCounter } from "../counters/GuestsCounter";
 import { CloseXIconBtn } from "../icons/Icons";
 import { AddFoodInput } from "../inputs/AddFoodInput";
@@ -31,9 +32,9 @@ function CustomerCard({
   restauLocation,
   index,
 }: CustomerCardType) {
-  // const { meridiumType, setMeridiumType } = useContext(FoodInfosContext);
+  const { customerFoodInput, setCustomerFoodInput } =
+    useContext(FoodInfosContext);
   const [openOrderModal, setOpenOrderModal] = useState(false);
-  const [customerFoodInput, setCustomerFoodInput] = useState("");
   const [location, setLocation] = useState({
     value: "",
     label: "Select the restaurant's address",

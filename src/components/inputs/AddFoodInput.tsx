@@ -38,8 +38,13 @@ export const AddFoodInput = ({
   // meridiumType: string;
 }) => {
   const dispatch = useDispatch();
-  const { is_breakfast_time, is_dinner_time, is_lunch_time, selectedTime } =
-    useContext(FoodInfosContext);
+  const {
+    is_breakfast_time,
+    is_dinner_time,
+    is_lunch_time,
+    selectedTime,
+    random_id,
+  } = useContext(FoodInfosContext);
   const [inputStatus, setInputStatus] = useState<
     "warning" | "error" | undefined | InputStatus
   >();
@@ -165,10 +170,16 @@ export const AddFoodInput = ({
             onClick={() => {
               dispatch(
                 addFoodToCustomer({
-                  id,
+                  id, //this is custimer's id
                   food_element: {
                     food_value: customerFoodInput,
-                    food_id: randomInteger(1, 5000),
+                    food_id:
+                      customerFoodInput === `tacos`
+                        ? random_id + 47
+                        : customerFoodInput === `pizza`
+                        ? random_id + 11
+                        : randomInteger(1, 5000),
+                    // randomInteger(1, 5000)
                     food_category:
                       customerFoodInput === `tacos`
                         ? `tacos_category`

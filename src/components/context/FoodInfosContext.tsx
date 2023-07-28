@@ -1,5 +1,6 @@
 import * as React from "react";
 import { createContext, useState } from "react";
+import { randomInteger } from "../inputs/AddFoodInput";
 import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
 // https://stackoverflow.com/questions/71333605/how-can-i-correctly-initialize-the-type-dispatchsetstateactionstring-as-a
 
@@ -14,10 +15,14 @@ export interface FoodInfosContext {
   meridiumType: string;
   setMeridiumType?: React.Dispatch<React.SetStateAction<string>> | any; //optional prop
   newFoodItem: FoodItem;
-  // newFoodItems:FoodItem[];
+  newFoodItems: FoodItem[];
   setNewFoodItem?: React.Dispatch<React.SetStateAction<FoodItem>> | any;
+  setNewFoodItems?: React.Dispatch<React.SetStateAction<FoodItem[]>> | any;
   storedItems: FoodItem[];
   setStoredItems?: React.Dispatch<React.SetStateAction<FoodItem[]>> | any;
+  random_id: number;
+  customerFoodInput: string;
+  setCustomerFoodInput?: React.Dispatch<React.SetStateAction<string>> | any;
 }
 
 // export const MusicContext = createContext<IMusicContext>(undefined as any);
@@ -33,6 +38,9 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
   selectedTime: "",
   newFoodItem: { food_id: 0, food_value: "", food_category: "" },
   storedItems: [{ food_category: "", food_id: 0, food_value: "" }],
+  newFoodItems: [{ food_category: "", food_id: 0, food_value: "" }],
+  random_id: 0,
+  customerFoodInput: "",
 });
 
 export const FoodInfosContextProvider = ({
@@ -52,6 +60,12 @@ export const FoodInfosContextProvider = ({
   //   foodList && foodList
   // );
   const [storedItems, setStoredItems] = useState<FoodItem[]>([]);
+  const [newFoodItems, setNewFoodItems] = useState<FoodItem[]>([]);
+  const [customerFoodInput, setCustomerFoodInput] = useState("");
+
+  let id = randomInteger(1, 5000);
+
+  const [random_id, setRandomId] = useState<number>(id);
 
   let is_time_between_06_and_11: boolean =
     selectedTime === `06` ||
@@ -95,6 +109,11 @@ export const FoodInfosContextProvider = ({
         setNewFoodItem,
         storedItems,
         setStoredItems,
+        newFoodItems,
+        setNewFoodItems,
+        random_id,
+        customerFoodInput,
+        setCustomerFoodInput,
       }}
     >
       {children}

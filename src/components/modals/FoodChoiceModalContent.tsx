@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { FoodChoiceItemBtn } from "../buttons/FoodChoiceItemBtn";
 import { FoodInfosContext } from "../context/FoodInfosContext";
 import { randomInteger } from "../inputs/AddFoodInput";
@@ -6,11 +6,15 @@ import "./modal_styles.scss";
 
 export const FoodChoiceModalContent = ({
   foodItem,
+  openFoodChoiceModal,
+  setOpenFoodChoiceModal,
 }: {
   foodItem: {
     food_value: string;
     food_id: number;
   };
+  openFoodChoiceModal: boolean;
+  setOpenFoodChoiceModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [choosenTacos, setChoosenTacos] = useState("");
   let description: string =
@@ -29,8 +33,15 @@ export const FoodChoiceModalContent = ({
   // when the user clicks on a given meal btn, a loading spinner first appears, it lasts for 1 second,
   // then the description text appears with a smooth animation from animate.css
 
-  const { newFoodItem, setNewFoodItem, setnewFoodItems, newFoodItems } =
-    useContext(FoodInfosContext);
+  const {
+    newFoodItem,
+    setNewFoodItem,
+    setNewFoodItems,
+    newFoodItems,
+    storedItems,
+    random_id,
+    customerFoodInput,
+  } = useContext(FoodInfosContext);
 
   let items_names: string[] = [
     `chicken tacos`,
@@ -43,16 +54,24 @@ export const FoodChoiceModalContent = ({
     return {
       key: option,
       newFoodHandler: () => {
+        console.log(option, "option");
         setChoosenTacos(`chicken`);
         setNewFoodItem({
-          food_id: randomInteger(1, 5000),
+          food_id:
+            foodItem.food_value === `tacos`
+              ? random_id + 47
+              : foodItem.food_value === `pizza`
+              ? random_id + 11
+              : randomInteger(1, 5000),
           food_value: option,
           food_category: "",
         });
+        // newFoodItems.push(newFoodItem);
+        // console.log(newFoodItems, "newFoodItems");
+        setOpenFoodChoiceModal(false);
       },
     };
   }
-  // foodItem.food_value === `tacos`;
 
   function generate_optional_food_items_array([
     opt1,
@@ -134,7 +153,7 @@ export const FoodChoiceModalContent = ({
           `Tacos de Pescado`,
         ]
       : foodItem.food_value === `pizza`
-      ? [`chicken pizza`, `Ground beef pizza`, `Shrimp pizza`, `pizzoooo`]
+      ? [`chicken pizza`, `Ground beef pizza`, `Shrimp pizza`, `Tuna Pizza`]
       : foodItem.food_value === `tacos`
       ? [
           `chicken tacos`,
@@ -172,13 +191,11 @@ export const FoodChoiceModalContent = ({
         ]
       : [``];
 
-  useEffect(() => {
-    if (newFoodItem) {
-      // let newItems =
-      setStoredItems([...storedItems, newFoodItem]);
-      // setnewFoodItems
-    }
-  }, [newFoodItem]);
+  // useEffect(() => {
+  //   if (newFoodItem) {
+  //     newFoodItems.push(newFoodItem);
+  //   }
+  // }, [newFoodItem]);
 
   return (
     <>

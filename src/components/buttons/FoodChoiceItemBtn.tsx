@@ -18,7 +18,7 @@ export const FoodChoiceItemBtn = ({
         <Button
           disabled={false}
           className="meal-option-btn"
-          onClick={() => handleFoodChoiceClick()}
+          onClick={handleFoodChoiceClick}
         >
           <span>{itemName}</span>
         </Button>

@@ -122,7 +122,11 @@ export const DraggableFoodItem = ({
             </div>
           }
         >
-          {is_lunch_time ? <FoodChoiceModalContent {...{ foodItem }} /> : null}
+          {is_lunch_time ? (
+            <FoodChoiceModalContent
+              {...{ foodItem, openFoodChoiceModal, setOpenFoodChoiceModal }}
+            />
+          ) : null}
         </Modal>
       </>
     </>

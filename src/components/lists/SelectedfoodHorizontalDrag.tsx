@@ -23,7 +23,8 @@ export const SelectedfoodHorizontalDrag = ({
 }) => {
   // const dispatch = useDispatch();
   const [startDragging, setStartDragging] = useState(false);
-  const { storedItems, setStoredItems } = useContext(FoodInfosContext);
+  const { storedItems, setStoredItems, newFoodItems } =
+    useContext(FoodInfosContext);
 
   // const [storedItems, setStoredItems] = useState<FoodItem[]>(
   //   foodList && foodList
@@ -55,18 +56,24 @@ export const SelectedfoodHorizontalDrag = ({
 
   const { newFoodItem, setNewFoodItem } = useContext(FoodInfosContext);
 
-  const replace = (object: FoodItem, list: FoodItem[]) => {
+  const replace = (
+    object: FoodItem,
+    list: FoodItem[]
+    // id: number
+  ): FoodItem[] => {
     let newList: FoodItem[] = [];
     list.forEach(function (item: FoodItem) {
-      if (
-        item.food_category === `tacos_category` ||
-        item.food_category === `pizza_category`
-      ) {
-        // if (item.food_id === object.food_id) {
+      console.log(
+        item.food_id,
+        "item.food_id ",
+        object.food_id,
+        "object.food_id"
+      );
+      if (item.food_id === object.food_id) {
+        // only d othe replacement if the old and the new food items' id's are the same,
         newList.push(object);
-
-        // }
       } else {
+        //else, keep the array of old items as it is
         newList.push(item);
       }
     });
@@ -82,13 +89,10 @@ export const SelectedfoodHorizontalDrag = ({
         item.food_category === `tacos_category` ||
         item.food_category === `pizza_category`
       ) {
-        // if (item.food_id === object.food_id) {
         for (let index = 0; index < objects?.length; index++) {
           const element = objects[index];
           newList.push(element);
         }
-
-        // }
       } else {
         newList.push(item);
       }
@@ -96,9 +100,10 @@ export const SelectedfoodHorizontalDrag = ({
     return newList;
   };
 
+  let newFoodList: FoodItem[] = replace(newFoodItem, foodList);
+
   useEffect(() => {
     if (newFoodItem) {
-      let newFoodList: FoodItem[] = replace(newFoodItem, foodList);
       setStoredItems(newFoodList);
     }
   }, [newFoodItem]);
@@ -153,6 +158,11 @@ export const SelectedfoodHorizontalDrag = ({
                             }
                           )
                         : null}
+                      <>
+                        {/* <NewFoodItem>
+                      {newfoodItems.map ...}
+                      </NewFoodItem> */}
+                      </>
                     </Card>
                     {provided.placeholder}
                   </div>
