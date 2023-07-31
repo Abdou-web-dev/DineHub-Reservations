@@ -20,7 +20,7 @@ export const FoodChoiceItemBtn = ({
           className="meal-option-btn"
           onClick={handleFoodChoiceClick}
         >
-          <span>{itemName}</span>
+          <span className="itemName">{itemName}</span>
         </Button>
       </div>
     </>

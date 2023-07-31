@@ -4,7 +4,23 @@
 
 # Todo3: when clicking on newFoodItem button, display a spinner, then the description text, then OK btn , if Ok clicked , close the modal
 
-<!-- use mantine react components library in a new project with React Query  --> npm i @mantine/core !!!!!!
+# Todo4: when the reservation infos are filled, allow the user to modify them through btns, when the user hovers over each CARD.
+
+<!-- concerning number of guests , show + - btns when the user hovers, hide them when he hovers outside the card -->
+<!-- concerning date , show dateIconBtn when the user hovers, hide it when he hovers outside the card -->
+<!-- concerning time , show dateIconBtn when the user hovers, hide it when he hovers outside the card -->
+
+# Todo5: add a border around the droppable area, when the user is dragging items
+
+# Todo6: wadd info btn below the food items, on hover , display this msg : You can reorder these items by dragging and dropping them,
+
+\*\*
+
+-
+-
+-
+- \*\*
+  <!-- use mantine react components library in a new project with React Query  --> npm i @mantine/core !!!!!!
 
 <!-- @AbdelmounimSIFELHAK All the customer data is in the Redux store, you can use the useSelector to select the customer state, and if you need to access a specific customer's data you can write a selector function that takes a customer id value and searches the customers array. There shouldn't be much to need to pass around in props. – -->
 

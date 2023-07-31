@@ -23,6 +23,20 @@ export interface FoodInfosContext {
   random_id: number;
   customerFoodInput: string;
   setCustomerFoodInput?: React.Dispatch<React.SetStateAction<string>> | any;
+  openFoodChoiceModal: boolean;
+  setOpenFoodChoiceModal?: React.Dispatch<React.SetStateAction<boolean>> | any;
+  singleFoodItem: FoodItem;
+  setSingleFoodItem?: React.Dispatch<React.SetStateAction<FoodItem>> | any;
+  lunch_menu: (
+    | {
+        value: string;
+        disabled?: undefined;
+      }
+    | {
+        value: string;
+        disabled: boolean;
+      }
+  )[];
 }
 
 // export const MusicContext = createContext<IMusicContext>(undefined as any);
@@ -41,6 +55,9 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
   newFoodItems: [{ food_category: "", food_id: 0, food_value: "" }],
   random_id: 0,
   customerFoodInput: "",
+  openFoodChoiceModal: false,
+  singleFoodItem: { food_id: 0, food_value: "", food_category: "" },
+  lunch_menu: [{ value: "", disabled: false }],
 });
 
 export const FoodInfosContextProvider = ({
@@ -48,14 +65,51 @@ export const FoodInfosContextProvider = ({
 }: {
   children: React.ReactNode | JSX.Element | JSX.Element[];
 }) => {
-  const [selectedTime, setSelectedTime] = useState("");
-  const [meridiumType, setMeridiumType] = useState("");
-  //
+  const [singleFoodItem, setSingleFoodItem] = useState<FoodItem>({
+    food_category: "",
+    food_id: 0,
+    food_value: "",
+  });
   const [newFoodItem, setNewFoodItem] = useState<FoodItem>({
     food_id: 0,
     food_value: "",
     food_category: "",
   });
+  const [disabled, setdisabled] = useState(false);
+  React.useEffect(() => {
+    if (singleFoodItem.food_value.includes(`Shrimp Tacos`)) {
+      setdisabled(true);
+    } else {
+      setdisabled(false);
+    }
+  }, [singleFoodItem.food_value]);
+  // arrays of data :
+  const lunch_menu = [
+    { value: "Slow-roasted beef with mustard potatoes recipe" },
+    {
+      value: "tacos",
+      disabled: disabled,
+      // singleFoodItem.food_value.includes(`tacos`) ||
+      // singleFoodItem.food_value.includes(`Tacos`)
+      // newFoodItem.food_value.includes(`tacos`) ? true : false,
+      // disabled: true,
+    },
+    { value: "pizza" },
+    { value: "sandwich" },
+    { value: "Shawarma" },
+    // { value: "Chicken Shawarma" },
+    { value: "hamburger" },
+    { value: "tajine" },
+    { value: "cheeseburger" },
+    { value: "ice cream" },
+    { value: "kabab" },
+  ];
+  const [openFoodChoiceModal, setOpenFoodChoiceModal] = useState(false);
+
+  const [selectedTime, setSelectedTime] = useState("");
+  const [meridiumType, setMeridiumType] = useState("");
+  //
+
   // const [storedItems, setStoredItems] = useState<FoodItem[]>(
   //   foodList && foodList
   // );
@@ -114,6 +168,11 @@ export const FoodInfosContextProvider = ({
         random_id,
         customerFoodInput,
         setCustomerFoodInput,
+        openFoodChoiceModal,
+        setOpenFoodChoiceModal,
+        singleFoodItem,
+        setSingleFoodItem,
+        lunch_menu,
       }}
     >
       {children}

@@ -1,3 +1,5 @@
+// import { FoodInfosContext } from "../../components/context/FoodInfosContext";
+
 export const breakfast_menu = [
   { value: "coffee" },
   { value: "Tea" },
@@ -38,7 +40,7 @@ export const breakfast_menu = [
 ];
 export const lunch_menu = [
   { value: "Slow-roasted beef with mustard potatoes recipe" },
-  { value: "tacos" },
+  { value: "tacos", disabled: true },
   { value: "pizza" },
   { value: "sandwich" },
   { value: "Shawarma" },

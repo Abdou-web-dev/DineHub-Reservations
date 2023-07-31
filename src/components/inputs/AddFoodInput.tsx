@@ -9,7 +9,6 @@ import lunch from "../../assets/img/meals/lunch.png";
 import {
   breakfast_menu,
   dinner_menu,
-  lunch_menu,
 } from "../../assets/staticData/meals_data";
 import { addFoodToCustomer } from "../../feature/customerSlice";
 
@@ -44,6 +43,8 @@ export const AddFoodInput = ({
     is_lunch_time,
     selectedTime,
     random_id,
+    singleFoodItem,
+    lunch_menu,
   } = useContext(FoodInfosContext);
   const [inputStatus, setInputStatus] = useState<
     "warning" | "error" | undefined | InputStatus
@@ -179,13 +180,14 @@ export const AddFoodInput = ({
                         : customerFoodInput === `pizza`
                         ? random_id + 11
                         : randomInteger(1, 5000),
+                    // random_id,
                     // randomInteger(1, 5000)
-                    food_category:
-                      customerFoodInput === `tacos`
-                        ? `tacos_category`
-                        : customerFoodInput === `pizza`
-                        ? `pizza_category`
-                        : "",
+                    food_category: "",
+                    // customerFoodInput === `tacos`
+                    //   ? `tacos_category`
+                    //   : customerFoodInput === `pizza`
+                    //   ? `pizza_category`
+                    //   : "",
                   },
                 })
               );

@@ -17,3 +17,21 @@
 // array_items.some((person) => person.key === "maccadamedia"),
 // "here"
 // );
+
+// const replace_with_new_food_items = (objects: FoodItem[], list: FoodItem[]) => {
+//   let newList: FoodItem[] = [];
+//   list.forEach(function (item: FoodItem) {
+//     if (
+//       item.food_category === `tacos_category` ||
+//       item.food_category === `pizza_category`
+//     ) {
+//       for (let index = 0; index < objects?.length; index++) {
+//         const element = objects[index];
+//         newList.push(element);
+//       }
+//     } else {
+//       newList.push(item);
+//     }
+//   });
+//   return newList;
+// };

@@ -1,6 +1,6 @@
 import { Button, Card, Modal } from "antd";
 // import React, { useEffect, useState } from "react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
 import delete_stop from "../../assets/img/delete_stop.svg";
@@ -35,6 +35,9 @@ export const DraggableFoodItem = ({
     is_dinner_time,
     is_lunch_time,
     newFoodItem,
+    openFoodChoiceModal,
+    setOpenFoodChoiceModal,
+    random_id,
   } = useContext(FoodInfosContext);
 
   let is_serving_time: boolean =
@@ -48,8 +51,6 @@ export const DraggableFoodItem = ({
 
   let showOptionsButton: boolean = is_lunch_time && lunch_time_meals;
   // is_serving_time && newFoodItem.food_value !== "";
-
-  const [openFoodChoiceModal, setOpenFoodChoiceModal] = useState(false);
 
   return (
     <>
@@ -73,7 +74,9 @@ export const DraggableFoodItem = ({
                       <img width={`20px`} src={options} alt="" />
                     </>
                   }
-                  onClick={() => setOpenFoodChoiceModal(true)}
+                  onClick={() => {
+                    setOpenFoodChoiceModal(true);
+                  }}
                 ></Button>
               ) : null}
               <p>{foodItem.food_value}</p>
@@ -124,7 +127,13 @@ export const DraggableFoodItem = ({
         >
           {is_lunch_time ? (
             <FoodChoiceModalContent
-              {...{ foodItem, openFoodChoiceModal, setOpenFoodChoiceModal }}
+              {...{
+                foodItem,
+                openFoodChoiceModal,
+                setOpenFoodChoiceModal,
+                id,
+                index,
+              }}
             />
           ) : null}
         </Modal>

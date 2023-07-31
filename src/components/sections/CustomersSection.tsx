@@ -19,6 +19,7 @@ export const CustomersSection = ({ customers }: { customers: Customer[] }) => {
           {/* I can use context api here to pass the customer object down to nested components, instead of props drilling */}
           {customers.map((customer: Customer, index: number) => {
             return (
+              // <FoodContext.Provider value={contextValue}>
               <FoodInfosContextProvider key={customer.id}>
                 <CustomerCard
                   id={customer.id}
@@ -29,6 +30,7 @@ export const CustomersSection = ({ customers }: { customers: Customer[] }) => {
                   // guestsNumber={customer.guestsNumber}
                 />
               </FoodInfosContextProvider>
+              // </FoodContext.Provider>
             );
           })}
         </div>

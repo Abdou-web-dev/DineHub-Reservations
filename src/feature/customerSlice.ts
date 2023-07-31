@@ -30,6 +30,15 @@ interface RemoveFoodFromCustomerPayload {
   id: string;
   index: number;
 }
+interface UpdateFoodItemPayload {
+  // food: string;
+  id: string;
+  index: number;
+  new_food_item: {
+    food_id: number;
+    food_value: string;
+  };
+}
 interface AddLocationToCustomerPayload {
   location: string;
   id: string;
@@ -42,6 +51,7 @@ export interface CustomerState {
 const initialState: CustomerState = {
   customers: [],
 };
+
 // https://www.softkraft.co/how-to-setup-slices-with-redux-toolkit/#data-displaying
 export const customerSlice = createSlice({
   name: "customer",
@@ -65,7 +75,6 @@ export const customerSlice = createSlice({
             food_id: action.payload.food_element.food_id,
             food_category: action.payload.food_element.food_category,
           });
-          // customer.food.push(action.payload.food + "string");
         }
       });
     },
@@ -104,6 +113,26 @@ export const customerSlice = createSlice({
         }
       });
     },
+    updateSpecificFoodItem: (
+      state,
+      action: PayloadAction<UpdateFoodItemPayload>
+    ) => {
+      state.customers.forEach((customer) => {
+        if (customer.id === action.payload.id) {
+          //the id is relevant to a given customer
+          customer.food.forEach((singleFood) => {
+            if (singleFood.food_id === action.payload.new_food_item.food_id) {
+              // console.log(singleFood.food_id, "here", action.payload.index);
+              singleFood.food_value = action.payload.new_food_item?.food_value;
+              //the index is relevant to a given food item
+              // singleFood.food_value = newFoodItem.food_value;
+              // singleFood.food_id = ;
+              // singleFood.food_category = "categ";
+            }
+          });
+        }
+      });
+    },
   },
 });
 
@@ -112,6 +141,7 @@ export const {
   addFoodToCustomer,
   addLocationToCustomer,
   deleteFoodFromCustomer,
+  updateSpecificFoodItem,
   deleteCustomer,
 } = customerSlice.actions;
 
