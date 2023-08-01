@@ -1,6 +1,6 @@
 import { AutoComplete, Button } from "antd";
 import { InputStatus } from "antd/es/_util/statusUtils";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import info from "../../assets/img/info.svg";
 import breakfast from "../../assets/img/meals/breakfast.png";
@@ -99,10 +99,6 @@ export const AddFoodInput = ({
     : is_dinner_time
     ? "dinner"
     : "";
-
-  useEffect(() => {
-    if (customerFoodInput) console.log(customerFoodInput, "customerFoodInput");
-  }, [customerFoodInput]);
 
   return (
     <>

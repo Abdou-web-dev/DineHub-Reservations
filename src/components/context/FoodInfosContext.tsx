@@ -4,6 +4,20 @@ import { randomInteger } from "../inputs/AddFoodInput";
 import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
 // https://stackoverflow.com/questions/71333605/how-can-i-correctly-initialize-the-type-dispatchsetstateactionstring-as-a
 
+export function containsObject(obj: FoodItem, list: FoodItem[]) {
+  // var i;
+  for (let i = 0; i < list.length; i++) {
+    if (
+      list[i].food_value === obj.food_value ||
+      list[i].food_value.includes(obj.food_value)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export interface FoodInfosContext {
   // is_time_between_01_and_06?: boolean;
   // is_time_between_06_and_11?: boolean;
@@ -25,8 +39,6 @@ export interface FoodInfosContext {
   setCustomerFoodInput?: React.Dispatch<React.SetStateAction<string>> | any;
   openFoodChoiceModal: boolean;
   setOpenFoodChoiceModal?: React.Dispatch<React.SetStateAction<boolean>> | any;
-  singleFoodItem: FoodItem;
-  setSingleFoodItem?: React.Dispatch<React.SetStateAction<FoodItem>> | any;
   lunch_menu: (
     | {
         value: string;
@@ -50,13 +62,12 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
   // is_time_between_06_and_11: false,
   meridiumType: "",
   selectedTime: "",
-  newFoodItem: { food_id: 0, food_value: "", food_category: "" },
-  storedItems: [{ food_category: "", food_id: 0, food_value: "" }],
-  newFoodItems: [{ food_category: "", food_id: 0, food_value: "" }],
+  newFoodItem: { food_id: 0, food_value: "" },
+  storedItems: [{ food_id: 0, food_value: "" }],
+  newFoodItems: [{ food_id: 0, food_value: "" }],
   random_id: 0,
   customerFoodInput: "",
   openFoodChoiceModal: false,
-  singleFoodItem: { food_id: 0, food_value: "", food_category: "" },
   lunch_menu: [{ value: "", disabled: false }],
 });
 
@@ -65,46 +76,56 @@ export const FoodInfosContextProvider = ({
 }: {
   children: React.ReactNode | JSX.Element | JSX.Element[];
 }) => {
-  const [singleFoodItem, setSingleFoodItem] = useState<FoodItem>({
-    food_category: "",
-    food_id: 0,
-    food_value: "",
-  });
   const [newFoodItem, setNewFoodItem] = useState<FoodItem>({
     food_id: 0,
     food_value: "",
     food_category: "",
   });
-  const [disabled, setdisabled] = useState(false);
-  React.useEffect(() => {
-    if (singleFoodItem.food_value.includes(`Shrimp Tacos`)) {
-      setdisabled(true);
-    } else {
-      setdisabled(false);
-    }
-  }, [singleFoodItem.food_value]);
+  const [storedItems, setStoredItems] = useState<FoodItem[]>([]);
+
   // arrays of data :
+  const [openFoodChoiceModal, setOpenFoodChoiceModal] = useState(false);
+
   const lunch_menu = [
     { value: "Slow-roasted beef with mustard potatoes recipe" },
     {
       value: "tacos",
-      disabled: disabled,
-      // singleFoodItem.food_value.includes(`tacos`) ||
-      // singleFoodItem.food_value.includes(`Tacos`)
-      // newFoodItem.food_value.includes(`tacos`) ? true : false,
-      // disabled: true,
+      disabled: containsObject({ food_value: "tacos" }, storedItems),
     },
-    { value: "pizza" },
-    { value: "sandwich" },
-    { value: "Shawarma" },
-    // { value: "Chicken Shawarma" },
-    { value: "hamburger" },
-    { value: "tajine" },
-    { value: "cheeseburger" },
-    { value: "ice cream" },
-    { value: "kabab" },
+
+    {
+      value: "pizza",
+      disabled: containsObject({ food_value: "pizza" }, storedItems),
+    },
+    {
+      value: "sandwich",
+      disabled: containsObject({ food_value: "sandwich" }, storedItems),
+    },
+    {
+      value: "Shawarma",
+      disabled: containsObject({ food_value: "Shawarma" }, storedItems),
+    },
+    {
+      value: "hamburger",
+      disabled: containsObject({ food_value: "hamburger" }, storedItems),
+    },
+    {
+      value: "tajine",
+      disabled: containsObject({ food_value: "tajine" }, storedItems),
+    },
+    {
+      value: "cheeseburger",
+      disabled: containsObject({ food_value: "cheeseburger" }, storedItems),
+    },
+    // {
+    //   value: "ice cream",
+    //   disabled: containsObject({ food_value: "cheeseburger" }, storedItems),
+    // },
+    {
+      value: "ANY",
+      // disabled: containsObject({ food_value: "" }, storedItems),
+    },
   ];
-  const [openFoodChoiceModal, setOpenFoodChoiceModal] = useState(false);
 
   const [selectedTime, setSelectedTime] = useState("");
   const [meridiumType, setMeridiumType] = useState("");
@@ -113,7 +134,6 @@ export const FoodInfosContextProvider = ({
   // const [storedItems, setStoredItems] = useState<FoodItem[]>(
   //   foodList && foodList
   // );
-  const [storedItems, setStoredItems] = useState<FoodItem[]>([]);
   const [newFoodItems, setNewFoodItems] = useState<FoodItem[]>([]);
   const [customerFoodInput, setCustomerFoodInput] = useState("");
 
@@ -170,8 +190,6 @@ export const FoodInfosContextProvider = ({
         setCustomerFoodInput,
         openFoodChoiceModal,
         setOpenFoodChoiceModal,
-        singleFoodItem,
-        setSingleFoodItem,
         lunch_menu,
       }}
     >

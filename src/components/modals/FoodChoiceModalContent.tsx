@@ -17,7 +17,7 @@ export const FoodChoiceModalContent = ({
 }: {
   foodItem: {
     food_value: string;
-    food_id: number;
+    food_id?: number | any;
   };
   openFoodChoiceModal: boolean;
   setOpenFoodChoiceModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -149,62 +149,6 @@ export const FoodChoiceModalContent = ({
     return optional_food_items_array;
   }
 
-  let newFoodItemsArray: {
-    key: string;
-    newFoodHandler: () => void;
-  }[] = [
-    {
-      key: `chicken tacos`,
-      // key:    foodItem.food_value === `tacos`?      `chicken tacos`:     foodItem.food_value === `tacos`?'pizza':''      ,
-      newFoodHandler: () => {
-        setChoosenTacos(`chicken`);
-        setNewFoodItem({
-          food_id: randomInteger(1, 5000),
-          food_value: "chicken tacos",
-          food_category: "",
-        });
-      },
-    },
-    {
-      key: `Ground beef tacos`,
-      newFoodHandler: () => {
-        setChoosenTacos(`beef`);
-        setNewFoodItem({
-          food_id: randomInteger(1, 5000),
-          food_value: "Ground beef tacos",
-          food_category: "",
-        });
-      },
-    },
-    {
-      key: `Shrimp tacos`,
-      newFoodHandler: () => {
-        setChoosenTacos(`Shrimp`);
-        setNewFoodItem({
-          food_id: randomInteger(1, 5000),
-          food_value: "Shrimp tacos",
-          food_category: "",
-        });
-      },
-    },
-    {
-      key: `Tacos de Pescado`,
-      newFoodHandler: () => {
-        setChoosenTacos(`Pescado`);
-        setNewFoodItem({
-          food_id: randomInteger(1, 5000),
-          food_value: "Tacos de Pescado",
-          food_category: "",
-        });
-      },
-    },
-  ];
-
-  let id_categ_object = {
-    food_id: randomInteger(1, 5000),
-    food_category: "",
-  };
-
   let optionalFoodArray =
     foodItem.food_value === `tacos`
       ? [
@@ -215,40 +159,12 @@ export const FoodChoiceModalContent = ({
         ]
       : foodItem.food_value === `pizza`
       ? [`chicken pizza`, `Ground beef pizza`, `Shrimp pizza`, `Tuna Pizza`]
-      : foodItem.food_value === `tacos`
+      : foodItem.food_value === `tajine`
       ? [
-          `chicken tacos`,
-          `Ground beef tacos`,
-          `Shrimp Tacos`,
-          `Tacos de Pescado`,
-        ]
-      : foodItem.food_value === `tacos`
-      ? [
-          `chicken tacos`,
-          `Ground beef tacos`,
-          `Shrimp Tacos`,
-          `Tacos de Pescado`,
-        ]
-      : foodItem.food_value === `tacos`
-      ? [
-          `chicken tacos`,
-          `Ground beef tacos`,
-          `Shrimp Tacos`,
-          `Tacos de Pescado`,
-        ]
-      : foodItem.food_value === `tacos`
-      ? [
-          `chicken tacos`,
-          `Ground beef tacos`,
-          `Shrimp Tacos`,
-          `Tacos de Pescado`,
-        ]
-      : foodItem.food_value === `tacos`
-      ? [
-          `chicken tacos`,
-          `Ground beef tacos`,
-          `Shrimp Tacos`,
-          `Tacos de Pescado`,
+          `tajine option 1`,
+          `tajine option 2`,
+          `tajine option 3`,
+          `tajine option 4`,
         ]
       : [``];
 

@@ -32,8 +32,8 @@ export const replace = (
 };
 export interface FoodItem {
   food_value: string;
-  food_id: number;
-  food_category: string;
+  food_id?: number;
+  food_category?: string;
 }
 
 export const SelectedfoodHorizontalDrag = ({
@@ -45,14 +45,8 @@ export const SelectedfoodHorizontalDrag = ({
 }) => {
   // const dispatch = useDispatch();
   const [startDragging, setStartDragging] = useState(false);
-  const {
-    openFoodChoiceModal,
-    storedItems,
-    setStoredItems,
-    newFoodItems,
-    setSingleFoodItem,
-    singleFoodItem,
-  } = useContext(FoodInfosContext);
+  const { openFoodChoiceModal, storedItems, setStoredItems, newFoodItems } =
+    useContext(FoodInfosContext);
 
   // const [storedItems, setStoredItems] = useState<FoodItem[]>(
   //   foodList && foodList
@@ -163,8 +157,8 @@ export const SelectedfoodHorizontalDrag = ({
                             (foodItem: FoodItem, index: number) => {
                               // console.log(foodItem, "foodItem");
                               if (foodItem && foodItem.food_value !== "") {
-                                setSingleFoodItem(foodItem);
-                                console.log(singleFoodItem, "singleFoodItem");
+                                // setSingleFoodItem(foodItem);
+                                // console.log(singleFoodItem, "singleFoodItem");
                                 return (
                                   <DraggableFoodItem
                                     key={foodItem?.food_id}

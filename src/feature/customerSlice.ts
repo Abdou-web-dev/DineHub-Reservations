@@ -35,7 +35,7 @@ interface UpdateFoodItemPayload {
   id: string;
   index: number;
   new_food_item: {
-    food_id: number;
+    food_id?: number;
     food_value: string;
   };
 }

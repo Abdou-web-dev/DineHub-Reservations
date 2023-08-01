@@ -18,7 +18,7 @@ interface DraggableFoodItemProps {
   index: number;
   foodItem: {
     food_value: string;
-    food_id: number;
+    food_id?: number | any;
   };
   id: string;
 }
