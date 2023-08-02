@@ -1,10 +1,17 @@
 import { Customer } from "../../feature/customerSlice";
 import CustomerCard from "../cards/CustomerCard";
 import { FoodInfosContextProvider } from "../context/FoodInfosContext";
+import { FoodItem } from "../lists/DraggableFoodItems";
 
 // https://www.reddit.com/r/reactjs/comments/we08mw/comment/iiywd82/
 
+let foodElement_initilizer: FoodItem = {
+  food_value: "",
+  food_id: 0,
+  food_category: "",
+};
 export const CustomersSection = ({ customers }: { customers: Customer[] }) => {
+  // const [foodElement, setfoodElement] = useState(foodElement_initilizer);
   return (
     <>
       <div className="customers-section-container">
@@ -18,8 +25,15 @@ export const CustomersSection = ({ customers }: { customers: Customer[] }) => {
         <div className="customers-section-customers__list">
           {/* I can use context api here to pass the customer object down to nested components, instead of props drilling */}
           {customers.map((customer: Customer, index: number) => {
+            // let customersFoodList = customer.food;
+            // let elements: string[] = customersFoodList.map((elem) => {
+            //   return elem.food_value;
+            // });
+            // for (let index = 0; index < customersFoodList.length; index++) {
+            //   const element = customersFoodList[index];
+            //   // setfoodElement(element);
+            // }
             return (
-              // <FoodContext.Provider value={contextValue}>
               <FoodInfosContextProvider key={customer.id}>
                 <CustomerCard
                   id={customer.id}
@@ -27,10 +41,8 @@ export const CustomersSection = ({ customers }: { customers: Customer[] }) => {
                   foodList={customer.food}
                   {...{ index }}
                   restauLocation={customer.restauLocation}
-                  // guestsNumber={customer.guestsNumber}
                 />
               </FoodInfosContextProvider>
-              // </FoodContext.Provider>
             );
           })}
         </div>

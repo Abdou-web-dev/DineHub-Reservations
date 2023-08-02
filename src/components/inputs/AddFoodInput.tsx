@@ -1,4 +1,4 @@
-import { AutoComplete, Button } from "antd";
+import { AutoComplete, Button, Tooltip } from "antd";
 import { InputStatus } from "antd/es/_util/statusUtils";
 import { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -11,30 +11,20 @@ import {
   dinner_menu,
 } from "../../assets/staticData/meals_data";
 import { addFoodToCustomer } from "../../feature/customerSlice";
-
+import { randomInteger } from "../../utils/helpers";
 import { FoodInfosContext } from "../context/FoodInfosContext";
 import "./inputs_styles.scss";
-// https://www.npmjs.com/package/turnstone
-// Turnstone is a highly customisable, easy-to-use autocomplete search component for React.
-
-export function randomInteger(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 export const AddFoodInput = ({
   customerFoodInput,
   id,
   setCustomerFoodInput,
   autoCompleteBorder,
-}: // selectedTime,
-// meridiumType,
-{
+}: {
   customerFoodInput: string;
   setCustomerFoodInput: React.Dispatch<React.SetStateAction<string>>;
   id: string;
   autoCompleteBorder: string;
-  // selectedTime: string;
-  // meridiumType: string;
 }) => {
   const dispatch = useDispatch();
   const {
@@ -43,7 +33,6 @@ export const AddFoodInput = ({
     is_lunch_time,
     selectedTime,
     random_id,
-    singleFoodItem,
     lunch_menu,
   } = useContext(FoodInfosContext);
   const [inputStatus, setInputStatus] = useState<
@@ -52,12 +41,7 @@ export const AddFoodInput = ({
 
   const [value, setValue] = useState("");
   const [optionsData, setOptionsData] = useState<{ value: string }[]>([]);
-  // const [anotherOptions, setAnotherOptions] = useState<{ value: string }[]>([]);
-  const mockVal = (str: string, repeat = 1) => ({
-    value: str.repeat(repeat),
-  });
-
-  // !searchText ? [] : is_breakfast_time ? breakfast_menu : [];
+  const [autoCompleteDisabled, setAutoCompleteDisabled] = useState(false);
 
   let is_serving_time: boolean =
     is_breakfast_time || is_lunch_time || is_dinner_time;
@@ -78,17 +62,12 @@ export const AddFoodInput = ({
     }
   };
 
-  // const getPanelValue = (searchText: string) =>
-  //   !searchText
-  //     ? []
-  //     : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
-
   const onSelect = (data: string) => {
-    console.log("onSelect", data);
+    // console.log("onSelect", data);
   };
 
   const onChange = (data: string) => {
-    console.log("onChange", data);
+    // console.log("onChange", data);
     setValue(data);
   };
 
@@ -125,39 +104,33 @@ export const AddFoodInput = ({
         </>
 
         <div className="customer-food-add-autocomplete__and__add-btn">
-          <AutoComplete
-            className="customer-food-add-autocomplete-input"
-            value={customerFoodInput}
-            onChange={(value) => {
-              // console.log(value, "value");
-              setCustomerFoodInput(value);
-              if (customerFoodInput) {
-                setInputStatus("");
-              }
-            }}
-            options={selectedTime !== "" ? optionsData : undefined}
-            style={{ width: 200, border: autoCompleteBorder }}
-            onSelect={onSelect}
-            onSearch={(text) => setOptionsData(getPanelValue(text))}
-            status={inputStatus}
-            placeholder={"Type a food item..."}
-            allowClear
-          />
-          {/* this Input component has been replaced with antd AutoComplete Input */}
-          {/* <Input
-          className="customer-food-add-input"
-          value={customerFoodInput}
-          onChange={(e) => {
-            setCustomerFoodInput(e.target.value);
-            if (customerFoodInput) {
-              setInputStatus("");
+          <Tooltip
+            title={
+              autoCompleteDisabled ? (
+                <span>Click on one of the buttons above</span>
+              ) : null
             }
-          }}
-          type="text"
-          status={inputStatus}
-          placeholder={"Type a food item..."}
-          allowClear
-        /> */}
+          >
+            <AutoComplete
+              disabled={autoCompleteDisabled}
+              className="customer-food-add-autocomplete-input"
+              value={customerFoodInput}
+              onChange={(value) => {
+                // console.log(value, "value");
+                setCustomerFoodInput(value);
+                if (customerFoodInput) {
+                  setInputStatus("");
+                }
+              }}
+              options={selectedTime !== "" ? optionsData : undefined}
+              style={{ width: 200, border: autoCompleteBorder }}
+              onSelect={onSelect}
+              onSearch={(text) => setOptionsData(getPanelValue(text))}
+              status={inputStatus}
+              placeholder={"Type a food item..."}
+              allowClear
+            />
+          </Tooltip>
           <Button
             className={
               customerFoodInput
@@ -176,14 +149,8 @@ export const AddFoodInput = ({
                         : customerFoodInput === `pizza`
                         ? random_id + 11
                         : randomInteger(1, 5000),
-                    // random_id,
-                    // randomInteger(1, 5000)
+
                     food_category: "",
-                    // customerFoodInput === `tacos`
-                    //   ? `tacos_category`
-                    //   : customerFoodInput === `pizza`
-                    //   ? `pizza_category`
-                    //   : "",
                   },
                 })
               );
@@ -192,7 +159,6 @@ export const AddFoodInput = ({
               }
               setCustomerFoodInput("");
             }}
-            // food_id: randomInteger(1, 5000),
           >
             <span>Add Food</span>
           </Button>
@@ -211,3 +177,28 @@ export const AddFoodInput = ({
     </>
   );
 };
+
+/* this Input component has been replaced with antd AutoComplete Input */
+/* <Input
+          className="customer-food-add-input"
+          value={customerFoodInput}
+          onChange={(e) => {
+            setCustomerFoodInput(e.target.value);
+            if (customerFoodInput) {
+              setInputStatus("");
+            }
+          }}
+          type="text"
+          status={inputStatus}
+          placeholder={"Type a food item..."}
+          allowClear
+        /> */
+// const mockVal = (str: string, repeat = 1) => ({
+//   value: str.repeat(repeat),
+// });
+
+// !searchText ? [] : is_breakfast_time ? breakfast_menu : [];
+// const getPanelValue = (searchText: string) =>
+//   !searchText
+//     ? []
+//     : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];

@@ -1,16 +1,14 @@
 import { Modal } from "antd";
 import { MouseEvent, useContext, useState } from "react";
 import { CustomerButtons } from "../buttons/CustomerButtons";
+import { FoodMealDessertButtons } from "../buttons/FoodMealDessertButtons";
 import { OrderTimeTable } from "../collapse/OrderTime";
 import { FoodInfosContext } from "../context/FoodInfosContext";
 import { GuestsCounter } from "../counters/GuestsCounter";
 import { CloseXIconBtn } from "../icons/Icons";
 import { AddFoodInput } from "../inputs/AddFoodInput";
 import { DateInput } from "../inputs/DateInput";
-import {
-  FoodItem,
-  SelectedfoodHorizontalDrag,
-} from "../lists/SelectedfoodHorizontalDrag";
+import { DraggableFoodItems, FoodItem } from "../lists/DraggableFoodItems";
 import { ButtonsModalContent } from "../modals/ButtonsModalContent";
 import { FoodInfosModalContent } from "../modals/FoodInfosModalContent";
 import { FoodListModalContent } from "../modals/FoodListModalContent";
@@ -78,6 +76,8 @@ function CustomerCard({
           </div>
 
           <div className="add-food-input-and-list-comps">
+            <FoodMealDessertButtons {...{ foodList }} />
+            {/* FoodMealDessertButtons component's code to be implemented */}
             <AddFoodInput
               {...{
                 id,
@@ -86,13 +86,14 @@ function CustomerCard({
                 autoCompleteBorder,
               }}
             />
-            <SelectedfoodHorizontalDrag {...{ id, foodList }} />
+            <DraggableFoodItems {...{ id, foodList }} />
           </div>
         </div>
       </div>
 
       <div className="customer-infos-footer">
         <CustomerButtons
+          // index is specific to each customer, it is an integer
           {...{ foodList, index, setOpenOrderModal, setAutoCompleteBorder }}
         />
       </div>

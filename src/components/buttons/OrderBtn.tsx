@@ -23,12 +23,6 @@ export const OrderBtn = ({
   return (
     <>
       <Button
-        // disabled={
-        //   // meaning when the array is empty
-        //   foodList?.length === 1 && foodList[0]?.food_value === ""
-        //     ? true
-        //     : false
-        // }
         className="order"
         onClick={handleOrder}
         onMouseOver={() => {
@@ -39,6 +33,12 @@ export const OrderBtn = ({
           if (foodList?.length === 1 && foodList[0]?.food_value === "")
             setAutoCompleteBorder("");
         }}
+        // disabled={
+        //   // meaning when the array is empty
+        //   foodList?.length === 1 && foodList[0]?.food_value === ""
+        //     ? true
+        //     : false
+        // }
       >
         <span>{label}</span>
       </Button>

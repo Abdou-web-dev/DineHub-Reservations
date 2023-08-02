@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteCustomer } from "../../feature/customerSlice";
 import { CloseXIconBtn } from "../icons/Icons";
-import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
+import { FoodItem } from "../lists/DraggableFoodItems";
 import { CancelBtn, CancelBtn as NoBtn } from "./CancebBtn";
 import { OrderBtn, OrderBtn as YesBtn } from "./OrderBtn";
 import "./btns_styles.scss";
@@ -36,7 +36,7 @@ export function CustomerButtons({
         // handleCancelClick={() => dispatch(deleteCustomer(index))}
         handleCancelClick={() => setOpenDeleteModal(true)}
         label="Cancel"
-        {...{ index }}
+        // {...{ index }}
       />
       <OrderBtn
         label="Order"

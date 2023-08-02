@@ -4,7 +4,7 @@
 import { Button } from "antd";
 import { useContext } from "react";
 import { FoodInfosContext } from "../context/FoodInfosContext";
-import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
+import { FoodItem } from "../lists/DraggableFoodItems";
 import "./modal_styles.scss";
 
 export const ButtonsModalContent = ({

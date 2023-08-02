@@ -14,11 +14,16 @@
 
 # Todo6: wadd info btn below the food items, on hover , display this msg : You can reorder these items by dragging and dropping them,
 
+# Todo7: on hovering on each food item option button, the descirption will appear below , preceded by a spinner
+
+# Todo8: when the user selects lunch or dinner menu, display three buttons next to the AutoComplete : meals, dessert, ALL.
+
+dinner will have its specific desserts , lunch too.
+
+# Todo9: if a food item is added manually with the AutoComplete, display it as a disabled btn , and when the user hovers over it , display this msg : We don't serve this meal, please choose from the list above, and delete this item from the storedItems array inside FoodListModalContent component
+
 \*\*
 
--
--
--
 - \*\*
   <!-- use mantine react components library in a new project with React Query  --> npm i @mantine/core !!!!!!
 
@@ -32,3 +37,6 @@
 
 // https://stackoverflow.com/questions/62378796/cannot-destructure-property-of-object-from-context
 // the solution is to wrap the components with the context Provider
+
+// https://www.npmjs.com/package/turnstone
+// Turnstone is a highly customisable, easy-to-use autocomplete search component for React.

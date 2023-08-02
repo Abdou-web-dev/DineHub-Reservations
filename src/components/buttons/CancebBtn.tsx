@@ -3,25 +3,17 @@ import { useDispatch } from "react-redux";
 
 interface CancelBtnProps {
   label: string;
-  index?: number;
+  // index?: number;
   handleCancelClick: React.MouseEventHandler<HTMLAnchorElement> &
     React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const CancelBtn = ({
-  label,
-  index,
-  handleCancelClick,
-}: CancelBtnProps) => {
+export const CancelBtn = ({ label, handleCancelClick }: CancelBtnProps) => {
   const dispatch = useDispatch();
 
   return (
     <>
-      <Button
-        // onClick={() => dispatch(deleteCustomer(index))}
-        onClick={handleCancelClick}
-        className="cancel"
-      >
+      <Button onClick={handleCancelClick} className="cancel">
         <span>{label}</span>
       </Button>
     </>

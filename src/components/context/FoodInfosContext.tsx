@@ -1,22 +1,8 @@
 import * as React from "react";
 import { createContext, useState } from "react";
-import { randomInteger } from "../inputs/AddFoodInput";
-import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
+import { isListContainsObject, randomInteger } from "../../utils/helpers";
+import { FoodItem } from "../lists/DraggableFoodItems";
 // https://stackoverflow.com/questions/71333605/how-can-i-correctly-initialize-the-type-dispatchsetstateactionstring-as-a
-
-export function containsObject(obj: FoodItem, list: FoodItem[]) {
-  // var i;
-  for (let i = 0; i < list.length; i++) {
-    if (
-      list[i].food_value === obj.food_value ||
-      list[i].food_value.includes(obj.food_value)
-    ) {
-      return true;
-    }
-  }
-
-  return false;
-}
 
 export interface FoodInfosContext {
   // is_time_between_01_and_06?: boolean;
@@ -73,9 +59,12 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
 
 export const FoodInfosContextProvider = ({
   children,
-}: {
+}: // foodElement,
+{
   children: React.ReactNode | JSX.Element | JSX.Element[];
+  // foodElement: FoodItem;
 }) => {
+  // console.log(foodElement, "");
   const [newFoodItem, setNewFoodItem] = useState<FoodItem>({
     food_id: 0,
     food_value: "",
@@ -90,37 +79,37 @@ export const FoodInfosContextProvider = ({
     { value: "Slow-roasted beef with mustard potatoes recipe" },
     {
       value: "tacos",
-      disabled: containsObject({ food_value: "tacos" }, storedItems),
+      disabled: isListContainsObject({ food_value: "tacos" }, storedItems),
     },
 
     {
       value: "pizza",
-      disabled: containsObject({ food_value: "pizza" }, storedItems),
+      disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
     },
     {
       value: "sandwich",
-      disabled: containsObject({ food_value: "sandwich" }, storedItems),
+      disabled: isListContainsObject({ food_value: "sandwich" }, storedItems),
     },
     {
       value: "Shawarma",
-      disabled: containsObject({ food_value: "Shawarma" }, storedItems),
+      disabled: isListContainsObject({ food_value: "Shawarma" }, storedItems),
     },
     {
       value: "hamburger",
-      disabled: containsObject({ food_value: "hamburger" }, storedItems),
+      disabled: isListContainsObject({ food_value: "hamburger" }, storedItems),
     },
     {
       value: "tajine",
-      disabled: containsObject({ food_value: "tajine" }, storedItems),
+      disabled: isListContainsObject({ food_value: "tajine" }, storedItems),
     },
     {
-      value: "cheeseburger",
-      disabled: containsObject({ food_value: "cheeseburger" }, storedItems),
+      value: "burger",
+      disabled: isListContainsObject({ food_value: "burger" }, storedItems),
     },
-    // {
-    //   value: "ice cream",
-    //   disabled: containsObject({ food_value: "cheeseburger" }, storedItems),
-    // },
+    {
+      value: "salad",
+      disabled: isListContainsObject({ food_value: "salad" }, storedItems),
+    },
     {
       value: "ANY",
       // disabled: containsObject({ food_value: "" }, storedItems),

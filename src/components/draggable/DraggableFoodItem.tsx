@@ -23,9 +23,9 @@ interface DraggableFoodItemProps {
   id: string;
 }
 export const DraggableFoodItem = ({
-  index,
+  index: food_item_index,
   foodItem,
-  id,
+  id: customer_id, //the customer's id
 }: DraggableFoodItemProps) => {
   const dispatch = useDispatch();
   const {
@@ -47,14 +47,25 @@ export const DraggableFoodItem = ({
     foodItem?.food_value === "tacos" ||
     foodItem?.food_value === "pizza" ||
     foodItem?.food_value === "tajine" ||
-    foodItem?.food_value === "Shawarma";
+    foodItem?.food_value === "Shawarma" ||
+    foodItem?.food_value === "salad" ||
+    foodItem?.food_value === "sandwich" ||
+    foodItem?.food_value === "rice";
 
   let showOptionsButton: boolean = is_lunch_time && lunch_time_meals;
+  //
+  function openHereLala(index: number) {
+    setOpenFoodChoiceModal(true);
+  }
+
   // is_serving_time && newFoodItem.food_value !== "";
 
   return (
     <>
-      <Draggable draggableId={foodItem?.food_id?.toString()} {...{ index }}>
+      <Draggable
+        draggableId={foodItem?.food_id?.toString()}
+        {...{ index: food_item_index }}
+      >
         {(provided) => (
           <div
             className="selected-food-single-card-grid-wrapper"
@@ -75,7 +86,15 @@ export const DraggableFoodItem = ({
                     </>
                   }
                   onClick={() => {
+                    // openHereLala(foodItem.food_id);
                     setOpenFoodChoiceModal(true);
+                    // Try this :
+                    // dispatch(
+                    //   displayFoodOptions({
+                    //     id: customer_id,
+                    //     index: food_item_index,
+                    //   })
+                    // )
                   }}
                 ></Button>
               ) : null}
@@ -89,8 +108,8 @@ export const DraggableFoodItem = ({
                 onClick={() =>
                   dispatch(
                     deleteFoodFromCustomer({
-                      id: id,
-                      index: index,
+                      id: customer_id,
+                      index: food_item_index,
                     })
                   )
                 }
@@ -103,7 +122,7 @@ export const DraggableFoodItem = ({
       </Draggable>
       <>
         <Modal
-          destroyOnClose
+          destroyOnClose={true}
           className="food-item-options-modal"
           open={openFoodChoiceModal}
           maskClosable={true}
@@ -125,14 +144,15 @@ export const DraggableFoodItem = ({
             </div>
           }
         >
+          {/* maybe use Redux to display */}
           {is_lunch_time ? (
             <FoodChoiceModalContent
               {...{
                 foodItem,
                 openFoodChoiceModal,
                 setOpenFoodChoiceModal,
-                id,
-                index,
+                id: customer_id,
+                index: food_item_index,
               }}
             />
           ) : null}

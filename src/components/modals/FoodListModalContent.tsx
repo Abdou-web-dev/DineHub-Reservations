@@ -1,19 +1,13 @@
-// import food_4 from "../../assets/img/food_item/food_4.svg"
-// import food_1 from "../../assets/img/food_item/food-dish.svg"
-// import food_2 from "../../assets/img/food_item/food-menu.svg"
-// import food_3 from "../../assets/img/food_item/food-restaurant.svg"
-
 import { useContext } from "react";
 import { ComeBackBtn } from "../buttons/ComeBackBtn";
 import { FoodInfosContext } from "../context/FoodInfosContext";
-import { FoodItem } from "../lists/SelectedfoodHorizontalDrag";
+import { FoodItem } from "../lists/DraggableFoodItems";
 
 export const FoodListModalContent = ({
   foodList,
   setShowChoosenFoodInfos,
   setShowChoosenFood,
 }: {
-  // foodList: [{ food_value: string; food_id: number }];
   foodList: FoodItem[];
   setShowChoosenFood: React.Dispatch<React.SetStateAction<boolean>>;
   setShowChoosenFoodInfos: React.Dispatch<React.SetStateAction<boolean>>;

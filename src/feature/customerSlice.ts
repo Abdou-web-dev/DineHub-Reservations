@@ -122,12 +122,11 @@ export const customerSlice = createSlice({
           //the id is relevant to a given customer
           customer.food.forEach((singleFood) => {
             if (singleFood.food_id === action.payload.new_food_item.food_id) {
-              // console.log(singleFood.food_id, "here", action.payload.index);
-              singleFood.food_value = action.payload.new_food_item?.food_value;
               //the index is relevant to a given food item
-              // singleFood.food_value = newFoodItem.food_value;
-              // singleFood.food_id = ;
+              singleFood.food_value = action.payload.new_food_item?.food_value;
+              singleFood.food_id = action.payload.new_food_item.food_id;
               // singleFood.food_category = "categ";
+              // singleFood.food_value = newFoodItem.food_value;
             }
           });
         }
