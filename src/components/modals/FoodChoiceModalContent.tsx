@@ -91,12 +91,7 @@ export const FoodChoiceModalContent = ({
         );
 
         setNewFoodItem({
-          food_id:
-            foodItem.food_value === "tacos"
-              ? random_id + 47
-              : foodItem.food_value === `pizza`
-              ? random_id + 11
-              : randomInteger(1, 5000),
+          food_id: randomInteger(1, 5000),
           food_value: option,
         });
       },

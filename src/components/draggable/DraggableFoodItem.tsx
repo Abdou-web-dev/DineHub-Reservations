@@ -1,14 +1,15 @@
 import { Button, Card, Modal } from "antd";
-// import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 import delete_stop from "../../assets/img/delete_stop.svg";
 import options from "../../assets/img/options.svg";
 import { deleteFoodFromCustomer } from "../../feature/customerSlice";
+import { setActiveFoodItem } from "../../feature/updateModalSlice";
 import { FoodInfosContext } from "../context/FoodInfosContext";
 import { CloseXIconBtn } from "../icons/Icons";
-import { FoodChoiceModalContent } from "../modals/FoodChoiceModalContent";
+import FoodChoiceModalContentAI from "../modals/FoodChoiceModalContentAI";
 
 const gridStyle: React.CSSProperties = {
   textAlign: "center",
@@ -29,19 +30,18 @@ export const DraggableFoodItem = ({
 }: DraggableFoodItemProps) => {
   const dispatch = useDispatch();
   const {
-    selectedTime,
-    meridiumType,
     is_breakfast_time,
     is_dinner_time,
     is_lunch_time,
-    newFoodItem,
     openFoodChoiceModal,
     setOpenFoodChoiceModal,
-    random_id,
   } = useContext(FoodInfosContext);
 
   let is_serving_time: boolean =
     is_breakfast_time || is_lunch_time || is_dinner_time;
+
+  // let is_lunch_time: boolean =
+  //   is_time_between_01_and_06 && meridiumType === "PM";
 
   let lunch_time_meals: boolean =
     foodItem?.food_value === "tacos" ||
@@ -53,12 +53,19 @@ export const DraggableFoodItem = ({
     foodItem?.food_value === "rice";
 
   let showOptionsButton: boolean = is_lunch_time && lunch_time_meals;
-  //
-  function openHereLala(index: number) {
-    setOpenFoodChoiceModal(true);
-  }
 
-  // is_serving_time && newFoodItem.food_value !== "";
+  // Define your sub-options data here
+  const subOptionsData: Record<string, string[]> = {
+    pizza: ["Tuna Pizza", "Beef Pizza", "Chicken Pizza", "Shrimp Pizza"],
+    tacos: ["Tacos de Pescado", "Tacos Opt2", "Tacos Opt3", "tacos opt4"],
+    tajine: ["tajine1", " tajine2", "tajine3 ", "tajine4 "],
+
+    // Add more sub-options for other food items
+  };
+
+  const activeFoodItem = useSelector(
+    (state: RootState) => state.updateModalReducer.activeFoodItem
+  );
 
   return (
     <>
@@ -86,15 +93,8 @@ export const DraggableFoodItem = ({
                     </>
                   }
                   onClick={() => {
-                    // openHereLala(foodItem.food_id);
+                    dispatch(setActiveFoodItem(foodItem.food_value));
                     setOpenFoodChoiceModal(true);
-                    // Try this :
-                    // dispatch(
-                    //   displayFoodOptions({
-                    //     id: customer_id,
-                    //     index: food_item_index,
-                    //   })
-                    // )
                   }}
                 ></Button>
               ) : null}
@@ -144,15 +144,15 @@ export const DraggableFoodItem = ({
             </div>
           }
         >
-          {/* maybe use Redux to display */}
           {is_lunch_time ? (
-            <FoodChoiceModalContent
+            <FoodChoiceModalContentAI
+              activeFoodItem={activeFoodItem}
+              subOptionsData={subOptionsData}
               {...{
-                foodItem,
-                openFoodChoiceModal,
                 setOpenFoodChoiceModal,
-                id: customer_id,
-                index: food_item_index,
+                customer_id,
+                food_item_index,
+                foodItem,
               }}
             />
           ) : null}

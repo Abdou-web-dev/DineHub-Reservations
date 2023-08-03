@@ -2,19 +2,16 @@ import { Button } from "antd";
 
 interface TogglerBtnProps {
   label: string;
-  handleCancelClick?: React.MouseEventHandler<HTMLAnchorElement> &
+  onClick: React.MouseEventHandler<HTMLAnchorElement> &
     React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const TogglerButton = ({
-  label,
-  handleCancelClick,
-}: TogglerBtnProps) => {
+export const TogglerButton = ({ label, onClick }: TogglerBtnProps) => {
   // const dispatch = useDispatch();
 
   return (
     <>
-      <Button onClick={handleCancelClick} className="btn-toggler">
+      <Button onClick={onClick} className="btn-toggler">
         <span>{label}</span>
       </Button>
     </>

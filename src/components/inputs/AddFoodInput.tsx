@@ -6,10 +6,6 @@ import info from "../../assets/img/info.svg";
 import breakfast from "../../assets/img/meals/breakfast.png";
 import dinner from "../../assets/img/meals/dinner.png";
 import lunch from "../../assets/img/meals/lunch.png";
-import {
-  breakfast_menu,
-  dinner_menu,
-} from "../../assets/staticData/meals_data";
 import { addFoodToCustomer } from "../../feature/customerSlice";
 import { randomInteger } from "../../utils/helpers";
 import { FoodInfosContext } from "../context/FoodInfosContext";
@@ -32,33 +28,29 @@ export const AddFoodInput = ({
     is_dinner_time,
     is_lunch_time,
     selectedTime,
-    random_id,
-    lunch_menu,
+    selectedCategory,
+    // lunch_menu,
+    optionsData,
+    setOptionsData,
+    lunchMenu,
   } = useContext(FoodInfosContext);
   const [inputStatus, setInputStatus] = useState<
     "warning" | "error" | undefined | InputStatus
   >();
 
   const [value, setValue] = useState("");
-  const [optionsData, setOptionsData] = useState<{ value: string }[]>([]);
   const [autoCompleteDisabled, setAutoCompleteDisabled] = useState(false);
 
   let is_serving_time: boolean =
     is_breakfast_time || is_lunch_time || is_dinner_time;
 
+  // ******************
+  // a function that returns a dynamic menu
   const getPanelValue = (searchText: string) => {
     if (!searchText) {
       return [];
     } else {
-      if (is_breakfast_time) {
-        return breakfast_menu;
-      } else if (is_lunch_time) {
-        return lunch_menu;
-      } else if (is_dinner_time) {
-        return dinner_menu;
-      } else {
-        return [];
-      }
+      return lunchMenu.filter((option) => option.value.includes(searchText));
     }
   };
 
@@ -67,7 +59,6 @@ export const AddFoodInput = ({
   };
 
   const onChange = (data: string) => {
-    // console.log("onChange", data);
     setValue(data);
   };
 
@@ -112,20 +103,32 @@ export const AddFoodInput = ({
             }
           >
             <AutoComplete
+              options={selectedTime !== "" ? optionsData : undefined}
               disabled={autoCompleteDisabled}
               className="customer-food-add-autocomplete-input"
               value={customerFoodInput}
               onChange={(value) => {
-                // console.log(value, "value");
                 setCustomerFoodInput(value);
                 if (customerFoodInput) {
                   setInputStatus("");
                 }
               }}
-              options={selectedTime !== "" ? optionsData : undefined}
               style={{ width: 200, border: autoCompleteBorder }}
               onSelect={onSelect}
-              onSearch={(text) => setOptionsData(getPanelValue(text))}
+              onSearch={(text: string) => {
+                const filteredOptions = getPanelValue(text).filter((option) => {
+                  // Modify this condition based on your logic
+                  if (selectedCategory === "Meals") {
+                    return option.value.includes("meal");
+                  } else if (selectedCategory === "Desserts") {
+                    return option.value.includes("dessert");
+                  } else {
+                    return true; // Show all options for "All" category
+                  }
+                });
+                // setOptionsData(getPanelValue(text));
+                setOptionsData(filteredOptions);
+              }}
               status={inputStatus}
               placeholder={"Type a food item..."}
               allowClear
@@ -143,13 +146,7 @@ export const AddFoodInput = ({
                   id, //this is custimer's id
                   food_element: {
                     food_value: customerFoodInput,
-                    food_id:
-                      customerFoodInput === `tacos`
-                        ? random_id + 47
-                        : customerFoodInput === `pizza`
-                        ? random_id + 11
-                        : randomInteger(1, 5000),
-
+                    food_id: randomInteger(1, 5000),
                     food_category: "",
                   },
                 })
@@ -202,3 +199,19 @@ export const AddFoodInput = ({
 //   !searchText
 //     ? []
 //     : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
+// a function that returns a static menu
+// const getPanelValue = (searchText: string) => {
+//   if (!searchText) {
+//     return [];
+//   } else {
+//     if (is_breakfast_time) {
+//       return breakfast_menu;
+//     } else if (is_lunch_time) {
+//       return lunch_menu;
+//     } else if (is_dinner_time) {
+//       return dinner_menu;
+//     } else {
+//       return [];
+//     }
+//   }
+// };

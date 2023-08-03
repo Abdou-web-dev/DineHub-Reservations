@@ -102,8 +102,6 @@ export const DraggableFoodItems = ({
                                     key={foodItem?.food_id}
                                     {...{ index, id, foodItem }}
                                   />
-                                  // <FoodItemContext.Provider {...{}}>
-                                  // </FoodItemContext.Provider>
                                 );
                               }
                             }

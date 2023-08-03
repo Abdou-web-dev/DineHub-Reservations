@@ -1,21 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FoodItem } from "../components/lists/DraggableFoodItems";
 
 export interface Customer {
   id: string;
   name: string;
-  food: [
-    {
-      food_value: string;
-      food_id: number;
-      food_category: string;
-    }
-  ];
+  food: [FoodItem];
   //the new 4 props
   guestsNumber?: number | string;
   restauLocation?: string;
   orderDate?: string;
   orderTime?: string;
 }
+
+// export interface foodItem
 
 interface AddFoodToCustomerPayload {
   food_element: {
@@ -25,19 +22,22 @@ interface AddFoodToCustomerPayload {
   };
   id: string;
 }
+
 interface RemoveFoodFromCustomerPayload {
-  // food: string;
   id: string;
   index: number;
 }
 interface UpdateFoodItemPayload {
-  // food: string;
   id: string;
   index: number;
   new_food_item: {
     food_id?: number;
     food_value: string;
   };
+}
+interface displayFoodOptionsPayload {
+  id: string;
+  index: number;
 }
 interface AddLocationToCustomerPayload {
   location: string;
@@ -79,28 +79,16 @@ export const customerSlice = createSlice({
       });
     },
 
-    // addFoodToCustomer_version2: (
-    //   state,
-    //   action: PayloadAction<AddFoodToCustomerPayload>
-    // ) => {
-    //   const { id, food } = action.payload;
-    //   const customer = state.customers.find((customer) => customer.id === id);
-    //   if (customer) {
-    //     customer.food.push(food);
-    //   }
-    // },
     addLocationToCustomer: (
       state,
       action: PayloadAction<AddLocationToCustomerPayload>
     ) => {
       const { id, location } = action.payload;
-      // const { id, guestNumber, location, ...etc... } = action.payload;
 
       const customer = state.customers.find((customer) => customer.id === id);
 
       if (customer) {
         customer.restauLocation = location;
-        // customer.guestsNumber = guestsNumber;
       }
     },
     deleteFoodFromCustomer: (
@@ -132,6 +120,32 @@ export const customerSlice = createSlice({
         }
       });
     },
+    updateFoodItemName: (
+      state,
+      action: PayloadAction<{
+        customerId: string;
+        foodId: number;
+        newName: string;
+        activeFoodItemParam: string; // Add activeFoodItem to the payload
+      }>
+    ) => {
+      const { customerId, foodId, newName, activeFoodItemParam } =
+        action.payload;
+      const customerToUpdate = state.customers.find(
+        (customer: Customer) => customer.id === customerId
+      );
+
+      if (customerToUpdate) {
+        const foodItemToUpdate = customerToUpdate.food.find(
+          (item: FoodItem) => item.food_id === foodId
+        );
+
+        if (foodItemToUpdate) {
+          foodItemToUpdate.food_value = newName;
+          // foodItemToUpdate.food_value = activeFoodItemParam is the same as foodItemToUpdate.food_value = newName;
+        }
+      }
+    },
   },
 });
 
@@ -142,6 +156,7 @@ export const {
   deleteFoodFromCustomer,
   updateSpecificFoodItem,
   deleteCustomer,
+  updateFoodItemName,
 } = customerSlice.actions;
 
 export default customerSlice.reducer;

@@ -22,6 +22,8 @@ dinner will have its specific desserts , lunch too.
 
 # Todo9: if a food item is added manually with the AutoComplete, display it as a disabled btn , and when the user hovers over it , display this msg : We don't serve this meal, please choose from the list above, and delete this item from the storedItems array inside FoodListModalContent component
 
+# todo10: You can further enhance the app by adding features like quantity selection, total order cost calculation, and more.
+
 \*\*
 
 - \*\*
@@ -40,3 +42,4 @@ dinner will have its specific desserts , lunch too.
 
 // https://www.npmjs.com/package/turnstone
 // Turnstone is a highly customisable, easy-to-use autocomplete search component for React.
+// Yes, you can have as many global variables (context values) in a context file as you need. However, keep in mind that having too many context values might lead to more complex management and potential performance issues. It's generally a good practice to group related state variables together in a single context if possible.

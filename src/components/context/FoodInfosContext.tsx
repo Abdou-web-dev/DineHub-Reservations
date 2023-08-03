@@ -5,36 +5,50 @@ import { FoodItem } from "../lists/DraggableFoodItems";
 // https://stackoverflow.com/questions/71333605/how-can-i-correctly-initialize-the-type-dispatchsetstateactionstring-as-a
 
 export interface FoodInfosContext {
-  // is_time_between_01_and_06?: boolean;
-  // is_time_between_06_and_11?: boolean;
   is_breakfast_time: boolean;
   is_lunch_time: boolean;
   is_dinner_time: boolean;
   selectedTime: string;
-  setSelectedTime?: React.Dispatch<React.SetStateAction<string>> | any; //optional prop
+  setSelectedTime: React.Dispatch<React.SetStateAction<string>>; //optional prop
   meridiumType: string;
-  setMeridiumType?: React.Dispatch<React.SetStateAction<string>> | any; //optional prop
+  setMeridiumType: React.Dispatch<React.SetStateAction<string>>; //optional prop
   newFoodItem: FoodItem;
   newFoodItems: FoodItem[];
-  setNewFoodItem?: React.Dispatch<React.SetStateAction<FoodItem>> | any;
-  setNewFoodItems?: React.Dispatch<React.SetStateAction<FoodItem[]>> | any;
+  setNewFoodItem: React.Dispatch<React.SetStateAction<FoodItem>>;
+  setNewFoodItems: React.Dispatch<React.SetStateAction<FoodItem[]>>;
   storedItems: FoodItem[];
-  setStoredItems?: React.Dispatch<React.SetStateAction<FoodItem[]>> | any;
+  setStoredItems: React.Dispatch<React.SetStateAction<FoodItem[]>>;
   random_id: number;
   customerFoodInput: string;
-  setCustomerFoodInput?: React.Dispatch<React.SetStateAction<string>> | any;
+  setCustomerFoodInput: React.Dispatch<React.SetStateAction<string>>;
   openFoodChoiceModal: boolean;
-  setOpenFoodChoiceModal?: React.Dispatch<React.SetStateAction<boolean>> | any;
-  lunch_menu: (
-    | {
+  setOpenFoodChoiceModal: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedCategory: string;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  optionsData: { value: string }[];
+  setOptionsData: React.Dispatch<React.SetStateAction<{ value: string }[]>>;
+  lunchMenu: {
+    value: string;
+    disabled?: boolean | undefined;
+  }[];
+  setLunchMenu: React.Dispatch<
+    React.SetStateAction<
+      {
         value: string;
-        disabled?: undefined;
-      }
-    | {
-        value: string;
-        disabled: boolean;
-      }
-  )[];
+        disabled?: boolean | undefined;
+      }[]
+    >
+  >;
+  // lunch_menu: (
+  //   | {
+  //       value: string;
+  //       disabled?: undefined;
+  //     }
+  //   | {
+  //       value: string;
+  //       disabled: boolean;
+  //     }
+  // )[];
 }
 
 // export const MusicContext = createContext<IMusicContext>(undefined as any);
@@ -44,8 +58,6 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
   is_breakfast_time: false,
   is_dinner_time: false,
   is_lunch_time: false,
-  // is_time_between_01_and_06: false,
-  // is_time_between_06_and_11: false,
   meridiumType: "",
   selectedTime: "",
   newFoodItem: { food_id: 0, food_value: "" },
@@ -54,7 +66,25 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
   random_id: 0,
   customerFoodInput: "",
   openFoodChoiceModal: false,
-  lunch_menu: [{ value: "", disabled: false }],
+  // lunch_menu: [{ value: "", disabled: false }],
+  selectedCategory: "",
+  setSelectedCategory: () => {}, // Initialize with an empty function
+  setNewFoodItem: () => {},
+  setNewFoodItems: () => {},
+  setOpenFoodChoiceModal: () => {},
+  setSelectedTime: () => {},
+  setMeridiumType: () => {},
+  setStoredItems: () => {},
+  setCustomerFoodInput: () => {},
+  optionsData: [],
+  setOptionsData: () => {},
+  lunchMenu: [
+    {
+      value: "",
+      disabled: false,
+    },
+  ],
+  setLunchMenu: () => {},
 });
 
 export const FoodInfosContextProvider = ({
@@ -70,59 +100,84 @@ export const FoodInfosContextProvider = ({
     food_value: "",
     food_category: "",
   });
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   const [storedItems, setStoredItems] = useState<FoodItem[]>([]);
+  const [optionsData, setOptionsData] = useState<{ value: string }[]>([]);
 
   // arrays of data :
   const [openFoodChoiceModal, setOpenFoodChoiceModal] = useState(false);
 
-  const lunch_menu = [
-    { value: "Slow-roasted beef with mustard potatoes recipe" },
-    {
-      value: "tacos",
-      disabled: isListContainsObject({ food_value: "tacos" }, storedItems),
-    },
+  const generateLunchMenu = (
+    selectedCategory: string,
+    storedItems: FoodItem[]
+  ) => {
+    const menu: { value: string; disabled?: boolean }[] = [];
 
-    {
-      value: "pizza",
-      disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
-    },
-    {
-      value: "sandwich",
-      disabled: isListContainsObject({ food_value: "sandwich" }, storedItems),
-    },
-    {
-      value: "Shawarma",
-      disabled: isListContainsObject({ food_value: "Shawarma" }, storedItems),
-    },
-    {
-      value: "hamburger",
-      disabled: isListContainsObject({ food_value: "hamburger" }, storedItems),
-    },
-    {
-      value: "tajine",
-      disabled: isListContainsObject({ food_value: "tajine" }, storedItems),
-    },
-    {
-      value: "burger",
-      disabled: isListContainsObject({ food_value: "burger" }, storedItems),
-    },
-    {
-      value: "salad",
-      disabled: isListContainsObject({ food_value: "salad" }, storedItems),
-    },
-    {
-      value: "ANY",
-      // disabled: containsObject({ food_value: "" }, storedItems),
-    },
-  ];
+    if (selectedCategory === "Meals") {
+      menu.push(
+        {
+          value: "tacos",
+          disabled: isListContainsObject({ food_value: "tacos" }, storedItems),
+        },
+        {
+          value: "pizza",
+          disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
+        }
+        // ... add other meal items
+      );
+    } else if (selectedCategory === "Desserts") {
+      menu.push(
+        {
+          value: "ice cream",
+          disabled: isListContainsObject(
+            { food_value: "ice cream" },
+            storedItems
+          ),
+        },
+        {
+          value: "cake",
+          disabled: isListContainsObject({ food_value: "cake" }, storedItems),
+        }
+        // ... add other dessert items
+      );
+    } else {
+      // Show all options for "All" category
+      menu.push(
+        {
+          value: "tacos",
+          disabled: isListContainsObject({ food_value: "tacos" }, storedItems),
+        },
+        {
+          value: "pizza",
+          disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
+        },
+        // ... add other meal items
+        {
+          value: "ice cream",
+          disabled: isListContainsObject(
+            { food_value: "ice cream" },
+            storedItems
+          ),
+        },
+        {
+          value: "cake",
+          disabled: isListContainsObject({ food_value: "cake" }, storedItems),
+        }
+        // ... add other dessert items
+      );
+    }
+
+    return menu;
+  };
+
+  const [lunchMenu, setLunchMenu] = useState<
+    { value: string; disabled?: boolean }[]
+  >(generateLunchMenu(selectedCategory, storedItems));
 
   const [selectedTime, setSelectedTime] = useState("");
   const [meridiumType, setMeridiumType] = useState("");
-  //
 
-  // const [storedItems, setStoredItems] = useState<FoodItem[]>(
-  //   foodList && foodList
-  // );
   const [newFoodItems, setNewFoodItems] = useState<FoodItem[]>([]);
   const [customerFoodInput, setCustomerFoodInput] = useState("");
 
@@ -156,11 +211,13 @@ export const FoodInfosContextProvider = ({
     (is_time_between_06_and_11 && meridiumType === "PM") ||
     (selectedTime === `12` && meridiumType === "AM");
 
+  React.useEffect(() => {
+    setLunchMenu(generateLunchMenu(selectedCategory, storedItems));
+  }, [selectedCategory, storedItems]);
+
   return (
     <FoodInfosContext.Provider
       value={{
-        // is_time_between_01_and_06,
-        // is_time_between_06_and_11,
         is_breakfast_time,
         is_lunch_time,
         is_dinner_time,
@@ -179,7 +236,12 @@ export const FoodInfosContextProvider = ({
         setCustomerFoodInput,
         openFoodChoiceModal,
         setOpenFoodChoiceModal,
-        lunch_menu,
+        selectedCategory,
+        setSelectedCategory,
+        optionsData,
+        setOptionsData,
+        lunchMenu,
+        setLunchMenu,
       }}
     >
       {children}
@@ -199,3 +261,6 @@ export const FoodInfosContextProvider = ({
 //   meridiumType: "",
 //   selectedTime: "",
 // });
+// Yes, you can have as many global variables (context values) in a context file as you need. However, keep in mind that having too many context values might lead to more complex management and potential performance issues. It's generally a good practice to group related state variables together in a single context if possible.
+
+// By placing this useEffect inside the FoodInfosContextProvider, you ensure that the lunchMenu state is updated whenever the selectedCategory or storedItems change. This will keep the lunch menu in sync with the user's selections and provide accurate autocomplete suggestions based on the selected category and stored items.
