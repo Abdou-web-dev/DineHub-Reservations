@@ -35,3 +35,87 @@
 //   });
 //   return newList;
 // };
+
+// const handleAutoCompleteChange = (data: string) => {
+//   setCustomerFoodInput(data);
+//   if (customerFoodInput) {
+//     setInputStatus("");
+//   }
+//   // Check if the input matches any available option
+//   const matchedOptions = optionsProp.map((option) => {
+//     if (
+//       is_serving_time &&
+//       selectedCategory &&
+//       option.value.toLowerCase().includes(data.toLowerCase())
+//     ) {
+//       return {
+//         ...option,
+//         value: (
+//           <span style={{ backgroundColor: 'lightgray' }}>
+//             {option.value}
+//           </span>
+//         ),
+//       };
+//     } else {
+//       return option;
+//     }
+//   });
+
+//   if (matchedOptions.length > 0) {
+//     setOptionsData(matchedOptions);
+//   } else {
+//     // If no matches found, display the "unavailable" message
+//     setOptionsData([
+//       {
+//         value:
+//           "The menu item you're looking for is not available at our restaurant. Check back again later!",
+//         disabled: true,
+//       },
+//     ]);
+//   }
+// };
+
+// const handleAutoCompleteSearch = (text: string) => {
+//   if (is_serving_time && selectedCategory) {
+//     const matchedOptions = optionsProp.map((option) => {
+//       if (option.value.toLowerCase().includes(text.toLowerCase())) {
+//         return {
+//           ...option,
+//           value: (
+//             <span style={{ backgroundColor: 'lightgray' }}>
+//               {option.value}
+//             </span>
+//           ),
+//         };
+//       } else {
+//         return option;
+//       }
+//     });
+
+//     if (matchedOptions.length > 0) {
+//       setOptionsData(matchedOptions);
+//     } else if (text.trim() !== "") {
+//       setOptionsData([
+//         {
+//           value:
+//             "The menu item you're looking for is not available at our restaurant. Check back again later!",
+//           disabled: true,
+//         },
+//       ]);
+//     } else {
+//       // When the input field is empty, show the appropriate options based on selected time and category
+//       let newOptionsData: {
+//         value: string;
+//         disabled: boolean;
+//       }[] = [];
+//       if (is_lunch_time) {
+//         newOptionsData = selectedCategory === "Meals" ? lunchMealMenu : [];
+//       } else if (is_dinner_time) {
+//         newOptionsData = selectedCategory === "Meals" ? [] : [];
+//       }
+//       setOptionsData(newOptionsData);
+//     }
+//   } else {
+//     setOptionsData([]);
+//   }
+// };

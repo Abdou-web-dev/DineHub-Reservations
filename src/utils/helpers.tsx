@@ -57,8 +57,19 @@ function isListContainsObject(obj: FoodItem, list: FoodItem[]) {
   return false;
 }
 
+const updateFoodCategory = (foodItem: FoodItem): FoodItem => {
+  if (foodItem.food_value.includes("meal")) {
+    return { ...foodItem, food_category: "meal" };
+  } else if (foodItem.food_value.includes("dessert")) {
+    return { ...foodItem, food_category: "dessert" };
+  } else {
+    return { ...foodItem, food_category: "" };
+  }
+};
+
 export {
   isListContainsObject,
   randomInteger,
   replace as replaceObjectWithAnotherOne,
+  updateFoodCategory,
 };

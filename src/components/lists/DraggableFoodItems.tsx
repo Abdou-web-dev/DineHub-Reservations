@@ -103,6 +103,24 @@ export const DraggableFoodItems = ({
                                     {...{ index, id, foodItem }}
                                   />
                                 );
+                                // const updatedFoodItem =
+                                //   updateFoodCategory(foodItem);
+                                // return (
+                                //   <>
+                                //     <span>
+                                //       {updatedFoodItem.food_category ||
+                                //         "no category"}
+                                //     </span>
+                                //     <DraggableFoodItem
+                                //       key={updatedFoodItem?.food_id}
+                                //       {...{
+                                //         index,
+                                //         id,
+                                //         foodItem: updatedFoodItem,
+                                //       }}
+                                //     />
+                                //   </>
+                                // );
                               }
                             }
                           )

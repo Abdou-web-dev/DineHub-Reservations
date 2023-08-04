@@ -93,3 +93,10 @@
     color: rgba(255, 0, 0, 0.603);
   }
 }
+/* Add this to your CSS */
+.ant-select-item-option-active {
+  background-color: lightgray;
+}
+.highlighted-option {
+  background-color: rgba(211, 211, 211, 0.536);
+}

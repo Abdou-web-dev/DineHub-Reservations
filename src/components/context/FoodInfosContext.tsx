@@ -27,6 +27,7 @@ export interface FoodInfosContext {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   optionsData: { value: string }[];
   setOptionsData: React.Dispatch<React.SetStateAction<{ value: string }[]>>;
+  // setOptionsData: React.Dispatch<React.SetStateAction<{ value: string }[]>>;
   lunchMenu: {
     value: string;
     disabled?: boolean | undefined;
@@ -39,6 +40,8 @@ export interface FoodInfosContext {
       }[]
     >
   >;
+  autoCompleteDisabled: boolean;
+  setAutoCompleteDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   // lunch_menu: (
   //   | {
   //       value: string;
@@ -85,6 +88,8 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
     },
   ],
   setLunchMenu: () => {},
+  autoCompleteDisabled: false,
+  setAutoCompleteDisabled: () => {},
 });
 
 export const FoodInfosContextProvider = ({
@@ -101,18 +106,55 @@ export const FoodInfosContextProvider = ({
     food_category: "",
   });
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [autoCompleteDisabled, setAutoCompleteDisabled] = useState(false);
 
   const [storedItems, setStoredItems] = useState<FoodItem[]>([]);
   const [optionsData, setOptionsData] = useState<{ value: string }[]>([]);
 
   // arrays of data :
   const [openFoodChoiceModal, setOpenFoodChoiceModal] = useState(false);
+  // lunchMealMenu
+  const lunchMealMenu = [
+    {
+      value: "Pizza",
+      disabled: isListContainsObject({ food_value: "Pizza" }, storedItems),
+    },
+    {
+      value: "Pizza",
+      disabled: isListContainsObject({ food_value: "Pizza" }, storedItems),
+    },
+    {
+      value: "Pizza",
+      disabled: isListContainsObject({ food_value: "Pizza" }, storedItems),
+    },
+    // ... add other meal items
+  ];
 
+  const dessertLunchMenu = [
+    {
+      value: "Cake",
+      disabled: isListContainsObject({ food_value: "Cake" }, storedItems),
+    },
+    {
+      value: "Ice Cream",
+      disabled: isListContainsObject({ food_value: "Ice Cream" }, storedItems),
+    },
+    {
+      value: "Pie",
+      disabled: isListContainsObject({ food_value: "Pie" }, storedItems),
+    },
+    // ... add other dessert items
+  ];
+
+  // dynamic menus
   const generateLunchMenu = (
     selectedCategory: string,
     storedItems: FoodItem[]
   ) => {
     const menu: { value: string; disabled?: boolean }[] = [];
+    const mealItems = storedItems.filter(
+      (item) => item.food_category === "meal"
+    );
 
     if (selectedCategory === "Meals") {
       menu.push(
@@ -161,11 +203,48 @@ export const FoodInfosContextProvider = ({
           ),
         },
         {
-          value: "cake",
+          value: "cake_all",
           disabled: isListContainsObject({ food_value: "cake" }, storedItems),
         }
         // ... add other dessert items
       );
+    }
+
+    return menu;
+  };
+  // dynamic menus
+  const generateLunchMenu_2 = (
+    selectedCategory: string,
+    storedItems: FoodItem[]
+  ) => {
+    const menu: { value: string; disabled?: boolean }[] = [];
+
+    if (selectedCategory === "Meals") {
+      const mealItems = storedItems.filter(
+        (item) => item.food_category === "meal"
+      );
+      mealItems.forEach((item) => {
+        menu.push({
+          value: item.food_value,
+          disabled: isListContainsObject(
+            { food_value: item.food_value },
+            storedItems
+          ),
+        });
+      });
+    } else if (selectedCategory === "Desserts") {
+      const dessertItems = storedItems.filter(
+        (item) => item.food_category === "dessert"
+      );
+      dessertItems.forEach((item) => {
+        menu.push({
+          value: item.food_value,
+          disabled: isListContainsObject(
+            { food_value: item.food_value },
+            storedItems
+          ),
+        });
+      });
     }
 
     return menu;
@@ -203,6 +282,11 @@ export const FoodInfosContextProvider = ({
   let is_breakfast_time: boolean =
     (is_time_between_06_and_11 && meridiumType === "AM") ||
     (selectedTime === `12` && meridiumType === "PM");
+
+  const currentHour = new Date().getHours();
+  const is_breakfast_time_equivalent: boolean =
+    currentHour >= 6 && currentHour <= 11;
+
   //
   let is_lunch_time: boolean =
     is_time_between_01_and_06 && meridiumType === "PM";
@@ -242,6 +326,8 @@ export const FoodInfosContextProvider = ({
         setOptionsData,
         lunchMenu,
         setLunchMenu,
+        autoCompleteDisabled,
+        setAutoCompleteDisabled,
       }}
     >
       {children}

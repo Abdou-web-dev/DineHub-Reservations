@@ -9,8 +9,12 @@ interface CustomerButtonsType {
 }
 
 export function FoodMealDessertButtons({ foodList }: CustomerButtonsType) {
-  const { setSelectedCategory, selectedCategory, setOptionsData } =
-    useContext(FoodInfosContext);
+  const {
+    setSelectedCategory,
+    selectedCategory,
+    setOptionsData,
+    setAutoCompleteDisabled,
+  } = useContext(FoodInfosContext);
 
   const filterSuggestionsByCategory = () => {
     if (selectedCategory === "All") {
@@ -33,14 +37,29 @@ export function FoodMealDessertButtons({ foodList }: CustomerButtonsType) {
   return (
     <div className="customer-card-btns-container">
       <TogglerButton
-        onClick={() => handleCategoryChange("Meals")}
+        onClick={() => {
+          handleCategoryChange("Meals");
+          filterSuggestionsByCategory();
+          setAutoCompleteDisabled(false);
+        }}
         label="Meals"
       />
       <TogglerButton
-        onClick={() => handleCategoryChange("Desserts")}
+        onClick={() => {
+          handleCategoryChange("Desserts");
+          filterSuggestionsByCategory();
+          setAutoCompleteDisabled(false);
+        }}
         label="Desserts"
       />
-      <TogglerButton onClick={() => handleCategoryChange("All")} label="All" />
+      <TogglerButton
+        onClick={() => {
+          handleCategoryChange("All");
+          filterSuggestionsByCategory();
+          setAutoCompleteDisabled(false);
+        }}
+        label="All"
+      />
     </div>
   );
 }
