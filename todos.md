@@ -24,6 +24,11 @@ dinner will have its specific desserts , lunch too.
 
 # todo10: You can further enhance the app by adding features like quantity selection, total order cost calculation, and more.
 
+# todo11 : add sub-options for Lasagne ; Wings, Wraps ...
+
+sub items :
+Garlic and pesto wings recipe
+
 \*\*
 
 - \*\*

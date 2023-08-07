@@ -1,7 +1,8 @@
 import * as React from "react";
 import { createContext, useState } from "react";
-import { isListContainsObject, randomInteger } from "../../utils/helpers";
-import { FoodItem } from "../lists/DraggableFoodItems";
+import { Customer, FoodItem } from "../../types/Types";
+import { randomInteger } from "../../utils/helpers";
+// import { FoodItem } from "../lists/DraggableFoodItems";
 // https://stackoverflow.com/questions/71333605/how-can-i-correctly-initialize-the-type-dispatchsetstateactionstring-as-a
 
 export interface FoodInfosContext {
@@ -27,31 +28,9 @@ export interface FoodInfosContext {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   optionsData: { value: string }[];
   setOptionsData: React.Dispatch<React.SetStateAction<{ value: string }[]>>;
-  // setOptionsData: React.Dispatch<React.SetStateAction<{ value: string }[]>>;
-  lunchMenu: {
-    value: string;
-    disabled?: boolean | undefined;
-  }[];
-  setLunchMenu: React.Dispatch<
-    React.SetStateAction<
-      {
-        value: string;
-        disabled?: boolean | undefined;
-      }[]
-    >
-  >;
   autoCompleteDisabled: boolean;
   setAutoCompleteDisabled: React.Dispatch<React.SetStateAction<boolean>>;
-  // lunch_menu: (
-  //   | {
-  //       value: string;
-  //       disabled?: undefined;
-  //     }
-  //   | {
-  //       value: string;
-  //       disabled: boolean;
-  //     }
-  // )[];
+  customer: Customer;
 }
 
 // export const MusicContext = createContext<IMusicContext>(undefined as any);
@@ -69,7 +48,6 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
   random_id: 0,
   customerFoodInput: "",
   openFoodChoiceModal: false,
-  // lunch_menu: [{ value: "", disabled: false }],
   selectedCategory: "",
   setSelectedCategory: () => {}, // Initialize with an empty function
   setNewFoodItem: () => {},
@@ -81,25 +59,34 @@ export const FoodInfosContext = createContext<FoodInfosContext>({
   setCustomerFoodInput: () => {},
   optionsData: [],
   setOptionsData: () => {},
-  lunchMenu: [
-    {
-      value: "",
-      disabled: false,
-    },
-  ],
-  setLunchMenu: () => {},
   autoCompleteDisabled: false,
   setAutoCompleteDisabled: () => {},
+  customer: {
+    food: [
+      {
+        food_value: "",
+        food_id: 0,
+        food_category: "",
+      },
+    ],
+    id: "",
+    name: "",
+    guestsNumber: 0,
+    orderDate: "",
+    orderTime: "",
+    restauLocation: "",
+  },
 });
 
 export const FoodInfosContextProvider = ({
   children,
+  customer,
 }: // foodElement,
 {
   children: React.ReactNode | JSX.Element | JSX.Element[];
+  customer: Customer;
   // foodElement: FoodItem;
 }) => {
-  // console.log(foodElement, "");
   const [newFoodItem, setNewFoodItem] = useState<FoodItem>({
     food_id: 0,
     food_value: "",
@@ -111,148 +98,7 @@ export const FoodInfosContextProvider = ({
   const [storedItems, setStoredItems] = useState<FoodItem[]>([]);
   const [optionsData, setOptionsData] = useState<{ value: string }[]>([]);
 
-  // arrays of data :
   const [openFoodChoiceModal, setOpenFoodChoiceModal] = useState(false);
-  // lunchMealMenu
-  const lunchMealMenu = [
-    {
-      value: "Pizza",
-      disabled: isListContainsObject({ food_value: "Pizza" }, storedItems),
-    },
-    {
-      value: "Pizza",
-      disabled: isListContainsObject({ food_value: "Pizza" }, storedItems),
-    },
-    {
-      value: "Pizza",
-      disabled: isListContainsObject({ food_value: "Pizza" }, storedItems),
-    },
-    // ... add other meal items
-  ];
-
-  const dessertLunchMenu = [
-    {
-      value: "Cake",
-      disabled: isListContainsObject({ food_value: "Cake" }, storedItems),
-    },
-    {
-      value: "Ice Cream",
-      disabled: isListContainsObject({ food_value: "Ice Cream" }, storedItems),
-    },
-    {
-      value: "Pie",
-      disabled: isListContainsObject({ food_value: "Pie" }, storedItems),
-    },
-    // ... add other dessert items
-  ];
-
-  // dynamic menus
-  const generateLunchMenu = (
-    selectedCategory: string,
-    storedItems: FoodItem[]
-  ) => {
-    const menu: { value: string; disabled?: boolean }[] = [];
-    const mealItems = storedItems.filter(
-      (item) => item.food_category === "meal"
-    );
-
-    if (selectedCategory === "Meals") {
-      menu.push(
-        {
-          value: "tacos",
-          disabled: isListContainsObject({ food_value: "tacos" }, storedItems),
-        },
-        {
-          value: "pizza",
-          disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
-        }
-        // ... add other meal items
-      );
-    } else if (selectedCategory === "Desserts") {
-      menu.push(
-        {
-          value: "ice cream",
-          disabled: isListContainsObject(
-            { food_value: "ice cream" },
-            storedItems
-          ),
-        },
-        {
-          value: "cake",
-          disabled: isListContainsObject({ food_value: "cake" }, storedItems),
-        }
-        // ... add other dessert items
-      );
-    } else {
-      // Show all options for "All" category
-      menu.push(
-        {
-          value: "tacos",
-          disabled: isListContainsObject({ food_value: "tacos" }, storedItems),
-        },
-        {
-          value: "pizza",
-          disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
-        },
-        // ... add other meal items
-        {
-          value: "ice cream",
-          disabled: isListContainsObject(
-            { food_value: "ice cream" },
-            storedItems
-          ),
-        },
-        {
-          value: "cake_all",
-          disabled: isListContainsObject({ food_value: "cake" }, storedItems),
-        }
-        // ... add other dessert items
-      );
-    }
-
-    return menu;
-  };
-  // dynamic menus
-  const generateLunchMenu_2 = (
-    selectedCategory: string,
-    storedItems: FoodItem[]
-  ) => {
-    const menu: { value: string; disabled?: boolean }[] = [];
-
-    if (selectedCategory === "Meals") {
-      const mealItems = storedItems.filter(
-        (item) => item.food_category === "meal"
-      );
-      mealItems.forEach((item) => {
-        menu.push({
-          value: item.food_value,
-          disabled: isListContainsObject(
-            { food_value: item.food_value },
-            storedItems
-          ),
-        });
-      });
-    } else if (selectedCategory === "Desserts") {
-      const dessertItems = storedItems.filter(
-        (item) => item.food_category === "dessert"
-      );
-      dessertItems.forEach((item) => {
-        menu.push({
-          value: item.food_value,
-          disabled: isListContainsObject(
-            { food_value: item.food_value },
-            storedItems
-          ),
-        });
-      });
-    }
-
-    return menu;
-  };
-
-  const [lunchMenu, setLunchMenu] = useState<
-    { value: string; disabled?: boolean }[]
-  >(generateLunchMenu(selectedCategory, storedItems));
 
   const [selectedTime, setSelectedTime] = useState("");
   const [meridiumType, setMeridiumType] = useState("");
@@ -264,13 +110,20 @@ export const FoodInfosContextProvider = ({
 
   const [random_id, setRandomId] = useState<number>(id);
 
-  let is_time_between_06_and_11: boolean =
-    selectedTime === `06` ||
-    selectedTime === `07` ||
-    selectedTime === `08` ||
-    selectedTime === `09` ||
-    selectedTime === `10` ||
-    selectedTime === `11`;
+  // let is_time_between_06_and_11: boolean =
+  //   selectedTime === `06` ||
+  //   selectedTime === `07` ||
+  //   selectedTime === `08` ||
+  //   selectedTime === `09` ||
+  //   selectedTime === `10` ||
+  //   selectedTime === `11`;
+
+  // This alternative code snippet first converts the selectedTime string to a number using parseInt with base 10, and then performs a numeric comparison to check if the selected hour is between 6 and 11 (inclusive). This approach is more scalable and easier to maintain if you need to modify the time range in the future.
+
+  const selectedHour: number = parseInt(selectedTime, 10);
+  const is_time_between_06_and_11: boolean =
+    selectedHour >= 6 && selectedHour <= 11;
+
   let is_time_between_01_and_06: boolean =
     selectedTime === `01` ||
     selectedTime === `02` ||
@@ -294,10 +147,6 @@ export const FoodInfosContextProvider = ({
   let is_dinner_time: boolean =
     (is_time_between_06_and_11 && meridiumType === "PM") ||
     (selectedTime === `12` && meridiumType === "AM");
-
-  React.useEffect(() => {
-    setLunchMenu(generateLunchMenu(selectedCategory, storedItems));
-  }, [selectedCategory, storedItems]);
 
   return (
     <FoodInfosContext.Provider
@@ -324,10 +173,9 @@ export const FoodInfosContextProvider = ({
         setSelectedCategory,
         optionsData,
         setOptionsData,
-        lunchMenu,
-        setLunchMenu,
         autoCompleteDisabled,
         setAutoCompleteDisabled,
+        customer,
       }}
     >
       {children}

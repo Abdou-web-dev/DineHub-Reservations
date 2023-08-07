@@ -9,8 +9,9 @@ import breakfast from "../../assets/img/meals/breakfast.png";
 import dinner from "../../assets/img/meals/dinner.png";
 import lunch from "../../assets/img/meals/lunch.png";
 import { addFoodToCustomer } from "../../feature/customerSlice";
-import { isListContainsObject, randomInteger } from "../../utils/helpers";
+import { randomInteger } from "../../utils/helpers";
 import { FoodInfosContext } from "../context/FoodInfosContext";
+import { MenusContext } from "../context/menusContextProvider";
 import "./inputs_styles.scss";
 
 export const AddFoodInput = ({
@@ -30,56 +31,26 @@ export const AddFoodInput = ({
     is_dinner_time,
     is_lunch_time,
     selectedTime,
-    // meridiumType,
     selectedCategory,
-    // lunch_menu,
-    // optionsData,
-    // setOptionsData,
-    // lunchMenu,
-    storedItems,
     setAutoCompleteDisabled,
     autoCompleteDisabled,
   } = useContext(FoodInfosContext);
 
-  // console.log("Selected Category:", selectedCategory);
-  const lunchMealMenu = [
-    {
-      value: "Pizza",
-      disabled: isListContainsObject({ food_value: "Pizza" }, storedItems),
-    },
-    {
-      value: "Tacos pizza",
-      disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
-    },
-    {
-      value: "pi",
-      disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
-    },
-    {
-      value: "piz",
-      disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
-    },
-    {
-      value: "Tacos",
-      disabled: isListContainsObject({ food_value: "Tacos" }, storedItems),
-    },
-    {
-      value: "Tajine",
-      disabled: isListContainsObject({ food_value: "Tajine" }, storedItems),
-    },
-    // ... add other meal items
-  ];
+  const {
+    lunchMealMenu,
+    dessertLunchMenu,
+    breakfastMealMenu,
+    dessertBreakfastMenu,
+    dessertDinnerMenu,
+    dinnerMealMenu,
+  } = useContext(MenusContext);
 
   const [inputStatus, setInputStatus] = useState<
     "warning" | "error" | undefined | InputStatus
   >();
 
-  // const [autoCompleteDisabled, setAutoCompleteDisabled] = useState(false);
-
   let is_serving_time: boolean =
     is_breakfast_time || is_lunch_time || is_dinner_time;
-
-  // ******************
 
   const onSelect = (data: string) => {
     // console.log("onSelect", data);
@@ -93,19 +64,26 @@ export const AddFoodInput = ({
     ? "dinner"
     : "";
 
-  let optionsProp = is_lunch_time
+  // optionsProp variable for initial options of the dropdown
+  let initialOptions = is_lunch_time
     ? selectedCategory === "Meals"
       ? lunchMealMenu // Provide lunch meal options
       : selectedCategory === "Desserts"
-      ? [] // Provide lunch dessert options
-      : [] // Empty array for other categories during lunch time
+      ? dessertLunchMenu // Provide lunch dessert options
+      : dessertLunchMenu.concat(lunchMealMenu) // Combine dessert and lunch meal options for other categories during lunch time
     : is_dinner_time
     ? selectedCategory === "Meals"
-      ? [] // Provide dinner meal options
+      ? dinnerMealMenu
       : selectedCategory === "Desserts"
-      ? [] // Provide dinner dessert options
-      : [] // Empty array for other categories during dinner time
-    : []; // ... handle other time cases here
+      ? dessertDinnerMenu
+      : dinnerMealMenu.concat(dessertDinnerMenu) // Combine dessert and dinner meal options for other categories during dinner time
+    : is_breakfast_time
+    ? selectedCategory === "Meals"
+      ? breakfastMealMenu
+      : selectedCategory === "Desserts"
+      ? dessertBreakfastMenu
+      : breakfastMealMenu.concat(dessertBreakfastMenu)
+    : []; // Handle other time cases here
 
   // Initialize optionsData based on selected time and category
   const [optionsData, setOptionsData] = useState<
@@ -119,28 +97,17 @@ export const AddFoodInput = ({
           disabled: boolean;
         }
     )[]
-  >(optionsProp);
+  >(initialOptions);
 
-  // this code ensure that the dropdown options are visible only when a category and time have been selected
-  useEffect(() => {
-    let newOptionsData: {
-      value: string;
-      disabled: boolean;
-    }[] = [];
-    if (is_lunch_time) {
-      newOptionsData = selectedCategory === "Meals" ? lunchMealMenu : [];
-    } else if (is_dinner_time) {
-      newOptionsData = selectedCategory === "Meals" ? [] : [];
-    }
-    setOptionsData(newOptionsData);
-  }, [is_lunch_time, is_dinner_time, selectedCategory]);
+  // Absolutely, choosing the simpler and more straightforward approach is often a good decision, especially if it meets your requirements. If the version you mentioned works for your needs and is easier to maintain and understand, then it's a perfectly valid choice.
+  // Remember, the goal is to have code that is clear, maintainable, and functional. If a more complex approach doesn't significantly improve the code's quality or usability, sticking with the simpler version is a reasonable decision.
 
   const handleChange = (data: string) => {
     setCustomerFoodInput(data);
     setInputStatus(data.trim() !== "" ? "" : "error");
 
     if (is_serving_time) {
-      const matchedOptions = optionsProp.filter((option) =>
+      const matchedOptions = initialOptions.filter((option) =>
         option.value.toLowerCase().includes(data.toLowerCase())
       );
 
@@ -161,6 +128,82 @@ export const AddFoodInput = ({
           disabled: boolean;
         }[] = [];
         if (is_lunch_time) {
+          newOptionsData =
+            selectedCategory === "Meals"
+              ? lunchMealMenu
+              : selectedCategory === `Dessert`
+              ? dessertLunchMenu
+              : dessertLunchMenu.concat(lunchMealMenu);
+        } else if (is_dinner_time) {
+          newOptionsData =
+            selectedCategory === "Meals"
+              ? dinnerMealMenu
+              : selectedCategory === `Dessert`
+              ? dessertDinnerMenu
+              : dinnerMealMenu.concat(dessertDinnerMenu);
+        } else if (is_breakfast_time) {
+          newOptionsData =
+            selectedCategory === "Meals"
+              ? breakfastMealMenu
+              : selectedCategory === `Dessert`
+              ? dessertBreakfastMenu
+              : breakfastMealMenu.concat(dessertBreakfastMenu);
+        }
+        setOptionsData(newOptionsData);
+      }
+    } else {
+      setOptionsData([]);
+    }
+  };
+
+  function handleAutoCompleteSearch(text: string) {
+    if (is_serving_time) {
+      // optionsProp must be used here
+      // option.value.toLowerCase().includes(text.toLowerCase()) is used to check if a given text (usually the user's input) is included in the value property of an option object, regardless of the letter casing.
+      // Here's a breakdown of what it does:
+      // option.value: This refers to the value of the current option in consideration. For example, if the option is { value: "Pizza", disabled: false }, then option.value is "Pizza".
+      const matchedOptions = initialOptions //highlighting cuntionality
+        .map((option) => {
+          let option_elem = {
+            ...option,
+            className: classNames({
+              "highlighted-option":
+                option.value
+                  .toString()
+                  .toLowerCase()
+                  .includes(customerFoodInput.toLowerCase()) &&
+                customerFoodInput.trim() !== "",
+            }),
+          };
+          // console.log(option_elem);
+          return option_elem;
+        })
+        //filtering functionality
+        .filter((option) =>
+          option.value.toLowerCase().includes(text.toLowerCase())
+        );
+
+      if (matchedOptions.length > 0) {
+        setOptionsData(matchedOptions);
+      } else if (text.trim() !== "") {
+        // this condition is used to determine whether the user has typed something meaningful into the input field. If the user has entered a non-empty input (excluding whitespace), the condition evaluates to true, and the code inside the if block will be executed. If the user input is empty (or only consists of whitespace), the condition evaluates to false, and the code inside the else block will be executed.
+        //  In summary, this condition helps ensure that the "not available" message is displayed only when the user has typed a non-empty input, indicating a search attempt. If the user hasn't typed anything (or only entered whitespace), the message won't be displayed.
+        setOptionsData([
+          {
+            value:
+              "The menu item you're looking for is not available at our restaurant. Check back again later!",
+            disabled: true,
+          },
+        ]);
+      } else {
+        // When the input field is empty, show the appropriate options based on selected time and category
+        // If the user hasn't typed anything (or only entered whitespace), the message won't be displayed.
+        //and the  menu will be displayed accordingly to selectTime and category
+        let newOptionsData: {
+          value: string;
+          disabled: boolean;
+        }[] = [];
+        if (is_lunch_time) {
           newOptionsData = selectedCategory === "Meals" ? lunchMealMenu : [];
         } else if (is_dinner_time) {
           newOptionsData = selectedCategory === "Meals" ? [] : [];
@@ -170,101 +213,42 @@ export const AddFoodInput = ({
     } else {
       setOptionsData([]);
     }
-  };
+  }
 
-  const handleAutoCompleteChange = (data: string) => {
-    setCustomerFoodInput(data);
-    if (customerFoodInput) {
-      setInputStatus("");
+  // this code ensure that the dropdown options are visible only when a category and time have been selected
+  useEffect(() => {
+    let newOptionsData: {
+      value: string;
+      disabled: boolean;
+    }[] = [];
+    if (is_lunch_time) {
+      newOptionsData =
+        selectedCategory === "Meals"
+          ? lunchMealMenu
+          : selectedCategory === "Desserts"
+          ? dessertLunchMenu
+          : lunchMealMenu.concat(dessertLunchMenu);
+    } else if (is_dinner_time) {
+      newOptionsData =
+        selectedCategory === "Meals"
+          ? dinnerMealMenu
+          : selectedCategory === "Desserts"
+          ? dessertDinnerMenu
+          : dinnerMealMenu.concat(dessertDinnerMenu);
+    } else if (is_breakfast_time) {
+      newOptionsData =
+        selectedCategory === "Meals"
+          ? breakfastMealMenu
+          : selectedCategory === "Desserts"
+          ? dessertBreakfastMenu
+          : breakfastMealMenu.concat(dessertBreakfastMenu);
     }
-    // Check if the input matches any available option
-    const matchedOptions: (
-      | {
-          value: string;
-          disabled: boolean;
-        }
-      | {
-          value: JSX.Element;
-          disabled: boolean;
-        }
-    )[] = optionsProp.map((option) => {
-      if (
-        is_serving_time &&
-        selectedCategory &&
-        option.value.toLowerCase().includes(data.toLowerCase())
-      ) {
-        return {
-          ...option,
-          value: (
-            <span style={{ backgroundColor: "lightgray" }}>{option.value}</span>
-          ),
-        };
-      } else {
-        return option;
-      }
-    });
-
-    if (matchedOptions.length > 0) {
-      setOptionsData(matchedOptions);
-    } else {
-      // If no matches found, display the "unavailable" message
-      setOptionsData([
-        {
-          value:
-            "The menu item you're looking for is not available at our restaurant. Check back again later!",
-          disabled: true,
-        },
-      ]);
-    }
-  };
+    setOptionsData(newOptionsData);
+  }, [is_lunch_time, is_dinner_time, is_breakfast_time, selectedCategory]);
 
   useEffect(() => {
     if (!is_serving_time) setAutoCompleteDisabled(true);
   }, [is_serving_time]);
-
-  // const renderDropdown = (menu: React.ReactNode, parts: string[]) => (
-  //   <div>
-  //     {menu}
-  //     {is_serving_time && selectedCategory && (
-  //       <div className="autocomplete-msg">
-  //         {parts.map((part, index) =>
-  //           part.toLowerCase() === customerFoodInput.toLowerCase() ? (
-  //             <span key={index} style={{ backgroundColor: "lightgray" }}>
-  //               {part}
-  //             </span>
-  //           ) : (
-  //             part
-  //           )
-  //         )}
-  //       </div>
-  //     )}
-  //   </div>
-  // );
-
-  // const renderDropdown = (menu: React.ReactElement) => {
-  //   if (is_serving_time && selectedCategory && customerFoodInput) {
-  //     return (
-  //       <div>
-  //         {menu}
-  //         <div className="autocomplete-msg">
-  //           {optionsProp.map((option, index) =>
-  //             option.value
-  //               .toLowerCase()
-  //               .includes(customerFoodInput.toLowerCase()) ? (
-  //               <span key={index} style={{ backgroundColor: "lightgray" }}>
-  //                 {option.value}
-  //               </span>
-  //             ) : (
-  //               option.value
-  //             )
-  //           )}
-  //         </div>
-  //       </div>
-  //     );
-  //   } else {
-  //     return menu;
-  //   }
-  // };
 
   return (
     <>
@@ -299,72 +283,18 @@ export const AddFoodInput = ({
             }
           >
             <AutoComplete
-              // dropdownRender={(menu) => renderDropdown(menu, parts)}
-              // dropdownRender={renderDropdown}
-              // options={is_serving_time ? optionsData : []}
-              // options={optionsData}
-              options={optionsData.map((option) => ({
-                ...option,
-                className: classNames({
-                  "highlighted-option":
-                    option.value
-                      .toString()
-                      .toLowerCase()
-                      .includes(customerFoodInput.toLowerCase()) &&
-                    customerFoodInput.trim() !== "",
-                }),
-              }))}
+              options={optionsData}
+              //In this code snippet, you are modifying the optionsData array to include an additional property called className for each option. This className property will be used to conditionally apply a CSS class to the autocomplete options, which will in turn control the highlighting of options based on user input.
+              // let option_elem = { ...option, ... }: Here, you're creating a new object option_elem based on the existing option object. This is done using the spread operator (...) to copy over all properties of the original option object.
+              // By adding the className property to each option object and applying the appropriate CSS class based on the conditions, you're achieving the highlighting effect for matching options in the autocomplete dropdown.
+              // Remember, this approach allows you to keep your original optionsData intact while enhancing it with the necessary highlighting information for the UI. It's a clever way to dynamically modify data to suit your UI needs without altering the core data structure
               disabled={autoCompleteDisabled}
               className="customer-food-add-autocomplete-input"
               value={customerFoodInput}
               onChange={handleChange}
               style={{ width: 200, border: autoCompleteBorder }}
               onSelect={onSelect}
-              onSearch={(text) => {
-                if (is_serving_time) {
-                  // optionsProp must be used here
-                  const matchedOptions = optionsProp.filter((option) =>
-                    option.value.toLowerCase().includes(text.toLowerCase())
-                  );
-                  // option.value.toLowerCase().includes(text.toLowerCase()) is used to check if a given text (usually the user's input) is included in the value property of an option object, regardless of the letter casing.
-                  // Here's a breakdown of what it does:
-                  // option.value: This refers to the value of the current option in consideration. For example, if the option is { value: "Pizza", disabled: false }, then option.value is "Pizza".
-
-                  if (matchedOptions.length > 0) {
-                    setOptionsData(matchedOptions);
-                  } else if (
-                    matchedOptions.length === 0 &&
-                    text.trim() !== ""
-                  ) {
-                    // this condition is used to determine whether the user has typed something meaningful into the input field. If the user has entered a non-empty input (excluding whitespace), the condition evaluates to true, and the code inside the if block will be executed. If the user input is empty (or only consists of whitespace), the condition evaluates to false, and the code inside the else block will be executed.
-                    //  In summary, this condition helps ensure that the "not available" message is displayed only when the user has typed a non-empty input, indicating a search attempt. If the user hasn't typed anything (or only entered whitespace), the message won't be displayed.
-                    setOptionsData([
-                      {
-                        value:
-                          "The menu item you're looking for is not available at our restaurant. Check back again later!",
-                        disabled: true,
-                      },
-                    ]);
-                  } else {
-                    // When the input field is empty, show the appropriate options based on selected time and category
-                    // If the user hasn't typed anything (or only entered whitespace), the message won't be displayed.
-                    //and the  menu will be displayed accordingly to selectTime and category
-                    let newOptionsData: {
-                      value: string;
-                      disabled: boolean;
-                    }[] = [];
-                    if (is_lunch_time) {
-                      newOptionsData =
-                        selectedCategory === "Meals" ? lunchMealMenu : [];
-                    } else if (is_dinner_time) {
-                      newOptionsData = selectedCategory === "Meals" ? [] : [];
-                    }
-                    setOptionsData(newOptionsData);
-                  }
-                } else {
-                  setOptionsData([]);
-                }
-              }}
+              onSearch={handleAutoCompleteSearch}
               status={inputStatus}
               placeholder={"Type a food item..."}
               allowClear

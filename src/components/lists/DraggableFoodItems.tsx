@@ -1,18 +1,13 @@
 import { Card } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { FoodItem } from "../../types/Types";
 import { StrictModeDroppable } from "../StrictModeDroppable";
 import { FoodInfosContext } from "../context/FoodInfosContext";
 import { DraggableFoodItem } from "../draggable/DraggableFoodItem";
 import "./lists_styles.scss";
 
 // this example implements react-dnd vertical drag and drop
-
-export interface FoodItem {
-  food_value: string;
-  food_id?: number;
-  food_category?: string;
-}
 
 export const DraggableFoodItems = ({
   foodList,
@@ -75,7 +70,7 @@ export const DraggableFoodItems = ({
               <StrictModeDroppable
                 // mode="standard"
                 // type=""
-                direction="horizontal"
+                direction="vertical"
                 droppableId="droppable-1"
               >
                 {(provided) => (

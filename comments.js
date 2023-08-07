@@ -119,3 +119,107 @@
 //     setOptionsData([]);
 //   }
 // };
+// *******************
+//   // dynamic menus
+//   const generateLunchMenu = (
+//     selectedCategory: string,
+//     storedItems: FoodItem[]
+//   ) => {
+//     const menu: { value: string; disabled?: boolean }[] = [];
+//     const mealItems = storedItems.filter(
+//       (item) => item.food_category === "meal"
+//     );
+
+//     if (selectedCategory === "Meals") {
+//       menu.push(
+//         {
+//           value: "tacos",
+//           disabled: isListContainsObject({ food_value: "tacos" }, storedItems),
+//         },
+//         {
+//           value: "pizza",
+//           disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
+//         }
+//         // ... add other meal items
+//       );
+//     } else if (selectedCategory === "Desserts") {
+//       menu.push(
+//         {
+//           value: "ice cream",
+//           disabled: isListContainsObject(
+//             { food_value: "ice cream" },
+//             storedItems
+//           ),
+//         },
+//         {
+//           value: "cake",
+//           disabled: isListContainsObject({ food_value: "cake" }, storedItems),
+//         }
+//         // ... add other dessert items
+//       );
+//     } else {
+//       // Show all options for "All" category
+//       menu.push(
+//         {
+//           value: "tacos",
+//           disabled: isListContainsObject({ food_value: "tacos" }, storedItems),
+//         },
+//         {
+//           value: "pizza",
+//           disabled: isListContainsObject({ food_value: "pizza" }, storedItems),
+//         },
+//         // ... add other meal items
+//         {
+//           value: "ice cream",
+//           disabled: isListContainsObject(
+//             { food_value: "ice cream" },
+//             storedItems
+//           ),
+//         },
+//         {
+//           value: "cake_all",
+//           disabled: isListContainsObject({ food_value: "cake" }, storedItems),
+//         }
+//         // ... add other dessert items
+//       );
+//     }
+
+//     return menu;
+//   };
+//   // dynamic menus
+//   const generateLunchMenu_2 = (
+//     selectedCategory: string,
+//     storedItems: FoodItem[]
+//   ) => {
+//     const menu: { value: string; disabled?: boolean }[] = [];
+
+//     if (selectedCategory === "Meals") {
+//       const mealItems = storedItems.filter(
+//         (item) => item.food_category === "meal"
+//       );
+//       mealItems.forEach((item) => {
+//         menu.push({
+//           value: item.food_value,
+//           disabled: isListContainsObject(
+//             { food_value: item.food_value },
+//             storedItems
+//           ),
+//         });
+//       });
+//     } else if (selectedCategory === "Desserts") {
+//       const dessertItems = storedItems.filter(
+//         (item) => item.food_category === "dessert"
+//       );
+//       dessertItems.forEach((item) => {
+//         menu.push({
+//           value: item.food_value,
+//           disabled: isListContainsObject(
+//             { food_value: item.food_value },
+//             storedItems
+//           ),
+//         });
+//       });
+//     }
+
+//     return menu;
+//   };

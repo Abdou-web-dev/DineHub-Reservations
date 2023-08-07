@@ -1,16 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FoodItem } from "../components/lists/DraggableFoodItems";
-
-export interface Customer {
-  id: string;
-  name: string;
-  food: [FoodItem];
-  //the new 4 props
-  guestsNumber?: number | string;
-  restauLocation?: string;
-  orderDate?: string;
-  orderTime?: string;
-}
+import { FoodItem } from "../../src/types/Types";
+import { Customer } from "../types/Types";
 
 // export interface foodItem
 
