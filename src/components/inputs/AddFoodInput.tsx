@@ -19,11 +19,13 @@ export const AddFoodInput = ({
   id,
   setCustomerFoodInput,
   autoCompleteBorder,
-}: {
+}: // menuItems,
+{
   customerFoodInput: string;
   setCustomerFoodInput: React.Dispatch<React.SetStateAction<string>>;
   id: string;
   autoCompleteBorder: string;
+  // menuItems: MenuItem[];
 }) => {
   const dispatch = useDispatch();
   const {

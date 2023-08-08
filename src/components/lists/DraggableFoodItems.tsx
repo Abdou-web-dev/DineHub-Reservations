@@ -12,9 +12,11 @@ import "./lists_styles.scss";
 export const DraggableFoodItems = ({
   foodList,
   id,
-}: {
+}: // menuItems,
+{
   foodList: FoodItem[];
   id: string;
+  // menuItems: MenuItem[];
 }) => {
   const [startDragging, setStartDragging] = useState(false);
   const { storedItems, setStoredItems } = useContext(FoodInfosContext);
@@ -92,6 +94,12 @@ export const DraggableFoodItems = ({
                         ? storedItems?.map(
                             (foodItem: FoodItem, index: number) => {
                               if (foodItem && foodItem.food_value !== "") {
+                                // const menuItem = menuItems.find(
+                                //   (item) => item.value === foodItem.food_value
+                                // );
+                                // const isDisabled: boolean =
+                                //   menuItem?.disabled || false;
+
                                 return (
                                   <DraggableFoodItem
                                     key={foodItem?.food_id}

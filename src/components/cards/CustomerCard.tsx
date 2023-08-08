@@ -5,7 +5,10 @@ import { CustomerButtons } from "../buttons/CustomerButtons";
 import { FoodMealDessertButtons } from "../buttons/FoodMealDessertButtons";
 import { OrderTimeTable } from "../collapse/OrderTime";
 import { FoodInfosContext } from "../context/FoodInfosContext";
-import { MenusContextProvider } from "../context/menusContextProvider";
+import {
+  MenusContext,
+  MenusContextProvider,
+} from "../context/menusContextProvider";
 import { GuestsCounter } from "../counters/GuestsCounter";
 import { CloseXIconBtn } from "../icons/Icons";
 import { AddFoodInput } from "../inputs/AddFoodInput";
@@ -32,8 +35,15 @@ function CustomerCard({
   restauLocation,
   index,
 }: CustomerCardType) {
-  const { customerFoodInput, setCustomerFoodInput } =
-    useContext(FoodInfosContext);
+  const {
+    customerFoodInput,
+    setCustomerFoodInput,
+    selectedTime,
+    selectedCategory,
+    is_lunch_time,
+    is_breakfast_time,
+    is_dinner_time,
+  } = useContext(FoodInfosContext);
   const [openOrderModal, setOpenOrderModal] = useState(false);
   const [location, setLocation] = useState({
     value: "",
@@ -53,6 +63,15 @@ function CustomerCard({
   ): void {
     setOpenOrderModal(false);
   }
+
+  const {
+    breakfastMealMenu,
+    dessertBreakfastMenu,
+    dessertDinnerMenu,
+    dessertLunchMenu,
+    dinnerMealMenu,
+    lunchMealMenu,
+  } = useContext(MenusContext);
 
   return (
     <MenusContextProvider>
@@ -166,3 +185,25 @@ function CustomerCard({
 }
 
 export default CustomerCard;
+
+// menuItems={
+//   is_lunch_time
+//     ? selectedCategory === "Meals"
+//       ? lunchMealMenu // Provide lunch meal options
+//       : selectedCategory === "Desserts"
+//       ? dessertLunchMenu // Provide lunch dessert options
+//       : dessertLunchMenu.concat(lunchMealMenu) // Combine dessert and lunch meal options for other categories during lunch time
+//     : is_dinner_time
+//     ? selectedCategory === "Meals"
+//       ? dinnerMealMenu
+//       : selectedCategory === "Desserts"
+//       ? dessertDinnerMenu
+//       : dinnerMealMenu.concat(dessertDinnerMenu) // Combine dessert and dinner meal options for other categories during dinner time
+//     : is_breakfast_time
+//     ? selectedCategory === "Meals"
+//       ? breakfastMealMenu
+//       : selectedCategory === "Desserts"
+//       ? dessertBreakfastMenu
+//       : breakfastMealMenu.concat(dessertBreakfastMenu)
+//     : []
+// }

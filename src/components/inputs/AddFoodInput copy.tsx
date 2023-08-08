@@ -33,7 +33,7 @@ export const AddFoodInput = ({
     // lunch_menu,
     // optionsData,
     // setOptionsData,
-    lunchMenu,
+    // lunchMenu,
     storedItems,
   } = useContext(FoodInfosContext);
 
@@ -70,7 +70,7 @@ export const AddFoodInput = ({
     if (!searchText) {
       return [];
     } else {
-      return lunchMenu.filter((option) => option.value.includes(searchText));
+      // return lunchMenu.filter((option) => option.value.includes(searchText));
     }
   };
 

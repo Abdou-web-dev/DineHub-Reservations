@@ -17,6 +17,10 @@ export interface FoodItem {
   food_id?: number;
   food_category?: string;
 }
+export interface MenuItem {
+  value: string;
+  disabled: boolean;
+}
 
 // export type OptionsDataType = OptionsData | JSX.Element[];
 export interface Customer {
