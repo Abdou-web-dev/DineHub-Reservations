@@ -26,6 +26,20 @@
             padding: 0;
             border: 0;
           }
+          &.disabled-grid-card {
+            // display: none;
+            // border: 1px solid red;
+            background: gray;
+            button {
+              height: fit-content;
+              padding: 0;
+              border: 0;
+              background: none;
+            }
+            p {
+              color: white;
+            }
+          }
         }
       }
       &.ant-card {

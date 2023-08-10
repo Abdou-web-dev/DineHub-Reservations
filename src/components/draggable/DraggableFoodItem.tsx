@@ -1,4 +1,4 @@
-import { Button, Card, Modal } from "antd";
+import { Button, Card, Modal, Tooltip } from "antd";
 import { useContext } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +41,7 @@ DraggableFoodItemProps) => {
   const dispatch = useDispatch();
   const {
     selectedCategory,
+    selectedTime,
     is_breakfast_time,
     is_dinner_time,
     is_lunch_time,
@@ -91,27 +92,21 @@ DraggableFoodItemProps) => {
   // ************
   const isMenuItemDisabled =
     (is_breakfast_time &&
-      selectedCategory === "Meals" &&
       (lunchMealMenuItems.includes(foodItem.food_value) ||
         dinnerMealMenuItems.includes(foodItem.food_value))) ||
     (is_lunch_time &&
-      selectedCategory === "Meals" &&
       (breakfastMealMenuItems.includes(foodItem.food_value) ||
         dinnerMealMenuItems.includes(foodItem.food_value))) ||
     (is_dinner_time &&
-      selectedCategory === "Meals" &&
       (breakfastMealMenuItems.includes(foodItem.food_value) ||
         lunchMealMenuItems.includes(foodItem.food_value))) ||
     (is_breakfast_time &&
-      selectedCategory === "Desserts" &&
       (dessertLunchMenuItems.includes(foodItem.food_value) ||
         dessertDinnerMenuItems.includes(foodItem.food_value))) ||
     (is_lunch_time &&
-      selectedCategory === "Desserts" &&
       (dessertDinnerMenuItems.includes(foodItem.food_value) ||
         dessertBreakfastMenuItems.includes(foodItem.food_value))) ||
     (is_dinner_time &&
-      selectedCategory === "Desserts" &&
       (dessertBreakfastMenuItems.includes(foodItem.food_value) ||
         dessertLunchMenuItems.includes(foodItem.food_value)));
 
@@ -123,18 +118,47 @@ DraggableFoodItemProps) => {
     !dessertLunchMenuItems.includes(foodItem.food_value) &&
     !dessertDinnerMenuItems.includes(foodItem.food_value);
 
+  // Define a function to determine the meal time based on the menu array
+  const determineMealTime = (
+    menuArray: string[]
+  ): "breakfast" | "lunch" | "dinner" | "unknown meal time" => {
+    if (breakfastMealMenuItems.includes(foodItem.food_value)) {
+      return "breakfast";
+    } else if (lunchMealMenuItems.includes(foodItem.food_value)) {
+      return "lunch";
+    } else if (dinnerMealMenuItems.includes(foodItem.food_value)) {
+      return "dinner";
+    } else if (dessertBreakfastMenuItems.includes(foodItem.food_value)) {
+      return "breakfast";
+    } else if (dessertLunchMenuItems.includes(foodItem.food_value)) {
+      return "lunch";
+    } else if (dessertDinnerMenuItems.includes(foodItem.food_value)) {
+      return "dinner";
+    } else {
+      return "unknown meal time";
+    }
+  };
+
+  // Determine the variable_to_determine based on the disabled item's meal time array
+  const meal_time_of_disabled_food = determineMealTime(
+    is_breakfast_time
+      ? breakfastMealMenuItems
+      : is_lunch_time
+      ? lunchMealMenuItems
+      : is_dinner_time
+      ? dinnerMealMenuItems
+      : is_breakfast_time
+      ? dessertBreakfastMenuItems
+      : is_lunch_time
+      ? dessertLunchMenuItems
+      : is_dinner_time
+      ? dessertDinnerMenuItems
+      : []
+  );
+
   return (
     <>
-      <div
-        style={{
-          border: isMenuItemDisabled
-            ? "1px solid red"
-            : isNotInMenu
-            ? "1px solid green"
-            : "",
-          margin: ".2rem",
-        }}
-      >
+      <div>
         <Draggable
           draggableId={foodItem?.food_id?.toString()}
           {...{ index: food_item_index }}
@@ -142,55 +166,76 @@ DraggableFoodItemProps) => {
         >
           {(provided) => (
             <div
+              style={{
+                border: isMenuItemDisabled
+                  ? "1px solid red"
+                  : isNotInMenu
+                  ? "1px solid green"
+                  : "",
+                margin: ".2rem",
+              }}
               className="selected-food-single-card-grid-wrapper"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               key={foodItem.food_id}
             >
-              <Card.Grid
-                className="selected-food-single-card-grid"
-                style={gridStyle}
+              <Tooltip
+                title={
+                  isMenuItemDisabled
+                    ? `You can order this item only during ${meal_time_of_disabled_food}`
+                    : ``
+                }
+                // Yes, "meal_time_of_disabled_food" is a descriptive and meaningful variable name that conveys its purpose clearly. It's important to use variable names that are self-explanatory and help make your code more readable and understandable. If you're comfortable with this name and it accurately represents the concept you're dealing with, then it's a good choice.
               >
-                {showOptionsButton ? (
+                <Card.Grid
+                  className={
+                    isMenuItemDisabled
+                      ? "selected-food-single-card-grid disabled-grid-card"
+                      : "selected-food-single-card-grid"
+                  }
+                  style={gridStyle}
+                >
+                  {showOptionsButton ? (
+                    <Button
+                      icon={
+                        <>
+                          <img width={`20px`} src={options} alt="" />
+                        </>
+                      }
+                      onClick={() => {
+                        if (!isMenuItemDisabled) {
+                          dispatch(setActiveFoodItem(foodItem.food_value));
+                          setOpenFoodChoiceModal(true);
+                        }
+                      }}
+                      disabled={isMenuItemDisabled}
+                      // onClick={() => {
+                      //   dispatch(setActiveFoodItem(foodItem.food_value));
+                      //   setOpenFoodChoiceModal(true);
+                      // }}
+                    ></Button>
+                  ) : null}
+                  <p>{foodItem.food_value}</p>
                   <Button
                     icon={
                       <>
-                        <img width={`20px`} src={options} alt="" />
+                        <img width={`17px`} src={delete_stop} alt="" />
                       </>
                     }
-                    onClick={() => {
-                      if (!isMenuItemDisabled) {
-                        dispatch(setActiveFoodItem(foodItem.food_value));
-                        setOpenFoodChoiceModal(true);
-                      }
-                    }}
-                    disabled={isMenuItemDisabled}
-                    // onClick={() => {
-                    //   dispatch(setActiveFoodItem(foodItem.food_value));
-                    //   setOpenFoodChoiceModal(true);
-                    // }}
-                  ></Button>
-                ) : null}
-                <p>{foodItem.food_value}</p>
-                <Button
-                  icon={
-                    <>
-                      <img width={`17px`} src={delete_stop} alt="" />
-                    </>
-                  }
-                  onClick={() =>
-                    dispatch(
-                      deleteFoodFromCustomer({
-                        id: customer_id,
-                        index: food_item_index,
-                      })
-                    )
-                  }
-                >
-                  {/* {"delete"} */}
-                </Button>
-              </Card.Grid>
+                    onClick={() =>
+                      dispatch(
+                        deleteFoodFromCustomer({
+                          id: customer_id,
+                          index: food_item_index,
+                        })
+                      )
+                    }
+                  >
+                    {/* {"delete"} */}
+                  </Button>
+                </Card.Grid>
+              </Tooltip>
             </div>
           )}
         </Draggable>
