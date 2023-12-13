@@ -79,6 +79,9 @@ DraggableFoodItemProps) => {
     (state: RootState) => state.updateModalReducer.activeFoodItem
   );
 
+  let aray = ["e", "efkjef", "d"];
+  let [, , test] = aray;
+  console.log(test, "test44");
   // let isMenuItemDisabled = false;
 
   // The line of code const dinnerMenuItems = [...dinnerMealMenuItems, ...dessertDinnerMenuItems]; is used to combine the arrays dinnerMealMenuItems and dessertDinnerMenuItems into a single array called dinnerMenuItems.
@@ -120,19 +123,19 @@ DraggableFoodItemProps) => {
 
   // Define a function to determine the meal time based on the menu array
   const determineMealTime = (
-    menuArray: string[]
+    disabledFood: string
   ): "breakfast" | "lunch" | "dinner" | "unknown meal time" => {
-    if (breakfastMealMenuItems.includes(foodItem.food_value)) {
+    if (breakfastMealMenuItems.includes(disabledFood)) {
       return "breakfast";
-    } else if (lunchMealMenuItems.includes(foodItem.food_value)) {
+    } else if (lunchMealMenuItems.includes(disabledFood)) {
       return "lunch";
-    } else if (dinnerMealMenuItems.includes(foodItem.food_value)) {
+    } else if (dinnerMealMenuItems.includes(disabledFood)) {
       return "dinner";
-    } else if (dessertBreakfastMenuItems.includes(foodItem.food_value)) {
+    } else if (dessertBreakfastMenuItems.includes(disabledFood)) {
       return "breakfast";
-    } else if (dessertLunchMenuItems.includes(foodItem.food_value)) {
+    } else if (dessertLunchMenuItems.includes(disabledFood)) {
       return "lunch";
-    } else if (dessertDinnerMenuItems.includes(foodItem.food_value)) {
+    } else if (dessertDinnerMenuItems.includes(disabledFood)) {
       return "dinner";
     } else {
       return "unknown meal time";
@@ -140,21 +143,7 @@ DraggableFoodItemProps) => {
   };
 
   // Determine the variable_to_determine based on the disabled item's meal time array
-  const meal_time_of_disabled_food = determineMealTime(
-    is_breakfast_time
-      ? breakfastMealMenuItems
-      : is_lunch_time
-      ? lunchMealMenuItems
-      : is_dinner_time
-      ? dinnerMealMenuItems
-      : is_breakfast_time
-      ? dessertBreakfastMenuItems
-      : is_lunch_time
-      ? dessertLunchMenuItems
-      : is_dinner_time
-      ? dessertDinnerMenuItems
-      : []
-  );
+  const meal_time_of_disabled_food = determineMealTime(foodItem.food_value);
 
   return (
     <>

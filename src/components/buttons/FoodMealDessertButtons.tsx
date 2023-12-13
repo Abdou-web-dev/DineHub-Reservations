@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { FoodInfosContext } from "../context/FoodInfosContext";
-import { FoodItem } from "../lists/DraggableFoodItems";
+// import { FoodItem } from "../lists/DraggableFoodItems";
+import { FoodItem } from "../../types/Types";
 import { TogglerButton } from "./TogglerButton";
 import "./btns_styles.scss";
 

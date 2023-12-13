@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FoodItem } from "../../src/types/Types";
 import { Customer } from "../types/Types";
+export {};
 
 // export interface foodItem
 

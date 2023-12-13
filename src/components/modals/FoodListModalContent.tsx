@@ -1,7 +1,7 @@
 import { useContext } from "react";
+import { FoodItem } from "../../types/Types";
 import { ComeBackBtn } from "../buttons/ComeBackBtn";
 import { FoodInfosContext } from "../context/FoodInfosContext";
-import { FoodItem } from "../lists/DraggableFoodItems";
 
 export const FoodListModalContent = ({
   foodList,

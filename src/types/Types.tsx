@@ -1,6 +1,6 @@
 // types.ts
 
-import { FoodItem } from "../components/lists/DraggableFoodItems";
+// import { FoodItem } from "../components/lists/DraggableFoodItems";
 
 export type OptionValue = string | JSX.Element;
 

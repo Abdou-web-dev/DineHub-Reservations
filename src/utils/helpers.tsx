@@ -1,4 +1,4 @@
-import { FoodItem } from "../components/lists/DraggableFoodItems";
+import { FoodItem } from "../types/Types";
 
 const replace = (
   object: FoodItem,

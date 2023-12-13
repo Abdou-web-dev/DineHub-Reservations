@@ -46,9 +46,15 @@ Garlic and pesto wings recipe
 
 # props drilling in React: Too subjective to answer. I try to not pass props more than a couple layers deep, but that's my personal preference/rule. 3-4 doesn't seem unreasonable for a general "rule of thumb". Yes, beyond this it is quite excessive to need to ensure all components are passing all extra props they don't care about. This is the madness of props drilling that is unnecessary and completely avoidable.
 
+# use this font : font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
 // https://stackoverflow.com/questions/62378796/cannot-destructure-property-of-object-from-context
 // the solution is to wrap the components with the context Provider
 
 // https://www.npmjs.com/package/turnstone
 // Turnstone is a highly customisable, easy-to-use autocomplete search component for React.
 // Yes, you can have as many global variables (context values) in a context file as you need. However, keep in mind that having too many context values might lead to more complex management and potential performance issues. It's generally a good practice to group related state variables together in a single context if possible.
+
+# Refactor :In computer programming, means To rewrite existing source code in order to improve its readability, reusability or structure without affecting its meaning or behaviour.
+
+https://www.svgminify.com/

@@ -6,8 +6,9 @@ import { RootState } from "./app/store";
 import { InfoText } from "./components/info/InfoText";
 import { CustomersSection } from "./components/sections/CustomersSection";
 import { ReservationsSection } from "./components/sections/ReservationsSection";
-import { Customer } from "./feature/customerSlice";
+// import { Customer } from "./feature/";
 import { addReservation } from "./feature/reservationSlice";
+import { Customer } from "./types/Types";
 
 function App() {
   const dispatch = useDispatch();

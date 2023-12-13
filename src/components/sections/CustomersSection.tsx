@@ -1,4 +1,3 @@
-// import { Customer } from "../../feature/customerSlice";
 import { Customer, FoodItem } from "../../types/Types";
 import CustomerCard from "../cards/CustomerCard";
 import { FoodInfosContextProvider } from "../context/FoodInfosContext";

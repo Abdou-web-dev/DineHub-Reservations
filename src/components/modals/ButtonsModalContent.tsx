@@ -3,8 +3,8 @@
 
 import { Button } from "antd";
 import { useContext } from "react";
+import { FoodItem } from "../../types/Types";
 import { FoodInfosContext } from "../context/FoodInfosContext";
-import { FoodItem } from "../lists/DraggableFoodItems";
 import "./modal_styles.scss";
 
 export const ButtonsModalContent = ({
